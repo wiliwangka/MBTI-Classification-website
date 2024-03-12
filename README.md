@@ -1,0 +1,2 @@
+# Project Description
+The relational database management system that we will create is a personality test website. This database management system would be in the domain of psychology, as it analyzes users’ personalities and teaches users about them. The users may take the tests to learn more about themselves to become more aware of their own behaviours and thoughts, as well as learn about others’ behaviours and thoughts.
