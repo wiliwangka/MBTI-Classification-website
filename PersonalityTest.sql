@@ -27,7 +27,7 @@ CREATE TABLE Question (
 );
 
 CREATE TABLE Outputs_2 (
-    TID INT NOT NULL,
+    TID INT NOT NULL AUTO_INCREMENT,
     RID INT NOT NULL,
     startDateTime DATETIME NOT NULL,
     username VARCHAR(63) NOT NULL,
