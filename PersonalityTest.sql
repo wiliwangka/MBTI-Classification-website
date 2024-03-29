@@ -1,6 +1,26 @@
-CREATE TABLE User (
+drop table IsRecommendedArticle;
+drop table IsRecommendedBook;
+drop table IsRecommendedVideo;
+drop table MyArticle;
+drop table MyBook;
+drop table MyVideo;
+drop table Outputs_3;
+drop table Outputs_4;
+drop table Question;
+drop table Outputs_2;
+drop table LoginUser;
+drop table MBTI_Type;
+drop table MyUser;
+
+CREATE TABLE MyUser (
     username VARCHAR(63) NOT NULL,
-    PRIMARY KEY (username),
+    PRIMARY KEY (username)
+);
+
+CREATE TABLE MBTI_Type (
+    mbtiName CHAR(4) NOT NULL,
+    mbtiDescription VARCHAR(1000) NOT NULL,
+    PRIMARY KEY (mbtiName)
 );
 
 CREATE TABLE LoginUser (
@@ -13,35 +33,25 @@ CREATE TABLE LoginUser (
     userGender CHAR(1),
     PRIMARY KEY (username),
     UNIQUE (emailAddress),
-    FOREIGN KEY (username) REFERENCES User(username) ON DELETE CASCADE
+    FOREIGN KEY (username) REFERENCES MyUser(username) ON DELETE CASCADE,
     FOREIGN KEY (mbtiName) REFERENCES MBTI_Type(mbtiName) ON DELETE CASCADE
 );
 
-CREATE TABLE Question (
-    questionNumber INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE Outputs_2 (
     TID INT NOT NULL,
-    questionDescription TEXT NOT NULL,
-    questionAnswer INT NOT NULL,
-    PRIMARY KEY (questionNumber, TID),
-    FOREIGN KEY (TID) REFERENCES Test(TID) ON DELETE CASCADE
+    RID INT NOT NULL,
+    startDateTime TIMESTAMP NOT NULL,
+    username VARCHAR(63) NOT NULL,
+    PRIMARY KEY (TID),
+    FOREIGN KEY (username) REFERENCES MyUser(username) ON DELETE CASCADE
 );
 
-CREATE TABLE Outputs_2 (
-    TID INT NOT NULL AUTO_INCREMENT,
-    RID INT NOT NULL,
-    startDateTime DATETIME NOT NULL,
-    username VARCHAR(63) NOT NULL,
-    PRIMARY KEY (TID)
-)
-
-CREATE TABLE Outputs_3 (
+CREATE TABLE Question (
+    questionNumber INT NOT NULL,
     TID INT NOT NULL,
-    EIScore REAL NOT NULL,
-    SNScore REAL NOT NULL,
-    TFScore REAL NOT NULL,
-    JPScore REAL NOT NULL,
-    PRIMARY KEY (TID, EIScore, SNScore, TFScore, JPScore),
-    FOREIGN KEY (EIScore, SNScore, TFScore, JPScore) REFERENCES Outputs_4(EIScore, SNScore, TFScore, JPScore) ON DELETE CASCADE,
+    questionDescription VARCHAR(1000) NOT NULL,
+    questionAnswer INT NOT NULL,
+    PRIMARY KEY (questionNumber, TID),
     FOREIGN KEY (TID) REFERENCES Outputs_2(TID) ON DELETE CASCADE
 );
 
@@ -54,31 +64,36 @@ CREATE TABLE Outputs_4 (
     PRIMARY KEY (EIScore, SNScore, TFScore, JPScore)
 );
 
-CREATE TABLE MBTI_Type (
-    mbtiName CHAR(4) NOT NULL,
-    mbtiDescription TEXT NOT NULL,
-    PRIMARY KEY (mbtiName)
-)
+CREATE TABLE Outputs_3 (
+    TID INT NOT NULL,
+    EIScore REAL NOT NULL,
+    SNScore REAL NOT NULL,
+    TFScore REAL NOT NULL,
+    JPScore REAL NOT NULL,
+    PRIMARY KEY (TID, EIScore, SNScore, TFScore, JPScore),
+    FOREIGN KEY (EIScore, SNScore, TFScore, JPScore) REFERENCES Outputs_4(EIScore, SNScore, TFScore, JPScore) ON DELETE CASCADE,
+    FOREIGN KEY (TID) REFERENCES Outputs_2(TID) ON DELETE CASCADE
+);
 
-CREATE TABLE Video (
+CREATE TABLE MyVideo (
     videoLink VARCHAR(255) NOT NULL,
     videoType VARCHAR(255),
     videoTitle VARCHAR(255) NOT NULL,
     PRIMARY KEY (videoLink)
 );
 
-CREATE TABLE Book (
+CREATE TABLE MyBook (
     bookURL VARCHAR(255) NOT NULL,
     bookTitle VARCHAR(255) NOT NULL,
     bookAuthor VARCHAR(255) NOT NULL,
     PRIMARY KEY (bookURL)
 );
 
-CREATE TABLE Article (
+CREATE TABLE MyArticle (
     articleURL VARCHAR(255) NOT NULL,
     articleTitle VARCHAR(255) NOT NULL,
     articleAuthor VARCHAR(255) NOT NULL,
-    articleText TEXT NOT NULL,
+    articleText VARCHAR(1000) NOT NULL,
     PRIMARY KEY (articleURL)
 );
 
@@ -87,7 +102,7 @@ CREATE TABLE IsRecommendedVideo (
     videoLink VARCHAR(255) NOT NULL,
     PRIMARY KEY (mbtiName, videoLink),
     FOREIGN KEY (mbtiName) REFERENCES MBTI_Type(mbtiName) ON DELETE CASCADE,
-    FOREIGN KEY (videoLink) REFERENCES Video(videoLink) ON DELETE CASCADE
+    FOREIGN KEY (videoLink) REFERENCES MyVideo(videoLink) ON DELETE CASCADE
 );
 
 CREATE TABLE IsRecommendedBook (
@@ -95,7 +110,7 @@ CREATE TABLE IsRecommendedBook (
     bookURL VARCHAR(255) NOT NULL,
     PRIMARY KEY (mbtiName, bookURL),
     FOREIGN KEY (mbtiName) REFERENCES MBTI_Type(mbtiName) ON DELETE CASCADE,
-    FOREIGN KEY (bookURL) REFERENCES Book(bookURL) ON DELETE CASCADE
+    FOREIGN KEY (bookURL) REFERENCES MyBook(bookURL) ON DELETE CASCADE
 );
 
 CREATE TABLE IsRecommendedArticle (
@@ -103,5 +118,5 @@ CREATE TABLE IsRecommendedArticle (
     articleURL VARCHAR(255) NOT NULL,
     PRIMARY KEY (mbtiName, articleURL),
     FOREIGN KEY (mbtiName) REFERENCES MBTI_Type(mbtiName) ON DELETE CASCADE,
-    FOREIGN KEY (articleURL) REFERENCES Article(articleURL) ON DELETE CASCADE
+    FOREIGN KEY (articleURL) REFERENCES MyArticle(articleURL) ON DELETE CASCADE
 );
