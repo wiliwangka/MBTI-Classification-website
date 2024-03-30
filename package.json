@@ -1,0 +1,15 @@
+{
+  "name": "mbti_personality_test",
+  "version": "1.0.0",
+  "description": "A database management system that stores users' results from an MBTI personality test.",
+  "main": "server.js",
+  "keywords": [],
+  "author": {
+    "name": "Herman Liao, William Wang, Yujie Chen"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "oracledb": "^5.2.0"
+  }
+}
