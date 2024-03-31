@@ -11,10 +11,10 @@ const router = express.Router();
 
 // API of LogIn feature for LogInUsers
 router.post('/logIn', async (req,res) => {
-    const {username, password} =  req.body;
+    const {emailAddress, password} =  req.body;
 
     try {
-        const exsisting  = await appService.logIn(username, password);
+        const exsisting  = await appService.logIn(emailAddress, password);
         if (exsisting) {
             res.json({ success: true, message: 'Log in successfully', user: exsisting});
         } else {
@@ -28,6 +28,16 @@ router.post('/logIn', async (req,res) => {
 
 });
 
+// API of Register feature
+router.post('/register', async (req, res) => {
+    const {mbtiName, password, emailAddress, age, country, userGender} =  req.body;
+    const insertResult = await appService.insertUser(mbtiName, password, emailAddress, age, country, userGender);
+    if (insertResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
 
 router.get('/check-db-connection', async (req, res) => {
     const isConnect = await appService.testOracleConnection();
