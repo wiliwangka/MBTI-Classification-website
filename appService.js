@@ -106,8 +106,9 @@ async function fetchDemotableFromDb() {
 
 async function initiateAllTables() {
     return await withOracleDB(async (connection) => {
-        dropAllTables(connection);
-        const result = await createAllTables(connection);
+        await dropAllTables(connection);
+        await createAllTables(connection);
+        await insertMBTI_Types(connection);
         return true;
     }).catch(() => {
         return false;
@@ -318,6 +319,27 @@ async function createIsRecommendedArticle(connection) {
     );
 }
 
+async function insertMBTI_Types(connection) {
+    mbtiNames = [
+        "ISTJ", "ISTP", "ISFJ", "ISFP",
+        "INTJ", "INTP", "INFJ", "INFP",
+        "ESTJ", "ESTP", "ESFJ", "ESFP",
+        "ENTJ", "ENTP", "ENFJ", "ENFP"
+    ];
+    mbtiDescriptions = [
+        "Number A", "Number B", "Number C", "Number D",
+        "Number E", "Number F", "Number G", "Number H",
+        "Number I", "Number J", "Number K", "Number L",
+        "Number M", "Number N", "Number O", "Number P"
+    ];
+    for (let i = 0; i < 16; i++) {
+        await connection.execute(`INSERT INTO MBTI_Type (mbtiName, mbtiDescription) VALUES (:mbtiName, :mbtiDescription)`,
+        [mbtiNames, mbtiDescriptions],
+        { autoCommit: true }
+        );
+    }
+}
+
 async function insertDemotable(id, name) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
@@ -357,8 +379,7 @@ async function countDemotable() {
 
 module.exports = {
     testOracleConnection,
-    fetchDemotableFromDb,
-    initiateDemotable: initiateAllTables, 
+    fetchDemotableFromDb,initiateAllTables, 
     insertDemotable, 
     updateNameDemotable, 
     countDemotable,
