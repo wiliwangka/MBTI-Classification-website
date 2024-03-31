@@ -39,6 +39,16 @@ router.post('/register', async (req, res) => {
     }
 });
 
+//API of initiating all the tables
+router.post("/initiate-All-Tables", async (req, res) => {
+    const initiateResult = await appService.initiateAllTables();
+    if (initiateResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
 router.get('/check-db-connection', async (req, res) => {
     const isConnect = await appService.testOracleConnection();
     if (isConnect) {
