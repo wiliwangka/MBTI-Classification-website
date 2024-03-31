@@ -8,6 +8,27 @@ const router = express.Router();
 // ----------------------------------------------------------
 // API endpoints
 // Modify or extend these routes based on your project's needs.
+
+// API of LogIn feature for LogInUsers
+router.post('/logIn', async (req,res) => {
+    const {username, password} =  req.body;
+
+    try {
+        const exsisting  = await appService.logIn(username, password);
+        if (exsisting) {
+            res.json({ success: true, message: 'Log in successfully', user: exsisting});
+        } else {
+            res.status(404).json({ success: false, message: 'Account is not existed or password is wrong' });
+        }
+    } catch {
+        console.error('error existed during logIn:', error);
+        res.status(500).json({ success: false, message: 'An error occurred during login' });
+    }
+    
+
+});
+
+
 router.get('/check-db-connection', async (req, res) => {
     const isConnect = await appService.testOracleConnection();
     if (isConnect) {

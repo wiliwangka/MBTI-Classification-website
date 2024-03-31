@@ -78,6 +78,23 @@ async function testOracleConnection() {
     });
 }
 
+async function logIn(username, password) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM LoginUser WHERE username=:username AND password=:password', {
+            username: username,
+            password: password
+        });
+        if (result.rows.length > 0) {
+            return result.rows[0];
+        } else {
+            return null;
+        }
+        
+    }).catch((error) => { 
+        throw error;
+    });
+}
+
 async function fetchDemotableFromDb() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute('SELECT * FROM DEMOTABLE');
@@ -344,5 +361,6 @@ module.exports = {
     initiateDemotable: initiateAllTables, 
     insertDemotable, 
     updateNameDemotable, 
-    countDemotable
+    countDemotable,
+    logIn
 };
