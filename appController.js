@@ -49,7 +49,19 @@ router.post("/initiate-All-Tables", async (req, res) => {
     }
 });
 
-//
+//API of submmiting test questions
+router.post("submit-test-questions", async (req, res) => {
+    const {emailAddress, EIScore, SNScore, TFScore, JPScore} = req.body;
+    const testAnswer = appService.calculateMBTIScores(EIScore, SNScore, TFScore, JPScore);
+    const insertResult = await appService.insertMBtiType(emailAddress,testAnswer);
+    if (insertResult) {
+        res.json({success: true, mbtiType: testAnswer});
+    } else { res.status(500).json({success: false });}
+        
+    
+    
+
+});
 
 router.get('/check-db-connection', async (req, res) => {
     const isConnect = await appService.testOracleConnection();

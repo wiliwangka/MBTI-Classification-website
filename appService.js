@@ -398,6 +398,10 @@ function calculateMBTIScores(EIScore, SNScore, TFScore, JPScore) {
 	return retVal;
 }
 
+async function insertMBtiType(emailAddress, mbtiType) {
+	
+}
+
 async function getRecommendedVideos(mbtiType) {
 	return withOracleDB(async(connection) => {
 		const result = await connection.execute(
@@ -500,5 +504,8 @@ module.exports = {
 	insertUser,
 	updateNameDemotable,
 	countDemotable,
-    logIn
+    logIn,
+	calculateMBTIScores,
+	insertMBtiType
+
 };
