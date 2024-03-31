@@ -36,31 +36,7 @@ async function checkDbConnection() {
     });
 }
 
-// Fetches data from the demotable and displays it.
-async function fetchAndDisplayUsers() {
-    const tableElement = document.getElementById('demotable');
-    const tableBody = tableElement.querySelector('tbody');
 
-    const response = await fetch('/demotable', {
-        method: 'GET'
-    });
-
-    const responseData = await response.json();
-    const demotableContent = responseData.data;
-
-    // Always clear old, already fetched data before new fetching process.
-    if (tableBody) {
-        tableBody.innerHTML = '';
-    }
-
-    demotableContent.forEach(user => {
-        const row = tableBody.insertRow();
-        user.forEach((field, index) => {
-            const cell = row.insertCell(index);
-            cell.textContent = field;
-        });
-    });
-}
 
 // This function resets or initializes the demotable.
 async function resetDemotable() {
@@ -82,8 +58,14 @@ async function resetDemotable() {
 async function insertDemotable(event) {
     event.preventDefault();
 
-    const idValue = document.getElementById('insertId').value;
-    const nameValue = document.getElementById('insertName').value;
+    const emailValue = document.getElementById('insertEmail').value;
+    const passwordValue = document.getElementById('insertPassword').value;
+    const ageValue = document.getElementById('insertAge').value;
+    const countryValue = document.getElementById('insertCountry').value;
+    const genderValue = document.getElementById('insertGender').value;
+
+  
+
 
     const response = await fetch('/insert-demotable', {
         method: 'POST',
@@ -91,8 +73,12 @@ async function insertDemotable(event) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id: idValue,
-            name: nameValue
+            email: emailValue,
+            password: passwordValue,
+            age: ageValue,
+            country: countryValue,
+            gender: genderValue
+            
         })
     });
 
@@ -100,10 +86,10 @@ async function insertDemotable(event) {
     const messageElement = document.getElementById('insertResultMsg');
 
     if (responseData.success) {
-        messageElement.textContent = "Data inserted successfully!";
+        messageElement.textContent = "register successfully!";
         fetchTableData();
     } else {
-        messageElement.textContent = "Error inserting data!";
+        messageElement.textContent = "Error in registering!";
     }
 }
 
