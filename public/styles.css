@@ -84,3 +84,28 @@ input::placeholder, textarea::placeholder {
     height: 1em;
     vertical-align: middle;
 }
+
+/* question answer switch STYLES */
+
+.question {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Adds space between each question */
+}
+
+.options {
+    margin-right: 20px; /* Adds space between the radio buttons and the description */
+}
+
+.options label {
+    margin-right: 10px; /* Adds space between the "No" and "Yes" options */
+}
+
+.description {
+    margin: 0; /* Removes default paragraph margins */
+}
+
+button[type="submit"] {
+    padding: 10px 20px; /* Adjust button padding to your preference */
+    cursor: pointer; /* Changes cursor to pointer when hovering over button */
+}

@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
-    <!-- <link rel="stylesheet" href="styles.css">   -->
-
-    <title>Database Application</title>
+    <link rel="stylesheet" href="styles.css">  
+   
+    <title>MBTI Database</title>
 </head>
 <body>
     <!-- ===================================================================================== -->
@@ -49,16 +49,72 @@
 
     <br><hr><br> <!-- ========================================================================= -->
 
-    <h2> Insert Values into DemoTable </h2>
+    <h2> Register </h2>
     <form id="insertDemotable">
         ID: <input type="number" id="insertId" placeholder="Enter ID" required> <br><br>
-        Name: <input type="text" id="insertName" placeholder="Enter Name" maxlength="20"> <br><br>
+        Password: <input type="text" id="insertPassword" placeholder="Enter Password" maxlength="20" required> <br><br>
+        Age: <input type="number" id="insertAge" placeholder="Enter Age" required> <br><br>
+        Country: <input type="text" id="insertCountry" placeholder="Enter Country" > <br><br>
+        Email: <input type="text" id="insertEmail" placeholder="Enter Email" > <br><br>
 
         <button type="submit"> insert </button> <br>
     </form>
     <div id="insertResultMsg"></div>
 
     <br><hr><br> <!-- ========================================================================= -->
+
+<!-- Login Section -->
+<h2>Login</h2>
+<form id="loginForm">
+    Email: <input type="email" id="loginEmail" placeholder="Enter Email" required> <br><br>
+    Password: <input type="password" id="loginPassword" placeholder="Enter Password" required> <br><br>
+    <button type="submit">Login</button> <br>
+</form>
+<div id="loginResultMsg"></div>
+
+<br><hr><br> <!-- ========================================================================= -->
+
+
+<h2>Personality Test</h2>
+<form id="personalityTestForm">
+    <div class="question">
+        <p>1. Do you get your energy from interaction with the world around you (Extravert), or more from yourself, with your own activities and thoughts (Introvert)?</p>
+        <label><input type="radio" name="question1" value="No" required> Extrovert</label>
+        <label><input type="radio" name="question1" value="Yes"> Introvert</label>
+    </div>
+
+    <div class="question">
+        <p>2. Does your info preferably come from observing, measuring, experience (Sensing), or from explanation, reasoning, more abstract understanding (iNtuition)?</p>
+        <label><input type="radio" name="question2" value="No" required> Sensing</label>
+        <label><input type="radio" name="question2" value="Yes"> iNtuition</label>
+    </div>
+
+    <div class="question">
+        <p>3. How do you decide: by way of ratio, logic, given decision criteria (Thinking), or by looking at context, interests, what feels right (Feeling)?</p>
+        <label><input type="radio" name="question3" value="No" required> Thinking</label>
+        <label><input type="radio" name="question3" value="Yes"> Feeling</label>
+    </div>
+
+    <div class="question">
+        <p>4. How do you approach situations: should things go as planned and wanted (Judgement), or are you flexible, open to change, go with the flow (Perception)?</p>
+        <label><input type="radio" name="question4" value="No" required> Judgement </label>
+        <label><input type="radio" name="question4" value="Yes"> Perception</label>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+
+<br><hr><br> <!-- ========================================================================= -->
+
+
+
+
+
+
+
+
+
 
     <h2>Update Name in DemoTable</h2>
     <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
@@ -81,5 +137,9 @@
     <!-- ===================================================================================== -->
     <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
     <script src="scripts.js"></script>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+
 </body>
 </html>
