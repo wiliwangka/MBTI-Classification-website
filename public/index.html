@@ -11,7 +11,8 @@
     <title>MBTI Database</title>
 </head>
 <body>
-    <!-- ===================================================================================== -->
+
+    <!--1. ===================================================================================== -->
     <!-- Display the current status of the database connection. 
          !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
          -->
@@ -22,7 +23,7 @@
         <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
     </h1>
 
-    <br><hr><br> <!-- ========================================================================= -->
+    <br><hr><br> <!--  ========================================================================= -->
 
     <!-- Show 'Demotable'. 
         Data will be fetched and inserted here dynamically using JavaScript. -->
@@ -41,7 +42,7 @@
         </tbody>
     </table>
 -->
-    <br><hr><br> <!-- ========================================================================= -->
+    <br><hr><br> <!--2.  ========================================================================= -->
 
     <h2>Reset</h2>
     <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
@@ -53,17 +54,18 @@
 
     <h2> Register </h2>
     <form id="insertDemotable">
-        ID: <input type="number" id="insertId" placeholder="Enter ID" required> <br><br>
+        Email: <input type="text" id="insertEmail" placeholder="Enter Email" > <br><br>
         Password: <input type="text" id="insertPassword" placeholder="Enter Password" maxlength="20" required> <br><br>
         Age: <input type="number" id="insertAge" placeholder="Enter Age" required> <br><br>
         Country: <input type="text" id="insertCountry" placeholder="Enter Country" > <br><br>
-        Email: <input type="text" id="insertEmail" placeholder="Enter Email" > <br><br>
+        Gender: <input type="text" id="insertGender" placeholder="Enter Gender" > <br><br>
+       
 
         <button type="submit"> insert </button> <br>
     </form>
     <div id="insertResultMsg"></div>
 
-    <br><hr><br> <!-- ========================================================================= -->
+    <br><hr><br> <!-- 3. ========================================================================= -->
 
 <!-- Login Section -->
 <h2>Login</h2>
@@ -74,7 +76,7 @@
 </form>
 <div id="loginResultMsg"></div>
 
-<br><hr><br> <!-- ========================================================================= -->
+<br><hr><br> <!-- 5. ========================================================================= -->
 
 
 
