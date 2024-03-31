@@ -28,6 +28,16 @@ router.post('/logIn', async (req,res) => {
 
 });
 
+// API of Register feature
+router.post('/register', async (req, res) => {
+    const {mbtiName, password, emailAddress, age, country, userGender} =  req.body;
+    const insertResult = await appService.insertUser(mbtiName, password, emailAddress, age, country, userGender);
+    if (insertResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
 
 router.get('/check-db-connection', async (req, res) => {
     const isConnect = await appService.testOracleConnection();
