@@ -50,7 +50,8 @@ CREATE TABLE Question (
     questionNumber INT NOT NULL,
     TID INT NOT NULL,
     questionDescription VARCHAR(1000) NOT NULL,
-    questionAnswer INT NOT NULL,
+    questionAnswer INT,
+    questionScoreType CHAR(2) NOT NULL,
     PRIMARY KEY (questionNumber, TID),
     FOREIGN KEY (TID) REFERENCES Outputs_2(TID) ON DELETE CASCADE
 );
