@@ -49,6 +49,8 @@ router.post("/initiate-All-Tables", async (req, res) => {
     }
 });
 
+//
+
 router.get('/check-db-connection', async (req, res) => {
     const isConnect = await appService.testOracleConnection();
     if (isConnect) {
