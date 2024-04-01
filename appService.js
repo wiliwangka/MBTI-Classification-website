@@ -82,7 +82,7 @@ async function testOracleConnection() {
 
 async function logIn(emailAddress, password) {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM LoginUser WHERE emailAddress=:username AND password=:password', {
+        const result = await connection.execute('SELECT * FROM LoginUser WHERE emailAddress=:emailAddress AND password=:password', {
             emailAddress: emailAddress,
             password: password
         });
@@ -111,6 +111,7 @@ async function initiateAllTables() {
 		await dropAllTables(connection);
 		await createAllTables(connection);
 		await insertMBTI_Types(connection);
+		await insertOutputs_4(connection); //populate Outputs_4 table
 		usernameGenerator = 0;
 		return true;
 	}).catch(() => {
@@ -344,6 +345,43 @@ async function insertMBTI_Types(connection) {
 	}
 }
 
+async function insertOutputs_4(connection) {
+	const scores = [
+		{mbtiName: 'INFP', EIScore: 0, SNScore: 0,TFScore: 0, JPScore: 0},
+		{mbtiName: 'INFJ', EIScore: 0, SNScore: 0,TFScore: 0, JPScore: 100},
+		{mbtiName: 'INTP', EIScore: 0, SNScore: 0,TFScore: 100, JPScore: 0},
+		{mbtiName: 'INTJ', EIScore: 0, SNScore: 0,TFScore: 100, JPScore: 100},
+		{mbtiName: 'ISFP', EIScore: 0, SNScore: 100,TFScore: 0, JPScore: 0},
+		{mbtiName: 'ISFJ', EIScore: 0, SNScore: 100,TFScore: 0, JPScore: 100},
+		{mbtiName: 'ISTP', EIScore: 0, SNScore: 100,TFScore: 100, JPScore: 0},
+		{mbtiName: 'ISTJ', EIScore: 0, SNScore: 100,TFScore: 100, JPScore: 100},
+		{mbtiName: 'ENFP', EIScore: 100, SNScore: 0,TFScore: 0, JPScore: 0},
+		{mbtiName: 'ENFJ', EIScore: 100, SNScore: 0,TFScore: 0, JPScore: 100},
+		{mbtiName: 'ENTP', EIScore: 100, SNScore: 0,TFScore: 100, JPScore: 0},
+		{mbtiName: 'ENTJ', EIScore: 100, SNScore: 0,TFScore: 100, JPScore: 100},
+		{mbtiName: 'ESFP', EIScore: 100, SNScore: 100,TFScore: 0, JPScore: 0},
+		{mbtiName: 'ESFJ', EIScore: 100, SNScore: 100,TFScore: 0, JPScore: 100},
+		{mbtiName: 'ESTP', EIScore: 100, SNScore: 100,TFScore: 100, JPScore: 0},
+		{mbtiName: 'ESTJ', EIScore: 100, SNScore: 100,TFScore: 100, JPScore: 100},
+	];
+
+	const insertSql = `
+            INSERT INTO Outputs_4 (mbtiName, EIScore, SNScore, TFScore, JPScore)
+            VALUES (:mbtiName, :EIScore, :SNScore, :TFScore, :JPScore)
+        `;
+
+	for (const score of scores) {
+		await connection.execute(insertSql, {
+			mbtiName: score.mbtiName,
+			EIScore: score.EIScore,
+			SNScore: score.SNScore,
+			TFScore: score.TFScore,
+			JPScore: score.JPScore
+		}, { autoCommit: true });
+
+	}
+}
+
 async function insertUser(mbtiName, password, emailAddress, age = "null", country = "null", userGender = "null") {
 	return await withOracleDB(async (connection) => {
 		let username = getUsername();
@@ -398,9 +436,140 @@ function calculateMBTIScores(EIScore, SNScore, TFScore, JPScore) {
 	return retVal;
 }
 
-async function insertMBtiType(emailAddress, mbtiType) {
-	
+async function submitQuestions(emailAddress, startDateTime, EIScore, SNScore, TFScore, JPScore) {
+	let mbtiType = calculateMBTIScores(EIScore, SNScore, TFScore, JPScore);  //get the test result mbtiType
+	const tid = await getMaxTid();	// assign a tid for the test
+	if (tid == -1) {
+			return null;
+		}
+	if (emailAddress) {
+		// the user is login user
+		const result1 = await updateLoginUserMbti(emailAddress, mbtiType);       		//update user's mbti
+		const result2 = await updateOutputs_2(emailAddress, startDateTime, tid); 		//update Outputs_2 table
+		const result3 = await insertQuestion(tid, EIScore, SNScore, TFScore, JPScore);  //update question table
+		const result4 = await updateOutputs_3(tid, EIScore, SNScore, TFScore, JPScore); 	 //update Outputs_3 table
+		if (result1 && result2 && result3 && result4) {
+			return mbtiType;
+		} else {
+			return null;
+		}
+	} else {
+		// the user is guestUser
+		let username = getUsername();
+		const result1 = await connection.execute(
+			`INSERT INTO MyUser (username) VALUES (:username)`,
+			[username],
+			{ autoCommit: true });
+		const result2 = await updateOutputs_2_guest(username, startDateTime, tid); 		//update Outputs_2 table
+		const result3 = await insertQuestion(tid, EIScore, SNScore, TFScore, JPScore);  //update question table
+		const result4 = await updateOutputs_3(tid, EIScore, SNScore, TFScore, JPScore); 	 //update Outputs_3 table
+		if (result1 && result2 && result3 && result4) {
+			return mbtiType;
+		} else {
+			return null;
+		}
+	}	
 }
+
+async function updateOutputs_2_guest(username, startDateTime, tid){
+	return await withOracleDB(async (connection) => {
+	  const sql = `
+	  INSERT INTO Outputs_2 (TID, startDateTime, username)
+	  VALUES (:tid, :startDateTime, :username)`;
+	  const result = await connection.execute(sql, [tid, startDateTime, username], {
+		  autoCommit: true 
+		});
+		return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => {
+	  return false;
+  });
+}
+
+
+async function updateOutputs_3(tid, EIScore, SNScore, TFScore, JPScore) {
+	return await withOracleDB(async (connection) => {
+		const sql = `
+		INSERT INTO Outputs_3 (TID, EIScore, SNScore, TFScore, JPScore)
+		VALUES (:tid, :EIScore, :SNScore, :TFScore, :JPScore)`;
+		const result = await connection.execute(sql, [tid, EIScore, SNScore, TFScore, JPScore], {
+			autoCommit: true 
+		  });
+		  return result.rowsAffected && result.rowsAffected > 0;
+	}).catch(() => {
+		return false;
+	});
+}
+
+async function updateOutputs_2(emailAddress, startDateTime, tid){
+  	return await withOracleDB(async (connection) => {
+		const sql = `
+		INSERT INTO Outputs_2 (TID, startDateTime, username)
+		SELECT :TID, TO_TIMESTAMP(:startDateTime, 'YYYY-MM-DD HH24:MI:SS'), lu.username
+		FROM LoginUser lu
+		WHERE lu.emailAddress = :emailAddress`;
+		const result = await connection.execute(sql, {
+			TID: tid, 
+			startDateTime: startDateTime,
+			emailAddress: emailAddress
+		  }, {
+			autoCommit: true 
+		  });
+		  return result.rowsAffected && result.rowsAffected > 0;
+	}).catch(() => {
+		return false;
+	});
+}
+
+async function insertQuestion(tid, EIScore, SNScore, TFScore, JPScore) {
+	return await withOracleDB(async (connection) => {
+        const insertSql = `
+            INSERT INTO Question (questionNumber, TID, questionScoreType, questionAnswer)
+            VALUES (:questionNumber, :tid, :questionScoreType, :questionAnswer)
+        `;
+
+        const scores = [
+            {questionNumber: 1, questionScoreType: 'EI', questionAnswer: EIScore},
+            {questionNumber: 2, questionScoreType: 'SN', questionAnswer: SNScore},
+            {questionNumber: 3, questionScoreType: 'TF', questionAnswer: TFScore},
+            {questionNumber: 4, questionScoreType: 'JP', questionAnswer: JPScore}
+        ];
+
+        for (const score of scores) {
+            await connection.execute(insertSql, {
+                questionNumber: score.questionNumber,
+                tid: tid,
+                questionScoreType: score.questionScoreType,
+                questionAnswer: score.questionAnswer
+            }, { autoCommit: true });
+
+        }
+		return true;
+
+	}).catch(() => {
+		return false;
+	});
+	
+
+}
+
+//Get the current max Tid in Db to see how many tests are there
+async function getMaxTid() {
+	return await withOracleDB(async (connection) => {
+		const result = await connection.execute('SELECT MAX(TID) AS max_tid FROM Outputs_2');
+		let tid;
+		if (result.rows[0][0] === null) {
+			console.log('no test existed');
+			tid=1;
+		} else {
+			tid = result.rows[0][0] + 1;
+		}
+		return tid;
+	}).catch(() => {
+		return -1;
+	});
+}
+
+
 
 async function getRecommendedVideos(mbtiType) {
 	return withOracleDB(async(connection) => {
@@ -474,6 +643,19 @@ async function updatePassword(username, oldPassword, newPassword) {
 	});
 }
 
+async function updateLoginUserMbti(emailAddress, mbtiType) {
+	return await withOracleDB(async (connection) => {
+		const result = await connection.execute(
+			`UPDATE LoginUser SET mbtiName=:mbtiType WHERE emailAddress=:emailAddress`,
+			[mbtiType, emailAddress],
+			{ autoCommit: true }
+		);
+		return result.rowsAffected && result.rowsAffected > 0;
+	}).catch(() => {
+		return false;
+	});
+}
+
 async function updateNameDemotable(oldName, newName) {
 	return await withOracleDB(async (connection) => {
 		const result = await connection.execute(
@@ -506,6 +688,6 @@ module.exports = {
 	countDemotable,
     logIn,
 	calculateMBTIScores,
-	insertMBtiType
+	submitQuestions
 
 };

@@ -39,7 +39,7 @@ CREATE TABLE LoginUser (
 
 CREATE TABLE Outputs_2 (
     TID INT NOT NULL,
-    RID INT NOT NULL,
+    -- RID INT NOT NULL,
     startDateTime TIMESTAMP NOT NULL,
     username VARCHAR(63) NOT NULL,
     PRIMARY KEY (TID),
@@ -49,7 +49,7 @@ CREATE TABLE Outputs_2 (
 CREATE TABLE Question (
     questionNumber INT NOT NULL,
     TID INT NOT NULL,
-    questionDescription VARCHAR(1000) NOT NULL,
+    -- questionDescription VARCHAR(1000) NOT NULL,
     questionAnswer INT,
     questionScoreType CHAR(2) NOT NULL,
     PRIMARY KEY (questionNumber, TID),
