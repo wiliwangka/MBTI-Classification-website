@@ -118,32 +118,61 @@ async function initiateAllTables() {
 	});
 }
 
+// async function dropAllTables(connection) {
+// 	let tableNames = [
+// 		"IsRecommendedArticle",
+// 		"IsRecommendedBook",
+// 		"IsRecommendedVideo",
+// 		"MyArticle",
+// 		"MyBook",
+// 		"MyVideo",
+// 		"Outputs_3",
+// 		"Outputs_4",
+// 		"Question",
+// 		"Outputs_2",
+// 		"LoginUser",
+// 		"MBTI_Type",
+// 		"MyUser"
+// 	];
+// 	for (let tableName of tableNames) {
+// 		try {
+// 			await connection.execute(`DROP TABLE :tableName`,
+// 			[tableName],
+// 			{autoCommit: true});
+
+// 			console.log(`drop table ${tableName}`);
+// 		} catch(err) {
+// 			console.log("Table " + tableName + " might not exist, proceeding to create...");
+// 		}
+// 	}
+// }
 async function dropAllTables(connection) {
-	let tableNames = [
-		"IsRecommendedArticle",
-		"IsRecommendedBook",
-		"IsRecommendedVideo",
-		"MyArticle",
-		"MyBook",
-		"MyVideo",
-		"Outputs_3",
-		"Outputs_4",
-		"Question",
-		"Outputs_2",
-		"LoginUser",
-		"MBTI_Type",
-		"MyUser"
-	];
-	for (let tableName of tableNames) {
-		try {
-			await connection.execute(`DROP TABLE :tableName`,
-			[tableName],
-			{autoCommit: true});
-		} catch(err) {
-			console.log("Table " + tableName + " might not exist, proceeding to create...");
-		}
-	}
+    let tableNames = [
+        "IsRecommendedArticle",
+        "IsRecommendedBook",
+        "IsRecommendedVideo",
+        "MyArticle",
+        "MyBook",
+        "MyVideo",
+        "Outputs_3",
+        "Outputs_4",
+        "Question",
+        "Outputs_2",
+        "LoginUser",
+        "MBTI_Type",
+        "MyUser"
+    ];
+    for (let tableName of tableNames) {
+        try {
+            await connection.execute(`DROP TABLE ${tableName}`, [], {autoCommit: true});
+            console.log(`Dropped table ${tableName}`);
+        } catch (err) {
+            console.log("Table " + tableName + " might not exist, proceeding to create...");
+        }
+    }
 }
+
+
 
 async function createAllTables(connection) {
 	await createMyUser(connection);
@@ -338,29 +367,33 @@ async function insertMBTI_Types(connection) {
 	];
 	for (let i = 0; i < 16; i++) {
 		await connection.execute(`INSERT INTO MBTI_Type (mbtiName, mbtiDescription) VALUES (:mbtiName, :mbtiDescription)`,
-		[mbtiNames, mbtiDescriptions],
+		[mbtiNames[i], mbtiDescriptions[i]],
 		{ autoCommit: true }
 		);
 	}
 }
 
-async function insertUser(mbtiName, password, emailAddress, age = "null", country = "null", userGender = "null") {
+async function insertUser(mbtiName, password, emailAddress, age , country , userGender ) {
 	return await withOracleDB(async (connection) => {
+		
 		let username = getUsername();
 		const result1 = await connection.execute(
 			`INSERT INTO MyUser (username) VALUES (:username)`,
 			[username],
-			{ autoCommit: true });
+			{ autoCommit: true }
+		);
 
 		if (mbtiName !== undefined && password !== undefined && emailAddress !== undefined) {
+			
 			const result2 = await connection.execute(
 				`INSERT INTO LoginUser (mbtiName, username, password, emailAddress, age, country, userGender)
 				VALUES (:mbtiName, :username, :password, :emailAddress, :age, :country, :userGender)`,
 				[mbtiName, username, password, emailAddress, age, country, userGender],
 				{ autoCommit: true });
-			
+			console.log("insert success");
 			return result1.rowsAffected && result1.rowsAffected > 0 && result2.rowsAffected && result2.rowsAffected > 0;
 		} else {
+		
 			return result1.rowsAffected && result1.rowsAffected > 0;
 		}
 	}).catch(() => {
@@ -370,7 +403,9 @@ async function insertUser(mbtiName, password, emailAddress, age = "null", countr
 
 function getUsername() {
 	usernameGenerator += 1;
-	return toString(usernameGenerator);
+	return `user${usernameGenerator}`;
+	// orical , is the string is just number orical will auto convert to interver
+	//return toString(usernameGenerator);
 }
 
 function calculateMBTIScores(EIScore, SNScore, TFScore, JPScore) {

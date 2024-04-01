@@ -40,7 +40,7 @@ async function checkDbConnection() {
 
 // This function resets or initializes the demotable.
 async function resetDemotable() {
-    const response = await fetch("/initiate-demotable", {
+    const response = await fetch("/initiate-All-Tables", {
         method: 'POST'
     });
     const responseData = await response.json();
@@ -48,16 +48,17 @@ async function resetDemotable() {
     if (responseData.success) {
         const messageElement = document.getElementById('resetResultMsg');
         messageElement.textContent = "demotable initiated successfully!";
-        fetchTableData();
+        // fetchTableData();
     } else {
         alert("Error initiating table!");
     }
 }
 
 // Inserts new records into the demotable.
-async function insertDemotable(event) {
+async function register(event) {
     event.preventDefault();
 
+    const mbtiValue  = document.getElementById('insertMbti').value;
     const emailValue = document.getElementById('insertEmail').value;
     const passwordValue = document.getElementById('insertPassword').value;
     const ageValue = document.getElementById('insertAge').value;
@@ -66,13 +67,13 @@ async function insertDemotable(event) {
 
   
 
-
-    const response = await fetch('/insert-demotable', {
+    const response = await fetch('/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+            mbtiName:  mbtiValue,
             email: emailValue,
             password: passwordValue,
             age: ageValue,
@@ -87,11 +88,57 @@ async function insertDemotable(event) {
 
     if (responseData.success) {
         messageElement.textContent = "register successfully!";
-        fetchTableData();
+        // fetchTableData();
     } else {
         messageElement.textContent = "Error in registering!";
     }
 }
+
+
+
+//login 
+
+async function login(event) {
+    event.preventDefault();
+
+   
+    const emailValue = document.getElementById('insertEmail').value;
+    const passwordValue = document.getElementById('insertPassword').value;
+    
+
+
+    const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            mbtiName:  mbtiValue,
+            email: emailValue,
+            password: passwordValue,
+            age: ageValue,
+            country: countryValue,
+            gender: genderValue
+            
+        })
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('insertResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "register successfully!";
+        // fetchTableData();
+    } else {
+        messageElement.textContent = "Error in registering!";
+    }
+}
+
+
+
+
+
+
 
 // Updates names in the demotable.
 async function updateNameDemotable(event) {
@@ -116,7 +163,7 @@ async function updateNameDemotable(event) {
 
     if (responseData.success) {
         messageElement.textContent = "Name updated successfully!";
-        fetchTableData();
+        // fetchTableData();
     } else {
         messageElement.textContent = "Error updating name!";
     }
@@ -146,15 +193,15 @@ async function countDemotable() {
 // Add or remove event listeners based on the desired functionalities.
 window.onload = function() {
     checkDbConnection();
-    fetchTableData();
+    // fetchTableData();
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
-    document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
+    document.getElementById("insertDemotable").addEventListener("submit", register);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countDemotable").addEventListener("click", countDemotable);
 };
 
 // General function to refresh the displayed table data. 
 // You can invoke this after any table-modifying operation to keep consistency.
-function fetchTableData() {
-    fetchAndDisplayUsers();
-}
+// function fetchTableData() {
+//     fetchAndDisplayUsers();
+// }
