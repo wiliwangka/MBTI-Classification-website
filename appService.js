@@ -166,7 +166,7 @@ async function dropAllTables(connection) {
     for (let tableName of tableNames) {
         try {
             await connection.execute(`DROP TABLE ${tableName}`, [], {autoCommit: true});
-            console.log(`Dropped table ${tableName}`);
+            // console.log(`Dropped table ${tableName}`);
         } catch (err) {
             console.log("Table " + tableName + " might not exist, proceeding to create...");
         }
@@ -415,7 +415,7 @@ async function insertUser(mbtiName, password, emailAddress, age , country , user
 	return await withOracleDB(async (connection) => {
 		
 		let username = getUsername();
-		const result1 = await connection.execute(
+		const result1 = await connectio n.execute(
 			`INSERT INTO MyUser (username) VALUES (:username)`,
 			[username],
 			{ autoCommit: true }
@@ -442,7 +442,7 @@ async function insertUser(mbtiName, password, emailAddress, age , country , user
 function getUsername() {
 	usernameGenerator += 1;
 	return `user${usernameGenerator}`;
-	// orical , is the string is just number orical will auto convert to interver
+	// orical , is the string is just number orical will auto convert to interger
 	//return toString(usernameGenerator);
 }
 

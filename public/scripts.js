@@ -102,35 +102,33 @@ async function login(event) {
     event.preventDefault();
 
    
-    const emailValue = document.getElementById('insertEmail').value;
-    const passwordValue = document.getElementById('insertPassword').value;
+    const emailValue = document.getElementById('loginEmail').value;
+    const passwordValue = document.getElementById('loginPassword').value;
     
 
 
-    const response = await fetch('/register', {
+    const response = await fetch('/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            mbtiName:  mbtiValue,
+            
             email: emailValue,
             password: passwordValue,
-            age: ageValue,
-            country: countryValue,
-            gender: genderValue
+            
             
         })
     });
 
     const responseData = await response.json();
-    const messageElement = document.getElementById('insertResultMsg');
+    const messageElement = document.getElementById('loginResultMsg');
 
     if (responseData.success) {
-        messageElement.textContent = "register successfully!";
-        // fetchTableData();
+        messageElement.textContent = "login successfully!";
+       
     } else {
-        messageElement.textContent = "Error in registering!";
+        messageElement.textContent = "Error in login!";
     }
 }
 
@@ -196,8 +194,9 @@ window.onload = function() {
     // fetchTableData();
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("insertDemotable").addEventListener("submit", register);
-    document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
-    document.getElementById("countDemotable").addEventListener("click", countDemotable);
+    document.getElementById("loginForm").addEventListener("submit", login);
+    // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
+    // document.getElementById("countDemotable").addEventListener("click", countDemotable);
 };
 
 // General function to refresh the displayed table data. 
