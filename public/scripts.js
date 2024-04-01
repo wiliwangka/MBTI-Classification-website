@@ -138,7 +138,7 @@ async function login(event) {
 
 
 
-// Updates names in the demotable.
+// Updates names in the demotable. //todo
 async function updateNameDemotable(event) {
     event.preventDefault();
 
@@ -166,6 +166,72 @@ async function updateNameDemotable(event) {
         messageElement.textContent = "Error updating name!";
     }
 }
+
+
+
+//mbti test 
+
+async function submitPersonalityTest(event) {
+    event.preventDefault();  // Prevent the form from submitting in the traditional way
+
+    // Get the binary values from the form
+    const answers = {
+        E: document.querySelector('input[name="question1"]:checked')?.value === 'E' ? 1 : 0,
+        S: document.querySelector('input[name="question2"]:checked')?.value === 'S' ? 1 : 0,
+        T: document.querySelector('input[name="question3"]:checked')?.value === 'T' ? 1 : 0,
+        J: document.querySelector('input[name="question4"]:checked')?.value === 'J' ? 1 : 0,
+    };
+
+    const emailValue = document.getElementById('loginEmail') ? document.getElementById('loginEmail').value : null;
+
+    const testData = {
+        emailAddress: emailValue, // Use null if the user isn't logged in
+        startDateTime: new Date().toISOString(),
+        EIScore: answers.E,
+        SNScore: answers.S,
+        TFScore: answers.T,
+        JPScore: answers.J
+    };
+
+    const messageElement = document.getElementById('testResultMsg');
+
+    try {
+        const response = await fetch('/submit-test-questions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(testData)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+
+        if (responseData.success) {
+            messageElement.textContent = "Test submitted successfully!";
+            document.getElementById('mbtiType').textContent = responseData.mbtiType;
+        } else {
+            throw new Error('Server response error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        messageElement.textContent = "Error submitting test!";
+    }
+}
+
+// Ensure this function is called after the document has fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("personalityTestForm").addEventListener("submit", submitPersonalityTest);
+});
+
+
+
+
+
+
 
 // Counts rows in the demotable.
 // Modify the function accordingly if using different aggregate functions or procedures.
@@ -195,6 +261,7 @@ window.onload = function() {
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("insertDemotable").addEventListener("submit", register);
     document.getElementById("loginForm").addEventListener("submit", login);
+    document.getElementById("personalityTestForm").addEventListener("submit", submitPersonalityTest);
     // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     // document.getElementById("countDemotable").addEventListener("click", countDemotable);
 };

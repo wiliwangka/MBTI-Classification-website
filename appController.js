@@ -55,7 +55,7 @@ router.post("/initiate-All-Tables", async (req, res) => {
 });
 
 //API of submmiting test questions
-router.post("submit-test-questions", async (req, res) => {
+router.post("/submit-test-questions", async (req, res) => {
     const {emailAddress, startDateTime, EIScore, SNScore, TFScore, JPScore} = req.body;
     //const testAnswer = appService.calculateMBTIScores(EIScore, SNScore, TFScore, JPScore);
     const insertResult = await appService.submitQuestions(emailAddress, startDateTime, EIScore, SNScore, TFScore, JPScore);
