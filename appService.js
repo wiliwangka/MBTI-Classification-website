@@ -415,7 +415,7 @@ async function insertUser(mbtiName, password, emailAddress, age , country , user
 	return await withOracleDB(async (connection) => {
 		
 		let username = getUsername();
-		const result1 = await connectio n.execute(
+		const result1 = await connection.execute(
 			`INSERT INTO MyUser (username) VALUES (:username)`,
 			[username],
 			{ autoCommit: true }
