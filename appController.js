@@ -99,15 +99,25 @@ router.post("/insert-demotable", async (req, res) => {
     }
 });
 
-router.post("/update-name-demotable", async (req, res) => {
-    const { oldName, newName } = req.body;
-    const updateResult = await appService.updateNameDemotable(oldName, newName);
-    if (updateResult) {
-        res.json({ success: true });
-    } else {
-        res.status(500).json({ success: false });
+router.post("/update-account-info", async (req, res) => {
+    // Extract the updated fields from the request body
+    const { mbti, email, age, country } = req.body;
+
+    // Assuming you have a method in appService to handle the account update
+    try {
+        const updateResult = await appService.updateAccountInfo(email, mbti, age, country);
+        if (updateResult) {
+            res.json({ success: true });
+        } else {
+            // If updateResult is false or null, handle it as an error
+            throw new Error('Failed to update account information');
+        }
+    } catch (error) {
+        console.error('Update account info error:', error);
+        res.status(500).json({ success: false, message: error.message });
     }
 });
+
 
 router.get('/count-demotable', async (req, res) => {
     const tableCount = await appService.countDemotable();
