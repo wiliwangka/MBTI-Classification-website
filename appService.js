@@ -108,8 +108,21 @@ async function fetchDemotableFromDb() {
 }
 
 async function initialize() {
-	await initialization.initiateAllTables();
+	usernameGenerator = 0;
+	return await withOracleDB((connection) => {
+		const result = initialization.initiateAllTables(connection);
+		return result;
+	}).catch((err) => {
+		if (typeof err === "string") {
+			throw Error(err);
+		} else if (err instanceof Error) {
+			throw err;
+		} else {
+			console.log(err);
+		}
+	});
 }
+
 
 async function insertUser(mbtiName, password, emailAddress, age, country, userGender ) {
 	return await withOracleDB(async (connection) => {
@@ -486,7 +499,6 @@ async function getLoginUserTable() {
 }
 
 module.exports = {
-	withOracleDB,
 	testOracleConnection,
 	fetchDemotableFromDb,
 	initialize,

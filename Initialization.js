@@ -1,20 +1,22 @@
-const oracledb = require('oracledb');
-const loadEnvFile = require('./utils/envUtil');
-
-const envVariables = loadEnvFile('./.env');
 const appServiceMain = require('./appService');
 
-async function initiateAllTables() {
-	return await appServiceMain.withOracleDB(async (connection) => {
-		await dropAllTables(connection);
-		await createAllTables(connection);
-		await insertMBTI_Types(connection);
-		await insertOutputs_4(connection); //populate Outputs_4 table
-		usernameGenerator = 0;
+async function initiateAllTables(connection) {
+	try {
+		const result1 = await dropAllTables(connection);
+		const result2 = await createAllTables(connection);
+		const result3 = await insertMBTI_Types(connection);
+		const result4 = await insertOutputs_4(connection); //populate Outputs_4 table
 		return true;
-	}).catch(() => {
-		return false;
-	});
+	} catch(err) {
+		if (typeof err === "string") {
+			throw Error(err);
+		} else if (err instanceof Error) {
+			throw err;
+		} else {
+			console.log(err);
+		}
+	}
+	
 }
 
 // async function dropAllTables(connection) {
