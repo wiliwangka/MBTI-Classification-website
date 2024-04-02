@@ -57,7 +57,7 @@ router.post("/initiate-All-Tables", async (req, res) => {
 //API of submmiting test questions
 router.post("/submit-test-questions", async (req, res) => {
     const {emailAddress, startDateTime, EIScore, SNScore, TFScore, JPScore} = req.body;
-    //const testAnswer = appService.calculateMBTIScores(EIScore, SNScore, TFScore, JPScore);
+    // const testAnswer = appService.calculateMBTIScores(EIScore, SNScore, TFScore, JPScore);
     const insertResult = await appService.submitQuestions(emailAddress, startDateTime, EIScore, SNScore, TFScore, JPScore);
     if (insertResult) {
         res.json({success: true, mbtiType: insertResult});
@@ -74,6 +74,17 @@ router.get('/check-db-connection', async (req, res) => {
         res.send('unable to connect');
     }
 });
+
+// router.get('/get-mbti-type', async (req, res) => {
+//     const mbti = await appService.testOracleConnection();
+//     if (isConnect) {
+//         res.send('connected');
+//     } else {
+//         res.send('unable to connect');
+//     }
+// });
+
+
 
 router.get('/demotable', async (req, res) => {
     const tableContent = await appService.fetchDemotableFromDb();
@@ -119,7 +130,7 @@ router.post("/update-account-info", async (req, res) => {
 });
 
 
-router.get('/count-demotable', async (req, res) => {
+router.get('/count-mbtitable', async (req, res) => {
     const tableCount = await appService.countDemotable();
     if (tableCount >= 0) {
         res.json({ 

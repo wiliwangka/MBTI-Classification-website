@@ -207,9 +207,8 @@ async function submitPersonalityTest(event) {
             body: JSON.stringify(testData)
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+
+      
 
         const responseData = await response.json();
 
@@ -222,15 +221,10 @@ async function submitPersonalityTest(event) {
     } catch (error) {
         console.error('Error:', error);
         messageElement.textContent = "Error submitting test!";
-    }
+    } 
 }
 
-// // Ensure this function is called after the document has fully loaded
-// document.addEventListener('DOMContentLoaded', () => {
-//     document.getElementById("personalityTestForm").addEventListener("submit", submitPersonalityTest);
-// }
 
-// );
 
 
 
@@ -240,8 +234,8 @@ async function submitPersonalityTest(event) {
 
 // Counts rows in the demotable.
 // Modify the function accordingly if using different aggregate functions or procedures.
-async function countDemotable() {
-    const response = await fetch("/count-demotable", {
+async function countMBTItype() {
+    const response = await fetch("/count-mbtitable", {
         method: 'GET'
     });
 
@@ -252,7 +246,9 @@ async function countDemotable() {
         const tupleCount = responseData.count;
         messageElement.textContent = `The number of tuples in demotable: ${tupleCount}`;
     } else {
-        alert("Error in count demotable!");
+        messageElement.textContent = `Error in count demotable!`;
+     
+        
     }
 }
 
@@ -268,7 +264,7 @@ window.onload = function() {
     document.getElementById("loginForm").addEventListener("submit", login);
     document.getElementById("personalityTestForm").addEventListener("submit", submitPersonalityTest);
     document.getElementById("updataUserTable").addEventListener("submit", updateAccountInfo);
-    // document.getElementById("countDemotable").addEventListener("click", countDemotable);
+    document.getElementById("countmbtitable").addEventListener("click", countMBTItype);
 };
 
 // General function to refresh the displayed table data. 
