@@ -197,6 +197,7 @@ async function submitPersonalityTest(event) {
     };
 
     const messageElement = document.getElementById('testResultMsg');
+    const mbtiElement = document.getElementById('mbtiTypeDisplay');
 
     try {
         const response = await fetch('/submit-test-questions', {
@@ -208,20 +209,51 @@ async function submitPersonalityTest(event) {
         });
 
 
-      
-
         const responseData = await response.json();
 
         if (responseData.success) {
             messageElement.textContent = "Test submitted successfully!";
-            document.getElementById('mbtiType').textContent = responseData.mbtiType;
+            mbtiElement.textContent = responseData.mbtiType;
+            fetchAndUpdateRecommendations();
         } else {
             throw new Error('Server response error');
         }
     } catch (error) {
         console.error('Error:', error);
         messageElement.textContent = "Error submitting test!";
-    } 
+    }   
+}
+
+function fetchAndUpdateRecommendations() {
+    fetch('/path/to/recommendations/api')
+        .then(response => response.json())
+        .then(data => {
+            updateTable('books', data.books);
+            updateTable('videos', data.videos);
+            updateTable('articles', data.articles);
+        })
+        .catch(error => console.error('Failed to fetch recommendations:', error));
+}
+
+
+
+function updateTable(type, items) {
+    const table = document.querySelector(`.${type}-section table`);
+    let rows = '';
+
+    items.forEach(item => {
+        rows += `<tr>
+                    <td>${item.title}</td>
+                    <td>${item.author || item.creator || item.source}</td>
+                    <td>${item.description || `<a href="${item.link}">${item.linkText || 'View'}</a>`}</td>
+                 </tr>`;
+    });
+
+    table.innerHTML = `<tr>
+                          <th>Title</th>
+                          <th>${type === 'books' ? 'Author' : type === 'videos' ? 'Creator' : 'Source'}</th>
+                          <th>${type === 'books' ? 'Description' : 'Link'}</th>
+                       </tr>` + rows;
 }
 
 
