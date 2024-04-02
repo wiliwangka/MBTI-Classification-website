@@ -2,6 +2,7 @@
 
 const oracledb = require('oracledb');
 const loadEnvFile = require('./utils/envUtil');
+const initialization = require('./Initialization')
 
 const envVariables = loadEnvFile('./.env');
 
@@ -106,6 +107,10 @@ async function fetchDemotableFromDb() {
 	});
 }
 
+async function initialize() {
+	initialization.initiateAllTables();
+}
+/*
 async function initiateAllTables() {
 	return await withOracleDB(async (connection) => {
 		await dropAllTables(connection);
@@ -376,22 +381,22 @@ async function insertMBTI_Types(connection) {
 
 async function insertOutputs_4(connection) {
 	const scores = [
-		{mbtiName: 'INFP', EIScore: 0, SNScore: 0,TFScore: 0, JPScore: 0},
-		{mbtiName: 'INFJ', EIScore: 0, SNScore: 0,TFScore: 0, JPScore: 100},
-		{mbtiName: 'INTP', EIScore: 0, SNScore: 0,TFScore: 100, JPScore: 0},
-		{mbtiName: 'INTJ', EIScore: 0, SNScore: 0,TFScore: 100, JPScore: 100},
-		{mbtiName: 'ISFP', EIScore: 0, SNScore: 100,TFScore: 0, JPScore: 0},
-		{mbtiName: 'ISFJ', EIScore: 0, SNScore: 100,TFScore: 0, JPScore: 100},
-		{mbtiName: 'ISTP', EIScore: 0, SNScore: 100,TFScore: 100, JPScore: 0},
-		{mbtiName: 'ISTJ', EIScore: 0, SNScore: 100,TFScore: 100, JPScore: 100},
-		{mbtiName: 'ENFP', EIScore: 100, SNScore: 0,TFScore: 0, JPScore: 0},
-		{mbtiName: 'ENFJ', EIScore: 100, SNScore: 0,TFScore: 0, JPScore: 100},
-		{mbtiName: 'ENTP', EIScore: 100, SNScore: 0,TFScore: 100, JPScore: 0},
-		{mbtiName: 'ENTJ', EIScore: 100, SNScore: 0,TFScore: 100, JPScore: 100},
-		{mbtiName: 'ESFP', EIScore: 100, SNScore: 100,TFScore: 0, JPScore: 0},
-		{mbtiName: 'ESFJ', EIScore: 100, SNScore: 100,TFScore: 0, JPScore: 100},
-		{mbtiName: 'ESTP', EIScore: 100, SNScore: 100,TFScore: 100, JPScore: 0},
-		{mbtiName: 'ESTJ', EIScore: 100, SNScore: 100,TFScore: 100, JPScore: 100},
+		{mbtiName: 'INFP', EIScore: 0, SNScore: 0, TFScore: 0, JPScore: 0},
+		{mbtiName: 'INFJ', EIScore: 0, SNScore: 0, TFScore: 0, JPScore: 100},
+		{mbtiName: 'INTP', EIScore: 0, SNScore: 0, TFScore: 100, JPScore: 0},
+		{mbtiName: 'INTJ', EIScore: 0, SNScore: 0, TFScore: 100, JPScore: 100},
+		{mbtiName: 'ISFP', EIScore: 0, SNScore: 100, TFScore: 0, JPScore: 0},
+		{mbtiName: 'ISFJ', EIScore: 0, SNScore: 100, TFScore: 0, JPScore: 100},
+		{mbtiName: 'ISTP', EIScore: 0, SNScore: 100, TFScore: 100, JPScore: 0},
+		{mbtiName: 'ISTJ', EIScore: 0, SNScore: 100, TFScore: 100, JPScore: 100},
+		{mbtiName: 'ENFP', EIScore: 100, SNScore: 0, TFScore: 0, JPScore: 0},
+		{mbtiName: 'ENFJ', EIScore: 100, SNScore: 0, TFScore: 0, JPScore: 100},
+		{mbtiName: 'ENTP', EIScore: 100, SNScore: 0, TFScore: 100, JPScore: 0},
+		{mbtiName: 'ENTJ', EIScore: 100, SNScore: 0, TFScore: 100, JPScore: 100},
+		{mbtiName: 'ESFP', EIScore: 100, SNScore: 100, TFScore: 0, JPScore: 0},
+		{mbtiName: 'ESFJ', EIScore: 100, SNScore: 100, TFScore: 0, JPScore: 100},
+		{mbtiName: 'ESTP', EIScore: 100, SNScore: 100, TFScore: 100, JPScore: 0},
+		{mbtiName: 'ESTJ', EIScore: 100, SNScore: 100, TFScore: 100, JPScore: 100},
 	];
 
 	const insertSql = `
@@ -410,6 +415,7 @@ async function insertOutputs_4(connection) {
 
 	}
 }
+*/
 
 async function insertUser(mbtiName, password, emailAddress, age , country , userGender ) {
 	return await withOracleDB(async (connection) => {
@@ -717,7 +723,7 @@ async function countDemotable() {
 module.exports = {
 	testOracleConnection,
 	fetchDemotableFromDb,
-	initiateAllTables,
+	initialize,
 	insertUser,
 	updateNameDemotable,
 	countDemotable,

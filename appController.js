@@ -46,7 +46,7 @@ router.post('/register', async (req, res) => {
 
 //API of initiating all the tables
 router.post("/initiate-All-Tables", async (req, res) => {
-    const initiateResult = await appService.initiateAllTables();
+    const initiateResult = await appService.initialize();
     if (initiateResult) {
         res.json({ success: true });
     } else {
