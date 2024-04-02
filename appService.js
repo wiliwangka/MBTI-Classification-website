@@ -697,18 +697,19 @@ async function updateLoginUserMbti(emailAddress, mbtiType) {
 	});
 }
 
-async function updateNameDemotable(oldName, newName) {
-	return await withOracleDB(async (connection) => {
-		const result = await connection.execute(
-			`UPDATE DEMOTABLE SET name=:newName where name=:oldName`,
-			[newName, oldName],
-			{ autoCommit: true }
-		);
+async function updateAccountInfo(email, mbti, age, country) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `UPDATE AccountTable SET mbti = :mbti, age = :age, country = :country WHERE email = :email`,
+            { mbti, age, country, email },
+            { autoCommit: true }
+        );
 
-		return result.rowsAffected && result.rowsAffected > 0;
-	}).catch(() => {
-		return false;
-	});
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch((error) => {
+        console.error('Error updating account info:', error);
+        return false;
+    });
 }
 
 async function countDemotable() {
@@ -725,7 +726,7 @@ module.exports = {
 	fetchDemotableFromDb,
 	initialize,
 	insertUser,
-	updateNameDemotable,
+	updateAccountInfo,
 	countDemotable,
     logIn,
 	calculateMBTIScores,

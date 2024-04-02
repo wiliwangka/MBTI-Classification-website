@@ -47,10 +47,10 @@ async function resetDemotable() {
 
     if (responseData.success) {
         const messageElement = document.getElementById('resetResultMsg');
-        messageElement.textContent = "demotable initiated successfully!";
+        messageElement.textContent = "reset successfully!";
         // fetchTableData();
     } else {
-        alert("Error initiating table!");
+        alert("Error resetting!");
     }
 }
 
@@ -136,23 +136,27 @@ async function login(event) {
 
 
 
-
-
-// Updates names in the demotable. //todo
-async function updateNameDemotable(event) {
+// Updates account information
+async function updateAccountInfo(event) {
     event.preventDefault();
 
-    const oldNameValue = document.getElementById('updateOldName').value;
-    const newNameValue = document.getElementById('updateNewName').value;
+    // Get the form data
+    const mbtiValue = document.getElementById('updateMbti').value;
+    const emailValue = document.getElementById('updateEmail').value;
+    const ageValue = document.getElementById('updateAge').value;
+    const countryValue = document.getElementById('updateCountry').value;
 
-    const response = await fetch('/update-name-demotable', {
+    // Send the data to the server
+    const response = await fetch('/update-account-info', {  // Adjust the endpoint as necessary
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            oldName: oldNameValue,
-            newName: newNameValue
+            mbti: mbtiValue,
+            email: emailValue,
+            age: ageValue,
+            country: countryValue
         })
     });
 
@@ -160,10 +164,9 @@ async function updateNameDemotable(event) {
     const messageElement = document.getElementById('updateNameResultMsg');
 
     if (responseData.success) {
-        messageElement.textContent = "Name updated successfully!";
-        // fetchTableData();
+        messageElement.textContent = "Account updated successfully!";
     } else {
-        messageElement.textContent = "Error updating name!";
+        messageElement.textContent = "Error updating account!";
     }
 }
 
@@ -222,10 +225,12 @@ async function submitPersonalityTest(event) {
     }
 }
 
-// Ensure this function is called after the document has fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById("personalityTestForm").addEventListener("submit", submitPersonalityTest);
-});
+// // Ensure this function is called after the document has fully loaded
+// document.addEventListener('DOMContentLoaded', () => {
+//     document.getElementById("personalityTestForm").addEventListener("submit", submitPersonalityTest);
+// }
+
+// );
 
 
 
@@ -262,7 +267,7 @@ window.onload = function() {
     document.getElementById("insertDemotable").addEventListener("submit", register);
     document.getElementById("loginForm").addEventListener("submit", login);
     document.getElementById("personalityTestForm").addEventListener("submit", submitPersonalityTest);
-    // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
+    document.getElementById("updataUserTable").addEventListener("submit", updateAccountInfo);
     // document.getElementById("countDemotable").addEventListener("click", countDemotable);
 };
 
