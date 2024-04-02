@@ -1,12 +1,11 @@
-/*
 const oracledb = require('oracledb');
 const loadEnvFile = require('./utils/envUtil');
 
 const envVariables = loadEnvFile('./.env');
-*/
+const appServiceMain = require('./appService');
 
 async function initiateAllTables() {
-	return await withOracleDB(async (connection) => {
+	return await appServiceMain.withOracleDB(async (connection) => {
 		await dropAllTables(connection);
 		await createAllTables(connection);
 		await insertMBTI_Types(connection);
