@@ -54,10 +54,11 @@
 
     <h2> Register </h2>
     <form id="insertDemotable">
-        MBTI: <input type="text" id="insertMbti" placeholder="Enter mbti" > <br><br>
-        Email: <input type="text" id="insertEmail" placeholder="Enter Email" > <br><br>
-        Password: <input type="text" id="insertPassword" placeholder="Enter Password" maxlength="20" required> <br><br>
-        Age: <input type="number" id="insertAge" placeholder="Enter Age" required> <br><br>
+      
+        Email(required): <input type="text" id="insertEmail" placeholder="Enter Email"  required > <br><br>
+        Password(required): <input type="text" id="insertPassword" placeholder="Enter Password" maxlength="20" required> <br><br>
+        MBTI(Must be 4 word all caps): <input type="text" id="insertMbti" placeholder="Enter mbti" > <br><br>
+        Age: <input type="number" id="insertAge" placeholder="Enter Age" > <br><br>
         Country: <input type="text" id="insertCountry" placeholder="Enter Country" > <br><br>
         Gender: <input type="text" id="insertGender" placeholder="Enter Gender" > <br><br>
        
@@ -84,10 +85,10 @@
 <h2>Update your account info</h2>
 <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 <form id="updataUserTable">
-    mbti: <input type="text" id="updateMbti" placeholder="Enter MBTI" required> <br><br>
-    email: <input type="text" id="updateEmail" placeholder="Enter email" required> <br><br>
+    mbti: <input type="text" id="updateMbti" placeholder="Enter MBTI" > <br><br>
+    email: <input type="text" id="updateEmail" placeholder="Enter email" > <br><br>
     New age: <input type="number" id="updateAge" placeholder="Enter New age" maxlength="20"> <br><br>
-    New country : <input type="text" id="updateCountry" placeholder="country" required> <br><br>
+    New country : <input type="text" id="updateCountry" placeholder="country" > <br><br>
 
 
     <button type="submit"> update </button> <br>
