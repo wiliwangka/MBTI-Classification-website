@@ -83,14 +83,13 @@ async function testOracleConnection() {
 
 async function logIn(emailAddress, password) {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM LoginUser WHERE emailAddress=:emailAddress AND password=:password', {
-            emailAddress: emailAddress,
-            password: password
-        });
+        const result = await connection.execute(`SELECT * FROM LoginUser WHERE emailAddress = :emailAddress AND password = :password`,
+		[emailAddress, password],
+		{ autoCommit: true });
         if (result.rows.length > 0) {
-            return result.rows[0];
+            return [true, result.rows[0]];
         } else {
-            return null;
+            return [false, null];
         }
         
     }).catch((error) => { 

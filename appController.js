@@ -11,17 +11,15 @@ const router = express.Router();
 
 // API of LogIn feature for LogInUsers
 router.post('/logIn', async (req,res) => {
-    console.log("1");
-    const {emailAddress, password} =  req.body;
-    console.log("2");
+    const emailAddress = req.body.email;
+    const password = req.body.password;
     try {
-        const exsisting  = await appService.logIn(emailAddress, password);
-        console.log("3");
-        if (exsisting) {
-            console.log("4");
-            res.json({ success: true, message: 'Log in successfully', user: exsisting});
+        const existing  = await appService.logIn(emailAddress, password);
+        if (existing[0]) {
+            console.log("Successful login");
+            res.json({ success: true, message: 'Log in successfully', user: existing[1]});
         } else {
-            console.log("5");
+            console.log("Failed Login");
             res.status(404).json({ success: false, message: 'Account is not existed or password is wrong' });
         }
     } catch {
