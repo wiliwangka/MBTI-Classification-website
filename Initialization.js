@@ -132,7 +132,6 @@ async function createOutputs_2(connection) {
 	return await connection.execute(
 		`CREATE TABLE Outputs_2 (
 			TID INT NOT NULL,
-			RID INT NOT NULL,
 			startDateTime TIMESTAMP NOT NULL,
 			username VARCHAR(63) NOT NULL,
 			PRIMARY KEY (TID),
@@ -146,7 +145,6 @@ async function createQuestion(connection) {
 		`CREATE TABLE Question (
 			questionNumber INT NOT NULL,
 			TID INT NOT NULL,
-			questionDescription VARCHAR(1000) NOT NULL,
 			questionAnswer INT,
 			questionScoreType CHAR(2) NOT NULL,
 			PRIMARY KEY (questionNumber, TID),
