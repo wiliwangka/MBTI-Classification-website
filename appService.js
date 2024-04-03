@@ -276,7 +276,7 @@ async function updateOutputs_2(emailAddress, startDateTime, tid){
 		WHERE lu.emailAddress = :emailAddress`;
 		const result = await connection.execute(sql, {
 			TID: tid, 
-			startDateTime: "2023-03-25 14:30:15",
+			startDateTime: startDateTime,
 			emailAddress: emailAddress
 		  }, {
 			autoCommit: true 
