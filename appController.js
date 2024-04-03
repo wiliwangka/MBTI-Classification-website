@@ -22,8 +22,7 @@ router.post('/logIn', async (req,res) => {
             console.log("Failed Login");
             res.status(404).json({ success: false, message: 'Account is not existed or password is wrong' });
         }
-    } catch {
-        console.log("7");
+    } catch (error) {
         console.error('error existed during logIn:', error);
         res.status(500).json({ success: false, message: 'An error occurred during login' });
     }

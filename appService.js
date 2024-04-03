@@ -343,6 +343,7 @@ async function getRecommendedVideos(mbtiType) {
 		`,
 		[mbtiType],
 		{ autoCommit: true });
+		return result;
 	}).catch(() => {
 		// What should happen if there is an error?
 	});
@@ -371,6 +372,7 @@ async function getRecommendedBooks(mbtiType) {
 		`,
 		[mbtiType],
 		{ autoCommit: true });
+		return result;
 	}).catch(() => {
 		// What should happen if there is an error?
 	});
@@ -385,6 +387,7 @@ async function countRecommendedBooks(mbtiType) {
 		`,
 		[mbtiType],
 		{ autoCommit: true });
+		return result;
 	}).catch(() => {
 		// What should happen if there is an error?
 	});
@@ -399,6 +402,7 @@ async function getRecommendedArticles(mbtiType) {
 		`,
 		[mbtiType],
 		{ autoCommit: true });
+		return result;
 	}).catch(() => {
 		// What should happen if there is an error?
 	});
