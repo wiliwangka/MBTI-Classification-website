@@ -48,29 +48,29 @@ async function initiateAllTables(connection) {
 // 	}
 // }
 async function dropAllTables(connection) {
-    let tableNames = [
-        "IsRecommendedArticle",
-        "IsRecommendedBook",
-        "IsRecommendedVideo",
-        "MyArticle",
-        "MyBook",
-        "MyVideo",
-        "Outputs_3",
-        "Outputs_4",
-        "Question",
-        "Outputs_2",
-        "LoginUser",
-        "MBTI_Type",
-        "MyUser"
-    ];
-    for (let tableName of tableNames) {
-        try {
-            await connection.execute(`DROP TABLE ${tableName}`, [], {autoCommit: true});
-            // console.log(`Dropped table ${tableName}`);
-        } catch (err) {
-            console.log("Table " + tableName + " might not exist, proceeding to create...");
-        }
-    }
+	let tableNames = [
+		"IsRecommendedArticle",
+		"IsRecommendedBook",
+		"IsRecommendedVideo",
+		"MyArticle",
+		"MyBook",
+		"MyVideo",
+		"Outputs_3",
+		"Outputs_4",
+		"Question",
+		"Outputs_2",
+		"LoginUser",
+		"MBTI_Type",
+		"MyUser"
+	];
+	for (let tableName of tableNames) {
+		try {
+			await connection.execute(`DROP TABLE ${tableName}`, [], {autoCommit: true});
+			// console.log(`Dropped table ${tableName}`);
+		} catch (err) {
+			console.log("Table " + tableName + " might not exist, proceeding to create...");
+		}
+	}
 }
 
 
@@ -293,9 +293,9 @@ async function insertOutputs_4(connection) {
 	];
 
 	const insertSql = `
-            INSERT INTO Outputs_4 (mbtiName, EIScore, SNScore, TFScore, JPScore)
-            VALUES (:mbtiName, :EIScore, :SNScore, :TFScore, :JPScore)
-        `;
+			INSERT INTO Outputs_4 (mbtiName, EIScore, SNScore, TFScore, JPScore)
+			VALUES (:mbtiName, :EIScore, :SNScore, :TFScore, :JPScore)
+		`;
 
 	for (const score of scores) {
 		await connection.execute(insertSql, {
@@ -310,5 +310,5 @@ async function insertOutputs_4(connection) {
 }
 
 module.exports = {
-    initiateAllTables
+	initiateAllTables
 };

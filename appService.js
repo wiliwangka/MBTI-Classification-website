@@ -6,7 +6,7 @@ const initialization = require('./Initialization')
 
 const envVariables = loadEnvFile('./.env');
 
-var usernameGenerator = 0;
+var usernameGenerator = 1;
 
 // Database configuration setup. Ensure your .env file has the required database credentials.
 const dbConfig = {
@@ -81,22 +81,6 @@ async function testOracleConnection() {
 	});
 }
 
-async function logIn(emailAddress, password) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(`SELECT * FROM LoginUser WHERE emailAddress = :emailAddress AND password = :password`,
-		[emailAddress, password],
-		{ autoCommit: true });
-        if (result.rows.length > 0) {
-            return [true, result.rows[0]];
-        } else {
-            return [false, null];
-        }
-        
-    }).catch((error) => { 
-        throw error;
-    });
-}
-
 async function fetchDemotableFromDb() {
 	return await withOracleDB(async (connection) => {
 		const result = await connection.execute('SELECT * FROM DEMOTABLE');
@@ -107,7 +91,7 @@ async function fetchDemotableFromDb() {
 }
 
 async function initialize() {
-	usernameGenerator = 0;
+	usernameGenerator = 1;
 	return await withOracleDB((connection) => {
 		const result = initialization.initiateAllTables(connection);
 		return result;
@@ -126,12 +110,14 @@ async function initialize() {
 async function insertLoginUser(emailAddress, password, mbtiName = null, age = null, country = null, userGender = null) {
 	return await withOracleDB(async (connection) => {
 		
-		let username = getUsername();
+		let username = await makeGuestUser();
+		/*
 		const result1 = await connection.execute(
 			`INSERT INTO MyUser (username) VALUES (:username)`,
 			[username],
 			{ autoCommit: true }
 		);
+		*/
 
 		//let foreignUsername = "(SELECT username FROM MyUser WHERE username = :username)";
 		const result2 = await connection.execute(
@@ -139,7 +125,6 @@ async function insertLoginUser(emailAddress, password, mbtiName = null, age = nu
 			VALUES (:username, :emailAddress, :password, :mbtiName, :age, :country, :userGender)`,
 			[username, emailAddress, password, mbtiName, age, country, userGender],
 			{ autoCommit: true });
-		console.log("insert success");
 		/*
 		try {
 			const result2 = await connection.execute(
@@ -160,16 +145,46 @@ async function insertLoginUser(emailAddress, password, mbtiName = null, age = nu
 			}
 		}
 		*/
-		return result1.rowsAffected && result1.rowsAffected > 0 && result2.rowsAffected && result2.rowsAffected > 0;
+		//return result1.rowsAffected && result1.rowsAffected > 0 && result2.rowsAffected && result2.rowsAffected > 0;
+		return result2.rowsAffected && result2.rowsAffected > 0;
 	}).catch((err) => {
 		console.log(err);
 		return false;
 	});
 }
 
-function getUsername() {
-	usernameGenerator += 1;
-	return `user${usernameGenerator}`;
+async function logIn(emailAddress, password) {
+	return await withOracleDB(async (connection) => {
+		const result = await connection.execute(`SELECT * FROM LoginUser WHERE emailAddress = :emailAddress AND password = :password`,
+		[emailAddress, password],
+		{ autoCommit: true });
+		if (result.rows.length > 0) {
+			return [true, result.rows[0]];
+		} else {
+			return [false, null];
+		}
+	}).catch((error) => { 
+		throw error;
+	});
+}
+
+async function makeGuestUser() {
+	return await withOracleDB(async (connection) => {
+		let takenUsernames = await connection.execute(`SELECT * FROM MyUser`);
+		let guestUsername = `user${usernameGenerator}`;
+		while (takenUsernames.rows[0].includes(guestUsername)) {
+			usernameGenerator += 1;
+			guestUsername = `user${usernameGenerator}`;
+			console.log(guestUsername);
+		}
+		let result = await connection.execute(
+			`INSERT INTO MyUser (username) VALUES (:guestUsername)`,
+			[guestUsername],
+			{ autoCommit: true });
+		return guestUsername;
+	}).catch((error) => {
+		throw error;
+	});
 	// oracle, if the string is just number oracle will auto convert it to interger
 	// return toString(usernameGenerator);
 }
@@ -218,7 +233,7 @@ async function submitQuestions(emailAddress, startDateTime, EIScore, SNScore, TF
 		}
 	} else {
 		// the user is guestUser
-		let username = getUsername();
+		let username = await makeGuestUser();
 		const result1 = await connection.execute(
 			`INSERT INTO MyUser (username) VALUES (:username)`,
 			[username],
@@ -289,27 +304,27 @@ async function updateOutputs_2(emailAddress, startDateTime, tid){
 
 async function insertQuestion(tid, EIScore, SNScore, TFScore, JPScore) {
 	return await withOracleDB(async (connection) => {
-        const insertSql = `
-            INSERT INTO Question (questionNumber, TID, questionScoreType, questionAnswer)
-            VALUES (:questionNumber, :tid, :questionScoreType, :questionAnswer)
-        `;
+		const insertSql = `
+			INSERT INTO Question (questionNumber, TID, questionScoreType, questionAnswer)
+			VALUES (:questionNumber, :tid, :questionScoreType, :questionAnswer)
+		`;
 
-        const scores = [
-            {questionNumber: 1, questionScoreType: 'EI', questionAnswer: EIScore},
-            {questionNumber: 2, questionScoreType: 'SN', questionAnswer: SNScore},
-            {questionNumber: 3, questionScoreType: 'TF', questionAnswer: TFScore},
-            {questionNumber: 4, questionScoreType: 'JP', questionAnswer: JPScore}
-        ];
+		const scores = [
+			{questionNumber: 1, questionScoreType: 'EI', questionAnswer: EIScore},
+			{questionNumber: 2, questionScoreType: 'SN', questionAnswer: SNScore},
+			{questionNumber: 3, questionScoreType: 'TF', questionAnswer: TFScore},
+			{questionNumber: 4, questionScoreType: 'JP', questionAnswer: JPScore}
+		];
 
-        for (const score of scores) {
-            await connection.execute(insertSql, {
-                questionNumber: score.questionNumber,
-                tid: tid,
-                questionScoreType: score.questionScoreType,
-                questionAnswer: score.questionAnswer
-            }, { autoCommit: true });
+		for (const score of scores) {
+			await connection.execute(insertSql, {
+				questionNumber: score.questionNumber,
+				tid: tid,
+				questionScoreType: score.questionScoreType,
+				questionAnswer: score.questionAnswer
+			}, { autoCommit: true });
 
-        }
+		}
 		return true;
 
 	}).catch(() => {
@@ -481,19 +496,19 @@ async function updateLoginUserMbti(emailAddress, mbtiType) {
 // FOREIGN KEY (username) REFERENCES MyUser(username) ON DELETE CASCADE,
 // FOREIGN KEY (mbtiName) REFERENCES MBTI_Type(mbtiName) ON DELETE CASCADE
 
-async function updateAccountInfo(email,password, mbti, age, country) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `UPDATE LoginUser SET mbtiName = :mbti, age = :age, country = :country, password= :password  WHERE emailAddress = :email`,
-            { mbti, age, country,password, email },
-            { autoCommit: true }
-        );
+async function updateAccountInfo(emailAddress, password, mbtiName, age, country, userGender) {
+	return await withOracleDB(async (connection) => {
+		const result = await connection.execute(
+			`UPDATE LoginUser SET mbtiName = :mbti, age = :age, country = :country, password= :password  WHERE emailAddress = :email`,
+			{ mbti, age, country,password, email },
+			{ autoCommit: true }
+		);
 
-        return result.rowsAffected && result.rowsAffected > 0;
-    }).catch((error) => {
-        console.error('Error updating account info:', error);
-        return false;
-    });
+		return result.rowsAffected && result.rowsAffected > 0;
+	}).catch((error) => {
+		console.error('Error updating account info:', error);
+		return false;
+	});
 }
 
 async function countUsers() {
@@ -540,7 +555,7 @@ module.exports = {
 	updateAccountInfo,
 	countUsers,
 	countLoginUsers,
-    logIn,
+	logIn,
 	calculateMBTIScores,
 	submitQuestions
 };

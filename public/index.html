@@ -1,80 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
-    <link rel="stylesheet" href="styles.css">  
+	<!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
+	<link rel="stylesheet" href="styles.css">  
    
-    <title>MBTI Database</title>
+	<title>MBTI Database</title>
 </head>
 <body>
 
-    <!--1. ===================================================================================== -->
-    <!-- Display the current status of the database connection. 
-         !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
-         -->
-    <h1>Database Connection Status: 
-        <!-- An in-line placeholder to display connection status. -->
-        <span id="dbStatus"> </span>
-        <!-- A loading GIF, will be hided once get the status. -->
-        <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
-    </h1>
+	<!--1. ===================================================================================== -->
+	<!-- Display the current status of the database connection. 
+		 !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
+		 -->
+	<h1>Database Connection Status: 
+		<!-- An in-line placeholder to display connection status. -->
+		<span id="dbStatus"> </span>
+		<!-- A loading GIF, will be hided once get the status. -->
+		<img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
+	</h1>
 
  
 
-    <!-- Show 'Demotable'. 
-        Data will be fetched and inserted here dynamically using JavaScript. -->
+	<!-- Show 'Demotable'. 
+		Data will be fetched and inserted here dynamically using JavaScript. -->
 
-        <!--
-    <h2>Show Demotable</h2>
-    <table id="demotable" border="1">
-        <thead>
-            <tr>
-                Table head, need to be adjusted accordingly to align with your own.
-                <th>ID</th>
-                <th>Name</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+		<!--
+	<h2>Show Demotable</h2>
+	<table id="demotable" border="1">
+		<thead>
+			<tr>
+				Table head, need to be adjusted accordingly to align with your own.
+				<th>ID</th>
+				<th>Name</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
 -->
-    <br><hr><br> <!--2.  ========================================================================= -->
+	<br><hr><br> <!--2.  ========================================================================= -->
 
-    <h2>Reset</h2>
-    <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
-    <button id="resetDemotable"> reset </button> <br>
-    <!-- A placeholder to display messages related to the reset operation. -->
-    <div id="resetResultMsg"></div>
+	<h2>Reset</h2>
+	<p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
+	<button id="resetDemotable"> reset </button> <br>
+	<!-- A placeholder to display messages related to the reset operation. -->
+	<div id="resetResultMsg"></div>
 
-    <br><hr><br> <!-- ========================================================================= -->
+	<br><hr><br> <!-- ========================================================================= -->
 
-    <h2> Register </h2>
-    <form id="insertDemotable">
-      
-        Email(required): <input type="email" id="insertEmail" placeholder="Enter Email"  required > <br><br>
-        Password(required): <input type="text" id="insertPassword" placeholder="Enter Password" maxlength="20" required> <br><br>
-        MBTI(Must be 4 word all caps): <input type="text" id="insertMbti" placeholder="Enter mbti" > <br><br>
-        Age: <input type="number" id="insertAge" placeholder="Enter Age" > <br><br>
-        Country: <input type="text" id="insertCountry" placeholder="Enter Country" > <br><br>
-        Gender: <input type="text" id="insertGender" placeholder="Enter Gender" > <br><br>
-       
+	<h2> Register </h2>
+	<form id="insertDemotable">
+	  
+		Email(required): <input type="email" id="insertEmail" placeholder="Enter Email" required > <br><br>
+		Password(required): <input type="text" id="insertPassword" placeholder="Enter Password" maxlength="20" required> <br><br>
+		MBTI(Must be 4 word all caps): <input type="text" id="insertMbti" placeholder="Enter mbti" > <br><br>
+		Age: <input type="number" id="insertAge" placeholder="Enter Age" > <br><br>
+		Country: <input type="text" id="insertCountry" placeholder="Enter Country" > <br><br>
+		Gender: <input type="text" id="insertGender" placeholder="Enter Gender" > <br><br>
+	   
 
-        <button type="submit"> insert </button> <br>
-    </form>
-    <div id="insertResultMsg"></div>
+		<button type="submit"> insert </button> <br>
+	</form>
+	<div id="insertResultMsg"></div>
 
-    <br><hr><br> <!-- 3. ========================================================================= -->
+	<br><hr><br> <!-- 3. ========================================================================= -->
 
 <!-- Login Section -->
 <h2>Login</h2>
 <form id="loginForm">
-    Email: <input type="email" id="loginEmail" placeholder="Enter Email" required> <br><br>
-    Password: <input type="password" id="loginPassword" placeholder="Enter Password" required> <br><br>
-    <button type="login">Login</button> <br>
+	Email: <input type="email" id="loginEmail" placeholder="Enter Email" required> <br><br>
+	Password: <input type="password" id="loginPassword" placeholder="Enter Password" required> <br><br>
+	<button type="login">Login</button> <br>
 </form>
 <div id="loginResultMsg"></div>
 
@@ -86,14 +86,14 @@
 <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 <form id="updataUserTable">
    
-    email: <input type="text" id="updateEmail" placeholder="Enter email" > <br><br>
-    Update Passwor: <input type="text" id="updatePassword" placeholder="Enter password" > <br><br>
-    Update mbti: <input type="text" id="updateMbti" placeholder="Enter MBTI" > <br><br>
-    Update age: <input type="number" id="updateAge" placeholder="Enter New age" maxlength="20"> <br><br>
-    Update country : <input type="text" id="updateCountry" placeholder="country" > <br><br>
+	Update email: <input type="text" id="updateEmail" placeholder="Enter new email" > <br><br>
+	Update password: <input type="text" id="updatePassword" placeholder="Enter new password" > <br><br>
+	Update mbti: <input type="text" id="updateMbti" placeholder="Enter new MBTI type" > <br><br>
+	Update age: <input type="number" id="updateAge" placeholder="Enter new age" maxlength="20"> <br><br>
+	Update country: <input type="text" id="updateCountry" placeholder="Enter new country" > <br><br>
+	Update gender: <input type="text" id="updateGender" placeholder="Enter new gender" > <br><br>
 
-
-    <button type="submit"> update </button> <br>
+	<button type="submit"> update </button> <br>
 </form>
 <!-- A placeholder to display messages related to the update operation. -->
 <div id="updateNameResultMsg"></div>
@@ -103,129 +103,125 @@
 
 <h2>Personality Test</h2>
 <form id="personalityTestForm">
-    <div class="question">
-        <p>1. Do you get your energy from interaction with the world around you (Extravert), or more from yourself, with your own activities and thoughts (Introvert)?</p>
-        <label><input type="radio" name="question1" value="No" required> E</label>
-        <label><input type="radio" name="question1" value="Yes"> I</label>
-    </div>
+	<div class="question">
+		<p>1. Do you get your energy from interaction with the world around you (Extravert), or more from yourself, with your own activities and thoughts (Introvert)?</p>
+		<label><input type="radio" name="question1" value="No" required> E</label>
+		<label><input type="radio" name="question1" value="Yes"> I</label>
+	</div>
 
-    <div class="question">
-        <p>2. Does your info preferably come from observing, measuring, experience (Sensing), or from explanation, reasoning, more abstract understanding (iNtuition)?</p>
-        <label><input type="radio" name="question2" value="No" required> S</label>
-        <label><input type="radio" name="question2" value="Yes"> N</label>
-    </div>
+	<div class="question">
+		<p>2. Does your info preferably come from observing, measuring, experience (Sensing), or from explanation, reasoning, more abstract understanding (iNtuition)?</p>
+		<label><input type="radio" name="question2" value="No" required> S</label>
+		<label><input type="radio" name="question2" value="Yes"> N</label>
+	</div>
 
-    <div class="question">
-        <p>3. How do you decide: by way of ratio, logic, given decision criteria (Thinking), or by looking at context, interests, what feels right (Feeling)?</p>
-        <label><input type="radio" name="question3" value="No" required> T</label>
-        <label><input type="radio" name="question3" value="Yes"> F</label>
-    </div>
+	<div class="question">
+		<p>3. How do you decide: by way of ratio, logic, given decision criteria (Thinking), or by looking at context, interests, what feels right (Feeling)?</p>
+		<label><input type="radio" name="question3" value="No" required> T</label>
+		<label><input type="radio" name="question3" value="Yes"> F</label>
+	</div>
 
-    <div class="question">
-        <p>4. How do you approach situations: should things go as planned and wanted (Judgement), or are you flexible, open to change, go with the flow (Perception)?</p>
-        <label><input type="radio" name="question4" value="No" required> J </label>
-        <label><input type="radio" name="question4" value="Yes"> P</label>
-    </div>
+	<div class="question">
+		<p>4. How do you approach situations: should things go as planned and wanted (Judgement), or are you flexible, open to change, go with the flow (Perception)?</p>
+		<label><input type="radio" name="question4" value="No" required> J </label>
+		<label><input type="radio" name="question4" value="Yes"> P</label>
+	</div>
 
-    <button type="submit">Submit</button>
+	<button type="submit">Submit</button>
 </form>
 
 <div id="testResultMsg"></div>
 
 
+	<!-- External JavaScript file that contains the functionality/logic for the operations above. -->
+	<script src="scripts.js"></script>
+
+	<br><hr><br> <!-- ========================================================================= -->
+
+		<section id="mbtiReport">
+			<h2>Your MBTI Type</h2>
+			<!-- Placeholder where the MBTI type will be displayed -->
+			<div id="mbtiTypeDisplay">
+				<!-- This is where the MBTI type will be inserted by the JavaScript -->
+				<p id="mbtiType">Retrieving...</p>
+			</div>
+		
+			<!-- Additional details about the MBTI type could also be dynamically inserted here if needed -->
+			<div id="mbtiDetails">
+				<!-- Details will be filled in by JavaScript -->
+			</div>
+		
+			<!-- A call to action or next steps based on the MBTI type could go here -->
+			<div id="mbtiNextSteps">
+				<h3>What to Do Next</h3>
+				<p>Once you know your MBTI type, you can start to explore careers, relationships, and personal growth strategies that align with your personality.</p>
+			</div>
+		</section>
 
 
+	<br><hr><br> <!-- ========================================================================= -->
+	<section id="recommendations">
 
-
-    <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
-    <script src="scripts.js"></script>
-
-    <br><hr><br> <!-- ========================================================================= -->
-
-        <section id="mbtiReport">
-            <h2>Your MBTI Type</h2>
-            <!-- Placeholder where the MBTI type will be displayed -->
-            <div id="mbtiTypeDisplay">
-                <!-- This is where the MBTI type will be inserted by the JavaScript -->
-                <p id="mbtiType">Retrieving...</p>
-            </div>
-        
-            <!-- Additional details about the MBTI type could also be dynamically inserted here if needed -->
-            <div id="mbtiDetails">
-                <!-- Details will be filled in by JavaScript -->
-            </div>
-        
-            <!-- A call to action or next steps based on the MBTI type could go here -->
-            <div id="mbtiNextSteps">
-                <h3>What to Do Next</h3>
-                <p>Once you know your MBTI type, you can start to explore careers, relationships, and personal growth strategies that align with your personality.</p>
-            </div>
-        </section>
-
-
-    <br><hr><br> <!-- ========================================================================= -->
-    <section id="recommendations">
-
-        <!-- Recommended Books -->
-        <div class="recommendation-section">
-            <h2>Recommended Books</h2>
-            <table>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Description</th>
-                </tr>
-                <!-- Example book recommendation -->
-                <tr>
-                    <td>The Road Less Traveled</td>
-                    <td>M. Scott Peck</td>
-                    <td>A new psychology of love, traditional values, and spiritual growth.</td>
-                </tr>
-                <!-- More book recommendations here -->
-            </table>
-        </div>
-        <hr>
-    
-        <!-- Recommended Videos -->
-        <div class="recommendation-section">
-            <h2>Recommended Videos</h2>
-            <table>
-                <tr>
-                    <th>Title</th>
-                    <th>Creator</th>
-                    <th>Link</th>
-                </tr>
-                <!-- Example video recommendation -->
-                <tr>
-                    <td>Understanding MBTI</td>
-                    <td>Personality Hacker</td>
-                    <td><a href="http://example.com/video">Watch here</a></td>
-                </tr>
-                <!-- More video recommendations here -->
-            </table>
-        </div>
-        <hr>
-    
-        <!-- Recommended Articles -->
-        <div class="recommendation-section">
-            <h2>Recommended Articles</h2>
-            <table>
-                <tr>
-                    <th>Title</th>
-                    <th>Source</th>
-                    <th>Link</th>
-                </tr>
-                <!-- Example article recommendation -->
-                <tr>
-                    <td>Deep Dive into Cognitive Functions</td>
-                    <td>Psychology Today</td>
-                    <td><a href="http://example.com/article">Read here</a></td>
-                </tr>
-                <!-- More article recommendations here -->
-            </table>
-        </div>
-    
-    </section>
+		<!-- Recommended Books -->
+		<div class="recommendation-section">
+			<h2>Recommended Books</h2>
+			<table>
+				<tr>
+					<th>Title</th>
+					<th>Author</th>
+					<th>Description</th>
+				</tr>
+				<!-- Example book recommendation -->
+				<tr>
+					<td>The Road Less Traveled</td>
+					<td>M. Scott Peck</td>
+					<td>A new psychology of love, traditional values, and spiritual growth.</td>
+				</tr>
+				<!-- More book recommendations here -->
+			</table>
+		</div>
+		<hr>
+	
+		<!-- Recommended Videos -->
+		<div class="recommendation-section">
+			<h2>Recommended Videos</h2>
+			<table>
+				<tr>
+					<th>Title</th>
+					<th>Creator</th>
+					<th>Link</th>
+				</tr>
+				<!-- Example video recommendation -->
+				<tr>
+					<td>Understanding MBTI</td>
+					<td>Personality Hacker</td>
+					<td><a href="http://example.com/video">Watch here</a></td>
+				</tr>
+				<!-- More video recommendations here -->
+			</table>
+		</div>
+		<hr>
+	
+		<!-- Recommended Articles -->
+		<div class="recommendation-section">
+			<h2>Recommended Articles</h2>
+			<table>
+				<tr>
+					<th>Title</th>
+					<th>Source</th>
+					<th>Link</th>
+				</tr>
+				<!-- Example article recommendation -->
+				<tr>
+					<td>Deep Dive into Cognitive Functions</td>
+					<td>Psychology Today</td>
+					<td><a href="http://example.com/article">Read here</a></td>
+				</tr>
+				<!-- More article recommendations here -->
+			</table>
+		</div>
+	
+	</section>
 
 
  <!-- ===================================================================================== -->
@@ -233,22 +229,22 @@
 
  <!-- Dropdown to select an MBTI type -->
  <select id="mbtiType">
-     <option value="INTJ">INTJ</option>
-     <option value="INTP">INTP</option>
-     <option value="ENTJ">ENTJ</option>
-     <option value="ENTP">ENTP</option>
-     <option value="INFJ">INFJ</option>
-     <option value="INFP">INFP</option>
-     <option value="ENFJ">ENFJ</option>
-     <option value="ENFP">ENFP</option>
-     <option value="ISTJ">ISTJ</option>
-     <option value="ISFJ">ISFJ</option>
-     <option value="ESTJ">ESTJ</option>
-     <option value="ESFJ">ESFJ</option>
-     <option value="ISTP">ISTP</option>
-     <option value="ISFP">ISFP</option>
-     <option value="ESTP">ESTP</option>
-     <option value="ESFP">ESFP</option>
+	 <option value="INTJ">INTJ</option>
+	 <option value="INTP">INTP</option>
+	 <option value="ENTJ">ENTJ</option>
+	 <option value="ENTP">ENTP</option>
+	 <option value="INFJ">INFJ</option>
+	 <option value="INFP">INFP</option>
+	 <option value="ENFJ">ENFJ</option>
+	 <option value="ENFP">ENFP</option>
+	 <option value="ISTJ">ISTJ</option>
+	 <option value="ISFJ">ISFJ</option>
+	 <option value="ESTJ">ESTJ</option>
+	 <option value="ESFJ">ESFJ</option>
+	 <option value="ISTP">ISTP</option>
+	 <option value="ISFP">ISFP</option>
+	 <option value="ESTP">ESTP</option>
+	 <option value="ESFP">ESFP</option>
  </select>
  
  <button id="countmbtitable">Count</button> <br><br>
@@ -256,7 +252,7 @@
  <!-- A placeholder to display the count result -->
  <div id="countResultMsg"></div> <br>
 
-    <!-- ===================================================================================== -->
+	<!-- ===================================================================================== -->
 
 </body>
 </html>
