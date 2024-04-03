@@ -123,7 +123,7 @@ CREATE TABLE IsRecommendedArticle (
 );
 
 
-
+-- why do we need this?
 INSERT INTO MBTI_Type VALUES ('ISTJ', 'Number A');
 INSERT INTO MBTI_Type VALUES ('ISTP', 'Number B');
 INSERT INTO MBTI_Type VALUES ('ISFJ', 'Number C');

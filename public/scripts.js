@@ -141,8 +141,10 @@ async function updateAccountInfo(event) {
     event.preventDefault();
 
     // Get the form data
-    const mbtiValue = document.getElementById('updateMbti').value;
+    
     const emailValue = document.getElementById('updateEmail').value;
+    const passwordValue = document.getElementById('updatePassword').value;
+    const mbtiValue = document.getElementById('updateMbti').value;
     const ageValue = document.getElementById('updateAge').value;
     const countryValue = document.getElementById('updateCountry').value;
 
@@ -155,6 +157,7 @@ async function updateAccountInfo(event) {
         body: JSON.stringify({
             mbti: mbtiValue,
             email: emailValue,
+            password: passwordValue,
             age: ageValue,
             country: countryValue
         })
