@@ -65,7 +65,6 @@ async function register(event) {
     const countryValue = document.getElementById('insertCountry').value;
     const genderValue = document.getElementById('insertGender').value;
 
-  
 
     const response = await fetch('/register', {
         method: 'POST',
@@ -74,11 +73,11 @@ async function register(event) {
         },
         body: JSON.stringify({
             mbtiName:  mbtiValue,
-            email: emailValue,
+            emailAddress: emailValue,
             password: passwordValue,
             age: ageValue,
             country: countryValue,
-            gender: genderValue
+            userGender: genderValue
             
         })
     });
@@ -88,7 +87,6 @@ async function register(event) {
 
     if (responseData.success) {
         messageElement.textContent = "register successfully!";
-        // fetchTableData();
     } else {
         messageElement.textContent = "Error in registering!";
     }

@@ -141,6 +141,7 @@ async function insertUser(mbtiName, password, emailAddress, age, country, userGe
 				VALUES (:mbtiName, :username, :password, :emailAddress, :age, :country, :userGender)`,
 				[mbtiName, username, password, emailAddress, age, country, userGender],
 				{ autoCommit: true });
+				
 			console.log("insert success");
 			return result1.rowsAffected && result1.rowsAffected > 0 && result2.rowsAffected && result2.rowsAffected > 0;
 		} else {
