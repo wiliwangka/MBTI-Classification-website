@@ -73,9 +73,9 @@ async function register(event) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            mbtiName:  mbtiValue,
-            email: emailValue,
             password: passwordValue,
+            email: emailValue,
+            mbtiName: mbtiValue,
             age: ageValue,
             country: countryValue,
             gender: genderValue

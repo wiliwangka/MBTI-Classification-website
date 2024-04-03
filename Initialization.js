@@ -113,10 +113,10 @@ async function createMBTI_Type(connection) {
 async function createLoginUser(connection) {
 	return await connection.execute(
 		`CREATE TABLE LoginUser (
-			mbtiName CHAR(4) NOT NULL,
 			username VARCHAR(63) NOT NULL,
-			password VARCHAR(255) NOT NULL,
 			emailAddress VARCHAR(255) NOT NULL,
+			password VARCHAR(255) NOT NULL,
+			mbtiName CHAR(4),
 			age INT,
 			country VARCHAR(255),
 			userGender CHAR(1),

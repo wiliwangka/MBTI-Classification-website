@@ -35,8 +35,13 @@ router.post('/logIn', async (req,res) => {
 
 // API of Register feature
 router.post('/register', async (req, res) => {
-    const {mbtiName, password, emailAddress, age, country, userGender} =  req.body;
-    const insertResult = await appService.insertUser(mbtiName, password, emailAddress, age, country, userGender);
+    const emailAddress = req.body.email;
+    const password = req.body.password;
+    const mbtiName = req.body.mbtiName;
+    const age = req.body.age;
+    const country = req.body.country;
+    const userGender = req.body.gender;
+    const insertResult = await appService.insertLoginUser(emailAddress, password, mbtiName, age, country, userGender);
     if (insertResult) {
         res.json({ success: true });
     } else {

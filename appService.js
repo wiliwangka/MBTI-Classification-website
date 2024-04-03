@@ -124,7 +124,7 @@ async function initialize() {
 }
 
 
-async function insertUser(mbtiName, password, emailAddress, age, country, userGender ) {
+async function insertLoginUser(emailAddress, password, mbtiName = null, age = null, country = null, userGender = null) {
 	return await withOracleDB(async (connection) => {
 		
 		let username = getUsername();
@@ -134,19 +134,33 @@ async function insertUser(mbtiName, password, emailAddress, age, country, userGe
 			{ autoCommit: true }
 		);
 
-		if (mbtiName !== undefined && password !== undefined && emailAddress !== undefined) {
-			
+		//let foreignUsername = "(SELECT username FROM MyUser WHERE username = :username)";
+		const result2 = await connection.execute(
+			`INSERT INTO LoginUser (username, emailAddress, password, mbtiName, age, country, userGender)
+			VALUES (:username, :emailAddress, :password, :mbtiName, :age, :country, :userGender)`,
+			[username, emailAddress, password, mbtiName, age, country, userGender],
+			{ autoCommit: true });
+		console.log("insert success");
+		/*
+		try {
 			const result2 = await connection.execute(
-				`INSERT INTO LoginUser (mbtiName, username, password, emailAddress, age, country, userGender)
-				VALUES (:mbtiName, :username, :password, :emailAddress, :age, :country, :userGender)`,
-				[mbtiName, username, password, emailAddress, age, country, userGender],
+				`INSERT INTO LoginUser (username, emailAddress, password, mbtiName, age, country, userGender)
+				VALUES (:username, :emailAddress, :password, :mbtiName, :age, :country, :userGender)`,
+				[username, emailAddress, password, mbtiName, age, country, userGender],
 				{ autoCommit: true });
 			console.log("insert success");
-			return result1.rowsAffected && result1.rowsAffected > 0 && result2.rowsAffected && result2.rowsAffected > 0;
-		} else {
-		
-			return result1.rowsAffected && result1.rowsAffected > 0;
+		} catch (err) {
+			// Delete result1 from MyUser
+			if (typeof err === "string") {
+				throw Error(err);
+			} else if (err instanceof Error) {
+				throw err;
+			} else {
+				console.log(err);
+			}
 		}
+		*/
+		return result1.rowsAffected && result1.rowsAffected > 0 && result2.rowsAffected && result2.rowsAffected > 0;
 	}).catch((err) => {
 		console.log(err);
 		return false;
@@ -156,8 +170,8 @@ async function insertUser(mbtiName, password, emailAddress, age, country, userGe
 function getUsername() {
 	usernameGenerator += 1;
 	return `user${usernameGenerator}`;
-	// orical , is the string is just number orical will auto convert to interger
-	//return toString(usernameGenerator);
+	// oracle, is the string is just number orical will auto convert to interger
+	// return toString(usernameGenerator);
 }
 
 function calculateMBTIScores(EIScore, SNScore, TFScore, JPScore) {
@@ -502,7 +516,7 @@ module.exports = {
 	testOracleConnection,
 	fetchDemotableFromDb,
 	initialize,
-	insertUser,
+	insertLoginUser,
 	updateAccountInfo,
 	countUsers,
 	countLoginUsers,
