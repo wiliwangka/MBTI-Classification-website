@@ -148,6 +148,7 @@ async function insertLoginUser(emailAddress, password, mbtiName = null, age = nu
 				VALUES (:username, :emailAddress, :password, :mbtiName, :age, :country, :userGender)`,
 				[username, emailAddress, password, mbtiName, age, country, userGender],
 				{ autoCommit: true });
+				
 			console.log("insert success");
 		} catch (err) {
 			// Delete result1 from MyUser
