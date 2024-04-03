@@ -170,7 +170,7 @@ async function insertLoginUser(emailAddress, password, mbtiName = null, age = nu
 function getUsername() {
 	usernameGenerator += 1;
 	return `user${usernameGenerator}`;
-	// oracle, is the string is just number orical will auto convert to interger
+	// oracle, if the string is just number oracle will auto convert it to interger
 	// return toString(usernameGenerator);
 }
 
@@ -469,11 +469,23 @@ async function updateLoginUserMbti(emailAddress, mbtiType) {
 	});
 }
 
-async function updateAccountInfo(email, mbti, age, country) {
+// mbtiName CHAR(4) NOT NULL,
+// username VARCHAR(63) NOT NULL,
+// password VARCHAR(255) NOT NULL,
+// emailAddress VARCHAR(255) NOT NULL,
+// age INT,
+// country VARCHAR(255),
+// userGender CHAR(1),
+// PRIMARY KEY (username),
+// UNIQUE (emailAddress),
+// FOREIGN KEY (username) REFERENCES MyUser(username) ON DELETE CASCADE,
+// FOREIGN KEY (mbtiName) REFERENCES MBTI_Type(mbtiName) ON DELETE CASCADE
+
+async function updateAccountInfo(email,password, mbti, age, country) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `UPDATE AccountTable SET mbti = :mbti, age = :age, country = :country WHERE email = :email`,
-            { mbti, age, country, email },
+            `UPDATE LoginUser SET mbtiName = :mbti, age = :age, country = :country, password= :password  WHERE emailAddress = :email`,
+            { mbti, age, country,password, email },
             { autoCommit: true }
         );
 
