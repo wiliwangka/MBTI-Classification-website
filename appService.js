@@ -108,9 +108,9 @@ async function initialize() {
 
 
 async function insertLoginUser(emailAddress, password, mbtiName = null, age = null, country = null, userGender = null) {
+	let username;
 	return await withOracleDB(async (connection) => {
-		
-		let username = await makeGuestUser();
+		username = await makeGuestUser();
 		/*
 		const result1 = await connection.execute(
 			`INSERT INTO MyUser (username) VALUES (:username)`,
@@ -148,6 +148,9 @@ async function insertLoginUser(emailAddress, password, mbtiName = null, age = nu
 		//return result1.rowsAffected && result1.rowsAffected > 0 && result2.rowsAffected && result2.rowsAffected > 0;
 		return result2.rowsAffected && result2.rowsAffected > 0;
 	}).catch((err) => {
+		if (username !== undefined) {
+			// DELETE the user with this username
+		}
 		console.log(err);
 		return false;
 	});
@@ -172,10 +175,9 @@ async function makeGuestUser() {
 	return await withOracleDB(async (connection) => {
 		let takenUsernames = await connection.execute(`SELECT * FROM MyUser`);
 		let guestUsername = `user${usernameGenerator}`;
-		while (takenUsernames.rows[0].includes(guestUsername)) {
+		while (await isUsernameTaken(guestUsername, takenUsernames)) {
 			usernameGenerator += 1;
 			guestUsername = `user${usernameGenerator}`;
-			console.log(guestUsername);
 		}
 		let result = await connection.execute(
 			`INSERT INTO MyUser (username) VALUES (:guestUsername)`,
@@ -187,6 +189,17 @@ async function makeGuestUser() {
 	});
 	// oracle, if the string is just number oracle will auto convert it to interger
 	// return toString(usernameGenerator);
+}
+
+async function isUsernameTaken(potentialUsername) {
+	return await withOracleDB(async (connection) => {
+		let result = await connection.execute(`SELECT username FROM MyUser WHERE username = :potentialUsername`,
+		[potentialUsername],
+		{ autoCommit: true });
+		return result.rows.length > 0;
+	}).catch((error) => {
+		throw error;
+	});
 }
 
 function calculateMBTIScores(EIScore, SNScore, TFScore, JPScore) {
