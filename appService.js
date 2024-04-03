@@ -236,8 +236,8 @@ async function submitQuestions(emailAddress, startDateTime, EIScore, SNScore, TF
 
 async function updateOutputs_2_guest(username, startDateTime, tid){
 	// Convert to ISO string and remove milliseconds and Z
-	const timestamp = startDateTime.replace('T', ' ').replace(/..+/, '');
-	console.log(timestamp);
+	startDateTime = "2023-03-25 14:30:15";
+	// console.log(timestamp);
 	return await withOracleDB(async (connection) => {
 	  const sql = `
 	  INSERT INTO Outputs_2 (TID, startDateTime, username)
