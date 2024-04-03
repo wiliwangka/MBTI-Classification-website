@@ -13,19 +13,18 @@ const router = express.Router();
 router.post('/logIn', async (req,res) => {
     console.log("1");
     const {emailAddress, password} =  req.body;
-    console.log("2");
+    console.log(emailAddress);
+    console.log(password)
     try {
         const exsisting  = await appService.logIn(emailAddress, password);
-        console.log("3");
-        if (exsisting) {
-            console.log("4");
+        if (exsisting.length > 0) {
+            console.log("2");
             res.json({ success: true, message: 'Log in successfully', user: exsisting});
         } else {
-            console.log("5");
+            console.log("3");
             res.status(404).json({ success: false, message: 'Account is not existed or password is wrong' });
         }
-    } catch {
-        console.log("7");
+    } catch (error) {
         console.error('error existed during logIn:', error);
         res.status(500).json({ success: false, message: 'An error occurred during login' });
     }
