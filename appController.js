@@ -139,7 +139,7 @@ router.get("/get-video-recommendation", async (req, res) => {
 })
 
 //API endpoint of getting recommendation articles
-router.post("/get-article-recommendation", async (req, res) => {
+router.get("/get-article-recommendation", async (req, res) => {
 	const {mbtiName} = req.body;
 	try{
 		const result = await appService.getRecommendedArticles(mbtiName);
