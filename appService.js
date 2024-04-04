@@ -247,14 +247,10 @@ async function submitQuestions(emailAddress, startDateTime, EIScore, SNScore, TF
 	} else {
 		// the user is guestUser
 		let username = await makeGuestUser();
-		const result1 = await connection.execute(
-			`INSERT INTO MyUser (username) VALUES (:username)`,
-			[username],
-			{ autoCommit: true });
 		const result2 = await updateOutputs_2_guest(username, startDateTime, tid); 		//update Outputs_2 table
 		const result3 = await insertQuestion(tid, EIScore, SNScore, TFScore, JPScore);  //update question table
 		const result4 = await updateOutputs_3(tid, EIScore, SNScore, TFScore, JPScore); 	 //update Outputs_3 table
-		if (result1 && result2 && result3 && result4) {
+		if (result2 && result3 && result4) {
 			return mbtiType;
 		} else {
 			return null;
@@ -264,12 +260,13 @@ async function submitQuestions(emailAddress, startDateTime, EIScore, SNScore, TF
 
 async function updateOutputs_2_guest(username, startDateTime, tid){
 	// Convert to ISO string and remove milliseconds and Z
-	startDateTime = "2023-03-25 14:30:15";
+	//startDateTime = "2023-03-25 14:30:15";
 	// console.log(timestamp);
 	return await withOracleDB(async (connection) => {
 	  const sql = `
 	  INSERT INTO Outputs_2 (TID, startDateTime, username)
-	  VALUES (:tid, :startDateTime, :username)`;
+	  VALUES (:tid, TO_TIMESTAMP(:startDateTime, 'YYYY-MM-DD HH24:MI:SS'), :username)`;
+	  
 	  const result = await connection.execute(sql, [tid, startDateTime, username], {
 		  autoCommit: true 
 		});
