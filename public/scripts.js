@@ -218,7 +218,7 @@ async function submitPersonalityTest(event) {
     }   
 }
 
-function fetchAndUpdateRecommendations() {
+async function fetchAndUpdateRecommendations() {
 	fetch('/path/to/recommendations/api')
 		.then(response => response.json())
 		.then(data => {

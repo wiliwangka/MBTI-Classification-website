@@ -309,6 +309,141 @@ async function insertOutputs_4(connection) {
 	}
 }
 
+
+async function insertrecommendedcontent(){
+ insertRecommendedArticles();
+ insertRecommendedBooks();
+ insertRecommendedVideos();
+ insertMyArticle();
+ insertMyBook();
+ insertMyVideo();
+
+}
+//   mbtiName CHAR(4) NOT NULL,
+//     videoLink VARCHAR(255) NOT NULL,
+//     PRIMARY KEY (mbtiName, videoLink),
+//     FOREIGN KEY (mbtiName) REFERENCES MBTI_Type(mbtiName) ON DELETE CASCADE,
+//     FOREIGN KEY (videoLink) REFERENCES MyVideo(videoLink) ON DELETE CASCADE
+async function insertRecommendedVideos(connection) {
+    const videos = [
+        { mbtiName: 'INFP', videoLink: 'http://example.com/video/infp' },
+        // Add more entries for each MBTI type with appropriate video links
+    ];
+
+    const insertSql = `
+        INSERT INTO IsRecommendedVideo (mbtiName, videoLink)
+        VALUES (:mbtiName, :videoLink)
+    `;
+
+    for (const video of videos) {
+        await connection.execute(insertSql, {
+            mbtiName: video.mbtiName,
+            videoLink: video.videoLink
+        }, { autoCommit: true });
+    }
+}
+
+
+async function insertRecommendedBooks(connection) {
+    const books = [
+        { mbtiName: 'INFP', bookURL: 'http://example.com/book/infp' },
+        // Add more entries for each MBTI type with appropriate book URLs
+    ];
+
+    const insertSql = `
+        INSERT INTO IsRecommendedBook (mbtiName, bookURL)
+        VALUES (:mbtiName, :bookURL)
+    `;
+
+    for (const book of books) {
+        await connection.execute(insertSql, {
+            mbtiName: book.mbtiName,
+            bookURL: book.bookURL
+        }, { autoCommit: true });
+    }
+}
+
+async function insertRecommendedArticles(connection) {
+    const articles = [
+        { mbtiName: 'INFP', articleURL: 'http://example.com/article/infp' },
+        // Add more entries for each MBTI type with appropriate article URLs
+    ];
+
+    const insertSql = `
+        INSERT INTO IsRecommendedArticle (mbtiName, articleURL)
+        VALUES (:mbtiName, :articleURL)
+    `;
+
+    for (const article of articles) {
+        await connection.execute(insertSql, {
+            mbtiName: article.mbtiName,
+            articleURL: article.articleURL
+        }, { autoCommit: true });
+    }
+}
+
+async function insertMyVideo(connection) {
+    const videos = [
+        { videoLink: 'http://example.com/video/infp', videoType: 'Motivational', videoTitle: 'INFP Inspiration' },
+        // Add more entries for each MBTI type with appropriate video links, types, and titles
+    ];
+
+    const insertSql = `
+        INSERT INTO MyVideo (videoLink, videoType, videoTitle)
+        VALUES (:videoLink, :videoType, :videoTitle)
+    `;
+
+    for (const video of videos) {
+        await connection.execute(insertSql, {
+            videoLink: video.videoLink,
+            videoType: video.videoType,
+            videoTitle: video.videoTitle
+        }, { autoCommit: true });
+    }
+}
+
+async function insertMyBook(connection) {
+    const books = [
+        { bookURL: 'http://example.com/book/infp', bookTitle: 'INFP: The Dreamer', bookAuthor: 'Jane Doe' },
+        // Add more entries for each MBTI type with appropriate book URLs, titles, and authors
+    ];
+
+    const insertSql = `
+        INSERT INTO MyBook (bookURL, bookTitle, bookAuthor)
+        VALUES (:bookURL, :bookTitle, :bookAuthor)
+    `;
+
+    for (const book of books) {
+        await connection.execute(insertSql, {
+            bookURL: book.bookURL,
+            bookTitle: book.bookTitle,
+            bookAuthor: book.bookAuthor
+        }, { autoCommit: true });
+    }
+}
+async function insertMyArticle(connection) {
+    const articles = [
+        { articleURL: 'http://example.com/article/infp', articleTitle: 'Understanding the INFP', articleAuthor: 'John Smith', articleText: 'INFPs are...' },
+        // Add more entries for each MBTI type with appropriate article URLs, titles, authors, and texts
+    ];
+
+    const insertSql = `
+        INSERT INTO MyArticle (articleURL, articleTitle, articleAuthor, articleText)
+        VALUES (:articleURL, :articleTitle, :articleAuthor, :articleText)
+    `;
+
+    for (const article of articles) {
+        await connection.execute(insertSql, {
+            articleURL: article.articleURL,
+            articleTitle: article.articleTitle,
+            articleAuthor: article.articleAuthor,
+            articleText: article.articleText
+        }, { autoCommit: true });
+    }
+}
+
+
+
 module.exports = {
 	initiateAllTables
 };
