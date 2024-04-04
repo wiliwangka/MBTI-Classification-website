@@ -159,7 +159,7 @@ router.get("/get-article-recommendation", async (req, res) => {
 
 // API endpoint of getting the numbers of login users for every mbti
 router.get("/get-numbers-mbti", async (req, res) => {
-	const {mbtiName} = req.body;
+	const {mbtiName} = req.query;
 	try{
 		const result = await appService.getNumberOfMbti(mbtiName);
 		res.json({success: true, data: result});
@@ -171,7 +171,7 @@ router.get("/get-numbers-mbti", async (req, res) => {
 
 // API endpoint of getting mbtis that have more than n users
 router.get("/get-over-n-mbti", async (req, res) => {
-	const {mbtiName, number} = req.body;
+	const {mbtiName, number} = req.query;
 	try{
 		const result = await appService.getMbtiMoreThanN(mbtiName, number);
 		res.json({success: true, data: result});
@@ -180,6 +180,8 @@ router.get("/get-over-n-mbti", async (req, res) => {
 	}
 	
 })
+
+// API endpoint of 
 
 // router.get('/demotable', async (req, res) => {
 //     const tableContent = await appService.fetchDemotableFromDb();
