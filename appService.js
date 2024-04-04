@@ -459,6 +459,42 @@ async function getRecommendedArticles(mbtiType) {
 	});
 }
 
+// implementation of getting the number of login users for every mbti
+async function getNumberOfMbti(mbtiName) {
+	return withOracleDB(async(connection) => {
+		const result = await connection.execute(
+		`SELECT (m.mbtiName), COUNT(lu.username)
+		FROM LoginUser lu, Mbti_Type m
+		WHERE lu.mbtiName = m.mbtiName AND m.mbtiName = :mbtiType
+		GROUP BY m.mbtiName
+		ORDER BY m.mbtiName
+		`,
+		[mbtiName]);
+		return result.rows;
+	}).catch((error) => {
+		console.log(error, "error exists in getting the numbers of login users every mbti");
+		throw error;
+	});
+}
+
+// implementation of looking for mbtis which have more than n loginusers
+async function getMbtiMoreThanN(mbtiName, number) {
+	return withOracleDB(async(connection) => {
+		const result = await connection.execute(
+		`SELECT (m.mbtiName), COUNT(lu.username)
+		FROM LoginUser lu, Mbti_Type m
+		WHERE lu.mbtiName = m.mbtiName AND m.mbtiName = :mbtiType
+		GROUP BY m.mbtiName
+		ORDER BY m.mbtiName
+		`,
+		[mbtiName]);
+		return result.rows;
+	}).catch((error) => {
+		console.log(error, "error exists in getting mbti that have more than n login Users");
+		throw error;
+	});
+}
+
 async function countRecommendedArticles(mbtiType) {
 	return withOracleDB(async(connection) => {
 		const result = await connection.execute(
@@ -581,5 +617,6 @@ module.exports = {
 	submitQuestions,
 	getRecommendedBooks,
 	getRecommendedVideos,
-	getRecommendedArticles
+	getRecommendedArticles,
+	getNumberOfMbti
 };

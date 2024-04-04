@@ -121,7 +121,7 @@ router.get("/get-book-recommendation", async (req, res) => {
 		const result = await appService.getRecommendedBooks(mbtiName);
 		res.json({success: true, data: result});
 	} catch (error) {
-		res.status(500).json({success: true, message: "error exists in getting books"});
+		res.status(500).json({success: false, message: "error exists in getting books"});
 	}
 	
 })
@@ -133,7 +133,7 @@ router.get("/get-video-recommendation", async (req, res) => {
 		const result = await appService.getRecommendedVideos(mbtiName);
 		res.json({success: true, data: result});
 	} catch (error) {
-		res.status(500).json({success: true, message: "error exists in getting videos"});
+		res.status(500).json({success: false, message: "error exists in getting videos"});
 	}
 	
 })
@@ -145,7 +145,21 @@ router.get("/get-article-recommendation", async (req, res) => {
 		const result = await appService.getRecommendedArticles(mbtiName);
 		res.json({success: true, data: result});
 	} catch (error) {
-		res.status(500).json({success: true, message: "error exists in getting articless"});
+		res.status(500).json({success: false, message: "error exists in getting articless"});
+	}
+	
+})
+
+
+
+// API endpoint of getting the numbers of login users for every mbti
+router.get("/get-numbers-mbti", async (req, res) => {
+	const {mbtiName} = req.body;
+	try{
+		const result = await appService.getNumberOfMbti(mbtiName);
+		res.json({success: true, data: result});
+	} catch (error) {
+		res.status(500).json({success: false, message: "error exists in getting articless"});
 	}
 	
 })
