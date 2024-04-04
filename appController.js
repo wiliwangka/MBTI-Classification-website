@@ -114,7 +114,41 @@ router.post("/submit-test-questions", async (req, res) => {
     }
 });
 
+// API endpoint of getting recommendation books
+router.post("/get-book-recommendation", async (req, res) => {
+	const {mbtiName} = req.body;
+	try{
+		const result = await appService.getRecommendedBooks(mbtiName);
+		res.json({success: true, data: result});
+	} catch (error) {
+		res.status(500).json({success: true, message: "error exists in getting books"});
+	}
+	
+})
 
+// API endpoint of getting recommendation videos
+router.post("/get-video-recommendation", async (req, res) => {
+	const {mbtiName} = req.body;
+	try{
+		const result = await appService.getRecommendedVideos(mbtiName);
+		res.json({success: true, data: result});
+	} catch (error) {
+		res.status(500).json({success: true, message: "error exists in getting videos"});
+	}
+	
+})
+
+//API endpoint of getting recommendation articles
+router.post("/get-article-recommendation", async (req, res) => {
+	const {mbtiName} = req.body;
+	try{
+		const result = await appService.getRecommendedArticles(mbtiName);
+		res.json({success: true, data: result});
+	} catch (error) {
+		res.status(500).json({success: true, message: "error exists in getting articless"});
+	}
+	
+})
 
 // router.get('/demotable', async (req, res) => {
 //     const tableContent = await appService.fetchDemotableFromDb();

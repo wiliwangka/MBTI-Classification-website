@@ -388,9 +388,11 @@ async function getRecommendedVideos(mbtiType) {
 		`,
 		[mbtiType],
 		{ autoCommit: true });
-		return result;
-	}).catch(() => {
+		return result.rows;
+	}).catch((error) => {
 		// What should happen if there is an error?
+		console.log(error, "error exists in get videos");
+		throw error;
 	});
 }
 
@@ -417,9 +419,11 @@ async function getRecommendedBooks(mbtiType) {
 		`,
 		[mbtiType],
 		{ autoCommit: true });
-		return result;
-	}).catch(() => {
+		return result.rows;
+	}).catch((error) => {
 		// What should happen if there is an error?
+		console.log(error, "error exists in get books");
+		throw error;
 	});
 }
 
@@ -447,9 +451,11 @@ async function getRecommendedArticles(mbtiType) {
 		`,
 		[mbtiType],
 		{ autoCommit: true });
-		return result;
-	}).catch(() => {
+		return result.rows;
+	}).catch((error) => {
 		// What should happen if there is an error?
+		console.log(error, "error exists in get books");
+		throw error;
 	});
 }
 
@@ -572,5 +578,8 @@ module.exports = {
 	countLoginUsers,
 	logIn,
 	calculateMBTIScores,
-	submitQuestions
+	submitQuestions,
+	getRecommendedBooks,
+	getRecommendedVideos,
+	getRecommendedArticles
 };
