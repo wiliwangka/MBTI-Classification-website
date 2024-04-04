@@ -181,7 +181,25 @@ router.get("/get-over-n-mbti", async (req, res) => {
 	
 })
 
-// API endpoint of 
+// API endpoint of calculating on average each mbti recommends how many books
+router.get("/get-average-book", async (req,res) => {
+	try{
+		const result = await appService.getAverageBook();
+		res.json({success: true, data: result});
+	} catch (error) {
+		res.status(500).json({success: false, message: "error exists in getting average number of books"});
+	}
+})
+
+// API endpoint of finding books that all mbti recommend
+router.get("/get-recommend-book", async (req,res) => {
+	try{
+		const result = await appService.getAllRecommendBook();
+		res.json({success: true, data: result});
+	} catch (error) {
+		res.status(500).json({success: false, message: "error exists in getting books that all mbti recommend"});
+	}
+})
 
 // router.get('/demotable', async (req, res) => {
 //     const tableContent = await appService.fetchDemotableFromDb();

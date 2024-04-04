@@ -500,6 +500,56 @@ async function getMbtiMoreThanN(mbtiName, number) {
 	});
 }
 
+//implementation of getting average number of books for each mbti
+async function getAverageBook() {
+	return withOracleDB(async(connection) => {
+		const result = await connection.execute(
+			`WITH MBTI_Book_Count AS (
+				SELECT 
+					mbtiName, 
+					COUNT(bookURL) AS NumberOfBooks
+				FROM 
+					IsRecommendedBook
+				GROUP BY 
+					mbtiName
+			)
+			SELECT 
+				AVG(NumberOfBooks)
+			FROM 
+				MBTI_Book_Count
+			`);
+		if (result.rows.length > 0) {
+			return result.rows[0][0]; // 返回查询结果的第一行第一列的值
+		} else {
+			console.log(error, "No book exusts");
+			return [];
+		}
+	}).catch((error) => {
+		console.log(error, "error exists in getting getting average number of books for each mbti");
+		throw error;
+	});
+}
+
+//implementation of getting books that all mbti recommend
+async function getAllRecommendBook() {
+	return withOracleDB(async(connection) => {
+		const result = await connection.execute(
+			`SELECT B.bookTitle
+			FROM MyBook B
+			WHERE NOT EXISTS (
+				(SELECT M.mbtiName FROM MBTI_Type M)
+				EXCEPT
+				(SELECT I.mbtiName FROM IsRecommendedBook I WHERE I.bookURL = B.bookURL)
+			)
+			`);
+		return result.rows;
+	}).catch((error) => {
+		console.log(error, "error exists in getting books that all mbti recommend");
+		throw error;
+	});
+}
+
+
 async function countRecommendedArticles(mbtiType) {
 	return withOracleDB(async(connection) => {
 		const result = await connection.execute(
@@ -624,5 +674,7 @@ module.exports = {
 	getRecommendedVideos,
 	getRecommendedArticles,
 	getNumberOfMbti,
-	getMbtiMoreThanN
+	getMbtiMoreThanN,
+	getAverageBook,
+	getAllRecommendBook
 };
