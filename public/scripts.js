@@ -166,13 +166,13 @@ async function updateAccountInfo(event) {
 async function submitPersonalityTest(event) {
 	event.preventDefault();  // Prevent the form from submitting in the traditional way
 
-	// Get the binary values from the form
-	const answers = {
-		E: document.querySelector('input[name="question1"]:checked')?.value === 'E' ? 1 : 0,
-		S: document.querySelector('input[name="question2"]:checked')?.value === 'S' ? 1 : 0,
-		T: document.querySelector('input[name="question3"]:checked')?.value === 'T' ? 1 : 0,
-		J: document.querySelector('input[name="question4"]:checked')?.value === 'J' ? 1 : 0,
-	};
+    // Get the binary values from the form
+    const answers = {
+        E: document.querySelector('input[name="question1"]:checked')?.value === 'E' ? 100 : 0,
+        S: document.querySelector('input[name="question2"]:checked')?.value === 'S' ? 100 : 0,
+        T: document.querySelector('input[name="question3"]:checked')?.value === 'T' ? 100 : 0,
+        J: document.querySelector('input[name="question4"]:checked')?.value === 'J' ? 100 : 0,
+    };
 
 	const emailValue = document.getElementById('loginEmail') ? document.getElementById('loginEmail').value : null;
 	const now = new Date();
@@ -187,8 +187,9 @@ async function submitPersonalityTest(event) {
 		JPScore: answers.J
 	};
 
-	const messageElement = document.getElementById('testResultMsg');
-	const mbtiElement = document.getElementById('mbtiTypeDisplay');
+    const messageElement = document.getElementById('testResultMsg');
+    const mbtiElement = document.getElementById('mbtiTypeDisplay');
+    const retriving = document.getElementById('mbtiType');
 
 	try {
 		const response = await fetch('/submit-test-questions', {
@@ -202,17 +203,19 @@ async function submitPersonalityTest(event) {
 
 		const responseData = await response.json();
 
-		if (responseData.success) {
-			messageElement.textContent = "Test submitted successfully!";
-			mbtiElement.textContent = responseData.mbtiType;
-			fetchAndUpdateRecommendations();
-		} else {
-			throw new Error('Server response error');
-		}
-	} catch (error) {
-		console.error('Error:', error);
-		messageElement.textContent = "Error submitting test!";
-	}   
+        if (responseData.success) {
+            messageElement.textContent = "Test submitted successfully!";
+            mbtiElement.textContent = responseData.mbtiType;
+            retriving.style.display = 'none';
+
+            fetchAndUpdateRecommendations();
+        } else {
+            throw new Error('Server response error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        messageElement.textContent = "Error submitting test!";
+    }   
 }
 
 function fetchAndUpdateRecommendations() {
