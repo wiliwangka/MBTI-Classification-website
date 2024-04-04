@@ -103,7 +103,7 @@ router.post("/update-account-info", async (req, res) => {
 
 
 //API of submmiting test questions
-router.post("/submit-test-questions", async (req, res) => {
+router.get("/submit-test-questions", async (req, res) => {
     const {emailAddress, startDateTime, EIScore, SNScore, TFScore, JPScore} = req.body;
     // const testAnswer = appService.calculateMBTIScores(EIScore, SNScore, TFScore, JPScore);
     const insertResult = await appService.submitQuestions(emailAddress, startDateTime, EIScore, SNScore, TFScore, JPScore);
@@ -115,7 +115,7 @@ router.post("/submit-test-questions", async (req, res) => {
 });
 
 // API endpoint of getting recommendation books
-router.post("/get-book-recommendation", async (req, res) => {
+router.get("/get-book-recommendation", async (req, res) => {
 	const {mbtiName} = req.body;
 	try{
 		const result = await appService.getRecommendedBooks(mbtiName);
@@ -127,7 +127,7 @@ router.post("/get-book-recommendation", async (req, res) => {
 })
 
 // API endpoint of getting recommendation videos
-router.post("/get-video-recommendation", async (req, res) => {
+router.get("/get-video-recommendation", async (req, res) => {
 	const {mbtiName} = req.body;
 	try{
 		const result = await appService.getRecommendedVideos(mbtiName);
