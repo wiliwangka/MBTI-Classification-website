@@ -42,7 +42,7 @@ router.post("/initiate-All-Tables", async (req, res) => {
 
 // API of Register feature
 router.post('/register', async (req, res) => {
-    const emailAddress = req.body.email;
+    const emailAddress = req.body.emailAddress;
     const password = req.body.password;
     const mbtiName = req.body.mbtiName;
     const age = req.body.age;
