@@ -380,14 +380,18 @@ async function getMaxTid() {
 
 
 async function getRecommendedVideos(mbtiType) {
+	// console.log(mbtiType);
 	return withOracleDB(async(connection) => {
 		const result = await connection.execute(
-		`SELECT videoTitle, videoType, videoLink
+		`SELECT V.videoTitle, V.videoType, V.videoLink
 		FROM IsRecommendedVideo IRV, MyVideo V
 		WHERE IRV.videoLink = V.videoLink AND IRV.mbtiName = :mbtiType
 		`,
+		
 		[mbtiType],
 		{ autoCommit: true });
+		// console.log(result.rows[0]);
+		console.log(result);
 		return result.rows;
 	}).catch((error) => {
 		// What should happen if there is an error?
@@ -413,7 +417,7 @@ async function countRecommendedVideos(mbtiType) {
 async function getRecommendedBooks(mbtiType) {
 	return withOracleDB(async(connection) => {
 		const result = await connection.execute(
-		`SELECT bookTitle, bookAuthor, bookURL
+		`SELECT B.bookTitle, B.bookAuthor, B.bookURL
 		FROM IsRecommendedBook IRB, MyBook B
 		WHERE IRB.bookURL = B.bookURL AND IRB.mbtiName = :mbtiType
 		`,
@@ -445,7 +449,7 @@ async function countRecommendedBooks(mbtiType) {
 async function getRecommendedArticles(mbtiType) {
 	return withOracleDB(async(connection) => {
 		const result = await connection.execute(
-		`SELECT articleTitle, articleAuthor, articleText, articleURL
+		`SELECT A.articleTitle, A.articleAuthor, A.articleText, A.articleURL
 		FROM IsRecommendedArticle IRA, MyArticle A
 		WHERE IRA.articleURL = A.articleURL AND IRA.mbtiName = :mbtiType
 		`,

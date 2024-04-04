@@ -116,10 +116,11 @@ router.post("/submit-test-questions", async (req, res) => {
 
 // API endpoint of getting recommendation books
 router.get("/get-book-recommendation", async (req, res) => {
-	const {mbtiName} = req.body;
+	const {mbtiName} = req.query;
 	try{
 		const result = await appService.getRecommendedBooks(mbtiName);
 		res.json({success: true, data: result});
+        
 	} catch (error) {
 		res.status(500).json({success: false, message: "error exists in getting books"});
 	}
@@ -128,10 +129,14 @@ router.get("/get-book-recommendation", async (req, res) => {
 
 // API endpoint of getting recommendation videos
 router.get("/get-video-recommendation", async (req, res) => {
-	const {mbtiName} = req.body;
+
+	const {mbtiName} = req.query;
+	
 	try{
+		
 		const result = await appService.getRecommendedVideos(mbtiName);
 		res.json({success: true, data: result});
+		
 	} catch (error) {
 		res.status(500).json({success: false, message: "error exists in getting videos"});
 	}
@@ -140,7 +145,7 @@ router.get("/get-video-recommendation", async (req, res) => {
 
 //API endpoint of getting recommendation articles
 router.get("/get-article-recommendation", async (req, res) => {
-	const {mbtiName} = req.body;
+	const {mbtiName} = req.query;
 	try{
 		const result = await appService.getRecommendedArticles(mbtiName);
 		res.json({success: true, data: result});

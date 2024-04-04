@@ -202,13 +202,20 @@ async function submitPersonalityTest(event) {
 
 
 		const responseData = await response.json();
+        let mbti = responseData.mbtiType;
 
         if (responseData.success) {
             messageElement.textContent = "Test submitted successfully!";
             mbtiElement.textContent = responseData.mbtiType;
             retriving.style.display = 'none';
+         console.log(mbti);
+            fetchAndUpdateRecommendations('/get-book-recommendation', mbti, 'books');
+    fetchAndUpdateRecommendations('/get-video-recommendation', mbti, 'videos');
+    fetchAndUpdateRecommendations('/get-article-recommendation', mbti, 'articles');
 
-            fetchAndUpdateRecommendations();
+//     updateTable('books', testBooks);
+// updateTable('videos', testVideos);
+// updateTable('articles', testArticles);
         } else {
             throw new Error('Server response error');
         }
@@ -217,38 +224,166 @@ async function submitPersonalityTest(event) {
         messageElement.textContent = "Error submitting test!";
     }   
 }
+// async function fetchAndDisplayUsers() {
+//     const tableElement = document.getElementById('demotable');
+//     const tableBody = tableElement.querySelector('tbody');
 
-async function fetchAndUpdateRecommendations() {
-	fetch('/path/to/recommendations/api')
-		.then(response => response.json())
-		.then(data => {
-			updateTable('books', data.books);
-			updateTable('videos', data.videos);
-			updateTable('articles', data.articles);
-		})
-		.catch(error => console.error('Failed to fetch recommendations:', error));
+//     const response = await fetch('/demotable', {
+//         method: 'GET'
+//     });
+
+//     const responseData = await response.json();
+//     const demotableContent = responseData.data;
+
+//     // Always clear old, already fetched data before new fetching process.
+//     if (tableBody) {
+//         tableBody.innerHTML = '';
+//     }
+
+//     demotableContent.forEach(user => {
+//         const row = tableBody.insertRow();
+//         user.forEach((field, index) => {
+//             const cell = row.insertCell(index);
+//             cell.textContent = field;
+//         });
+//     });
+// }
+
+
+
+
+
+// async function fetchAndUpdateRecommendations() {
+
+
+//     fetchAndUpdateRecommendations('/get-book-recommendation', mbtiName, 'books');
+//     fetchAndUpdateRecommendations('/get-video-recommendation', mbtiName, 'videos');
+//     fetchAndUpdateRecommendations('/get-article-recommendation', mbtiName, 'articles');
+
+//     const bookresponse = await fetch('/get-book-recommendatio', {
+//         method: 'GET'
+//     });
+
+//     const bookresponseData = await bookresponse.json();
+//     const booktableContent = bookresponseData.data;
+//     updateTable('books', booktableContent);
+
+//     // Always clear old, already fetched data before new fetching process.
+//     // if (tableBody) {
+//     //     tableBody.innerHTML = '';
+//     // }
+//     // booktableContent.forEach(user => {
+//     //     const row = tableBody.insertRow();
+//     //     user.forEach((field, index) => {
+//     //         const cell = row.insertCell(index);
+//     //         cell.textContent = field;
+//     //     });
+//     // });
+
+// 		.then(response => response.json())
+// 		.then(data => {
+// 			updateTable('books', data.books);
+// 			updateTable('videos', data.videos);
+// 			updateTable('articles', data.articles);
+// 		})
+// 		.catch(error => console.error('Failed to fetch recommendations:', error));
+// }
+
+// function fetchAndUpdateRecommendations(apiEndpoint, mbtiName, type) {
+//     fetch(`${apiEndpoint}?mbtiName=${mbtiName}`) // Assuming you will use query parameters
+//         .then(response => response.json())
+//         .then(data => {
+//             if (data.success) {
+//                 updateTable(type, data.data);
+//             } else {
+//                 console.error(`Failed to fetch ${type}:`, data.message);
+//             }
+//         })
+//         .catch(error => console.error(`Error fetching ${type}:`, error));
+// }
+
+
+// function fetchAndUpdateRecommendations(apiEndpoint, mbtiName, type) {
+//     fetch(apiEndpoint, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({ mbtiName: mbtiName })
+//     })
+
+
+function fetchAndUpdateRecommendations(apiEndpoint, mbtiName, type) {
+    fetch(`${apiEndpoint}?mbtiName=${encodeURIComponent(mbtiName)}`)  // Ensure the parameter is properly encoded
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+				// console.log(1);
+				// console.log("chia");
+				// console.log(data);
+                updateTable(type, data.data);
+            } else {
+                console.error(`Failed to fetch ${type}:`, data.message);
+            }
+        })
+        .catch(error => console.error(`Error fetching ${type}:`, error));
 }
+
+    // .then(response => response.json())
+    // .then(data => {
+    //     if (data.success) {
+    //         updateTable(type, data.data);
+    //     } else {
+    //         console.error(`Failed to fetch ${type}:`, data.message);
+    //     }
+    // })
+    // .catch(error => console.error(`Error fetching ${type}:`, error));
+// }
 
 
 
 function updateTable(type, items) {
-	const table = document.querySelector(`.${type}-section table`);
-	let rows = '';
+	console.log(items);
+    // Select the correct table based on the type of content
+    const table = document.querySelector(`.${type}-section table`);
+    
+    // Generate table rows from the items array
+    let rows = items.map(item => {
+		
+        switch (type) {
+			
+            case 'books':
+				console.log(2);
+                return `<tr>
+                            <td>${item[0]}</td>
+                            <td>${item[1]}</td>
+                            <td><a href="${item[2]}">Read here</a></td>
+                            
+                        </tr>`;
+            case 'videos':
+				console.log(3);
+                return `<tr>
+                            <td>${item[0]}</td>
+                            <td>${item[1]}</td>
+                            <td><a href="${item[2]}">Watch here</a></td>
+                        </tr>`;
+            case 'articles':
+				
+                return `<tr>
+                            <td>${item[0]}</td>
+                            <td>${item[1]}</td>
+                            <td>${item[2]}</td>
+                            <td><a href="${item[3]}">Read here</a></td>
+                        </tr>`;
+            default:
+                return '';
+        }
+    }).join('');
 
-	items.forEach(item => {
-		rows += `<tr>
-					<td>${item.title}</td>
-					<td>${item.author || item.creator || item.source}</td>
-					<td>${item.description || `<a href="${item.link}">${item.linkText || 'View'}</a>`}</td>
-				 </tr>`;
-	});
-
-	table.innerHTML = `<tr>
-						  <th>Title</th>
-						  <th>${type === 'books' ? 'Author' : type === 'videos' ? 'Creator' : 'Source'}</th>
-						  <th>${type === 'books' ? 'Description' : 'Link'}</th>
-					   </tr>` + rows;
+    // Set the inner HTML of the table to include the new rows
+    table.innerHTML = rows;
 }
+
 
 
 
@@ -303,6 +438,76 @@ window.onload = function() {
 	document.getElementById("updataUserTable").addEventListener("submit", updateAccountInfo);
 	document.getElementById("countmbtitable").addEventListener("click", countMBTItype);
 };
+
+
+
+
+
+
+
+
+
+
+
+// Test items for "books"
+const testBooks = [
+    {
+        bookTitle: "1984",
+        bookAuthor: "George Orwell",
+        bookURL: "https://example.com/1984"
+    },
+    {
+        bookTitle: "Brave New World",
+        bookAuthor: "Aldous Huxley",
+        bookURL: "https://example.com/brave-new-world"
+    },
+    {
+        bookTitle: "To Kill a Mockingbird",
+        bookAuthor: "Harper Lee",
+        bookURL: "https://example.com/to-kill-a-mockingbird"
+    }
+];
+
+// Test items for "videos"
+const testVideos = [
+    {
+        videoTitle: "The Power of Vulnerability",
+        videoType: "TED Talk",
+        videoLink: "https://example.com/the-power-of-vulnerability"
+    },
+    {
+        videoTitle: "Understanding the Universe",
+        videoType: "Documentary",
+        videoLink: "https://example.com/understanding-the-universe"
+    },
+    {
+        videoTitle: "Learn JavaScript in 1 Hour",
+        videoType: "Tutorial",
+        videoLink: "https://example.com/learn-javascript"
+    }
+];
+
+// Test items for "articles"
+const testArticles = [
+    {
+        articleTitle: "Exploring the Depths of the Ocean",
+        articleAuthor: "Jane Doe",
+        articleText: "An in-depth look at ocean exploration.",
+        articleURL: "https://example.com/exploring-ocean"
+    },
+    {
+        articleTitle: "The Future of Artificial Intelligence",
+        articleAuthor: "John Smith",
+        articleText: "Predicting how AI will evolve in the coming years.",
+        articleURL: "https://example.com/future-ai"
+    },
+    {
+        articleTitle: "Meditation and Mindfulness",
+        articleAuthor: "Emily White",
+        articleText: "How meditation and mindfulness change the brain.",
+        articleURL: "https://example.com/meditation-mindfulness"
+    }
+];
 
 // General function to refresh the displayed table data. 
 // You can invoke this after any table-modifying operation to keep consistency.

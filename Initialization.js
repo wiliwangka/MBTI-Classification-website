@@ -6,6 +6,13 @@ async function initiateAllTables(connection) {
 		const result2 = await createAllTables(connection);
 		const result3 = await insertMBTI_Types(connection);
 		const result4 = await insertOutputs_4(connection); //populate Outputs_4 table
+		const result5 = await insertMyArticle(connection);
+		const result6 = await 	insertMyBook(connection);
+		const result7 = await 	insertMyVideo(connection);
+		const result8 = await insertRecommendedArticles(connection);
+		const result9 = await insertRecommendedBooks(connection);
+		const result10 = await insertRecommendedVideos(connection);
+		
 		return true;
 	} catch(err) {
 		if (typeof err === "string") {
@@ -310,24 +317,36 @@ async function insertOutputs_4(connection) {
 }
 
 
-async function insertrecommendedcontent(){
- insertRecommendedArticles();
- insertRecommendedBooks();
- insertRecommendedVideos();
- insertMyArticle();
- insertMyBook();
- insertMyVideo();
+async function insertrecommendedcontent(connection){
+
+	 insertMyArticle(connection);
+	 insertMyBook(connection);
+	 insertMyVideo(connection);
+ insertRecommendedArticles(connection);
+ insertRecommendedBooks(connection);
+ insertRecommendedVideos(connection);
+
 
 }
-//   mbtiName CHAR(4) NOT NULL,
-//     videoLink VARCHAR(255) NOT NULL,
-//     PRIMARY KEY (mbtiName, videoLink),
-//     FOREIGN KEY (mbtiName) REFERENCES MBTI_Type(mbtiName) ON DELETE CASCADE,
-//     FOREIGN KEY (videoLink) REFERENCES MyVideo(videoLink) ON DELETE CASCADE
+
 async function insertRecommendedVideos(connection) {
     const videos = [
-        { mbtiName: 'INFP', videoLink: 'http://example.com/video/infp' },
-        // Add more entries for each MBTI type with appropriate video links
+		{mbtiName: 'INFP', videoLink: 'http://example.com/video/infp'},
+		{mbtiName: 'INFJ', videoLink: 'http://example.com/video/infj'},
+		{mbtiName: 'INTJ', videoLink: 'http://example.com/video/intj'},
+		{mbtiName: 'INTP', videoLink: 'http://example.com/video/intp'},
+		{mbtiName: 'ISFP', videoLink: 'http://example.com/video/isfp'},
+		{mbtiName: 'ISFJ', videoLink: 'http://example.com/video/isfj'},
+		{mbtiName: 'ISTP', videoLink: 'http://example.com/video/istp'},
+		{mbtiName: 'ISTJ', videoLink: 'http://example.com/video/istj'},
+		{mbtiName: 'ENFP', videoLink: 'http://example.com/video/enfp'},
+		{mbtiName: 'ENFJ', videoLink: 'http://example.com/video/enfj'},
+		{mbtiName: 'ENTJ', videoLink: 'http://example.com/video/entj'},
+		{mbtiName: 'ENTP', videoLink: 'http://example.com/video/entp'},
+		{mbtiName: 'ESFP', videoLink: 'http://example.com/video/esfp'},
+		{mbtiName: 'ESFJ', videoLink: 'http://example.com/video/esfj'},
+		{mbtiName: 'ESTP', videoLink: 'http://example.com/video/estp'},
+		{mbtiName: 'ESTJ', videoLink: 'http://example.com/video/estj'}
     ];
 
     const insertSql = `
@@ -346,8 +365,22 @@ async function insertRecommendedVideos(connection) {
 
 async function insertRecommendedBooks(connection) {
     const books = [
-        { mbtiName: 'INFP', bookURL: 'http://example.com/book/infp' },
-        // Add more entries for each MBTI type with appropriate book URLs
+		{mbtiName: 'INFP', bookURL: 'http://example.com/book/infp'},
+		{mbtiName: 'INFJ', bookURL: 'http://example.com/book/infj'},
+		{mbtiName: 'INTJ', bookURL: 'http://example.com/book/intj'},
+		{mbtiName: 'INTP', bookURL: 'http://example.com/book/intp'},
+		{mbtiName: 'ISFP', bookURL: 'http://example.com/book/isfp'},
+		{mbtiName: 'ISFJ', bookURL: 'http://example.com/book/isfj'},
+		{mbtiName: 'ISTP', bookURL: 'http://example.com/book/istp'},
+		{mbtiName: 'ISTJ', bookURL: 'http://example.com/book/istj'},
+		{mbtiName: 'ENFP', bookURL: 'http://example.com/book/enfp'},
+		{mbtiName: 'ENFJ', bookURL: 'http://example.com/book/enfj'},
+		{mbtiName: 'ENTJ', bookURL: 'http://example.com/book/entj'},
+		{mbtiName: 'ENTP', bookURL: 'http://example.com/book/entp'},
+		{mbtiName: 'ESFP', bookURL: 'http://example.com/book/esfp'},
+		{mbtiName: 'ESFJ', bookURL: 'http://example.com/book/esfj'},
+		{mbtiName: 'ESTP', bookURL: 'http://example.com/book/estp'},
+		{mbtiName: 'ESTJ', bookURL: 'http://example.com/book/estj'}
     ];
 
     const insertSql = `
@@ -365,8 +398,22 @@ async function insertRecommendedBooks(connection) {
 
 async function insertRecommendedArticles(connection) {
     const articles = [
-        { mbtiName: 'INFP', articleURL: 'http://example.com/article/infp' },
-        // Add more entries for each MBTI type with appropriate article URLs
+		{mbtiName: 'INFP', articleURL: 'http://example.com/article/infp'},
+		{mbtiName: 'INFJ', articleURL: 'http://example.com/article/infj'},
+		{mbtiName: 'INTJ', articleURL: 'http://example.com/article/intj'},
+		{mbtiName: 'INTP', articleURL: 'http://example.com/article/intp'},
+		{mbtiName: 'ISFP', articleURL: 'http://example.com/article/isfp'},
+		{mbtiName: 'ISFJ', articleURL: 'http://example.com/article/isfj'},
+		{mbtiName: 'ISTP', articleURL: 'http://example.com/article/istp'},
+		{mbtiName: 'ISTJ', articleURL: 'http://example.com/article/istj'},
+		{mbtiName: 'ENFP', articleURL: 'http://example.com/article/enfp'},
+		{mbtiName: 'ENFJ', articleURL: 'http://example.com/article/enfj'},
+		{mbtiName: 'ENTJ', articleURL: 'http://example.com/article/entj'},
+		{mbtiName: 'ENTP', articleURL: 'http://example.com/article/entp'},
+		{mbtiName: 'ESFP', articleURL: 'http://example.com/article/esfp'},
+		{mbtiName: 'ESFJ', articleURL: 'http://example.com/article/esfj'},
+		{mbtiName: 'ESTP', articleURL: 'http://example.com/article/estp'},
+		{mbtiName: 'ESTJ', articleURL: 'http://example.com/article/estj'}
     ];
 
     const insertSql = `
@@ -384,8 +431,22 @@ async function insertRecommendedArticles(connection) {
 
 async function insertMyVideo(connection) {
     const videos = [
-        { videoLink: 'http://example.com/video/infp', videoType: 'Motivational', videoTitle: 'INFP Inspiration' },
-        // Add more entries for each MBTI type with appropriate video links, types, and titles
+        {videoLink: 'http://example.com/video/infp', videoType: 'Motivational', videoTitle: 'INFP Inspiration'},
+    {videoLink: 'http://example.com/video/infj', videoType: 'Motivational', videoTitle: 'INFJ Inspiration'},
+    {videoLink: 'http://example.com/video/intj', videoType: 'Motivational', videoTitle: 'INTJ Inspiration'},
+    {videoLink: 'http://example.com/video/intp', videoType: 'Motivational', videoTitle: 'INTP Inspiration'},
+    {videoLink: 'http://example.com/video/isfp', videoType: 'Motivational', videoTitle: 'ISFP Inspiration'},
+    {videoLink: 'http://example.com/video/isfj', videoType: 'Motivational', videoTitle: 'ISFJ Inspiration'},
+    {videoLink: 'http://example.com/video/istp', videoType: 'Motivational', videoTitle: 'ISTP Inspiration'},
+    {videoLink: 'http://example.com/video/istj', videoType: 'Motivational', videoTitle: 'ISTJ Inspiration'},
+    {videoLink: 'http://example.com/video/enfp', videoType: 'Motivational', videoTitle: 'ENFP Inspiration'},
+    {videoLink: 'http://example.com/video/enfj', videoType: 'Motivational', videoTitle: 'ENFJ Inspiration'},
+    {videoLink: 'http://example.com/video/entj', videoType: 'Motivational', videoTitle: 'ENTJ Inspiration'},
+    {videoLink: 'http://example.com/video/entp', videoType: 'Motivational', videoTitle: 'ENTP Inspiration'},
+    {videoLink: 'http://example.com/video/esfp', videoType: 'Motivational', videoTitle: 'ESFP Inspiration'},
+    {videoLink: 'http://example.com/video/esfj', videoType: 'Motivational', videoTitle: 'ESFJ Inspiration'},
+    {videoLink: 'http://example.com/video/estp', videoType: 'Motivational', videoTitle: 'ESTP Inspiration'},
+    {videoLink: 'http://example.com/video/estj', videoType: 'Motivational', videoTitle: 'ESTJ Inspiration'}
     ];
 
     const insertSql = `
@@ -404,8 +465,22 @@ async function insertMyVideo(connection) {
 
 async function insertMyBook(connection) {
     const books = [
-        { bookURL: 'http://example.com/book/infp', bookTitle: 'INFP: The Dreamer', bookAuthor: 'Jane Doe' },
-        // Add more entries for each MBTI type with appropriate book URLs, titles, and authors
+		{bookURL: 'http://example.com/book/infp', bookTitle: 'INFP: The Dreamer', bookAuthor: 'Jane Doe'},
+		{bookURL: 'http://example.com/book/infj', bookTitle: 'INFJ: The Advocate', bookAuthor: 'John Smith'},
+		{bookURL: 'http://example.com/book/intj', bookTitle: 'INTJ: The Architect', bookAuthor: 'Alex Johnson'},
+		{bookURL: 'http://example.com/book/intp', bookTitle: 'INTP: The Thinker', bookAuthor: 'Sam Lee'},
+		{bookURL: 'http://example.com/book/isfp', bookTitle: 'ISFP: The Artist', bookAuthor: 'Chris Wong'},
+		{bookURL: 'http://example.com/book/isfj', bookTitle: 'ISFJ: The Defender', bookAuthor: 'Morgan Taylor'},
+		{bookURL: 'http://example.com/book/istp', bookTitle: 'ISTP: The Craftsman', bookAuthor: 'Jordan Casey'},
+		{bookURL: 'http://example.com/book/istj', bookTitle: 'ISTJ: The Inspector', bookAuthor: 'Taylor Morgan'},
+		{bookURL: 'http://example.com/book/enfp', bookTitle: 'ENFP: The Champion', bookAuthor: 'Jamie Reed'},
+		{bookURL: 'http://example.com/book/enfj', bookTitle: 'ENFJ: The Giver', bookAuthor: 'Casey Jordan'},
+		{bookURL: 'http://example.com/book/entj', bookTitle: 'ENTJ: The Commander', bookAuthor: 'Jordan Alex'},
+		{bookURL: 'http://example.com/book/entp', bookTitle: 'ENTP: The Debater', bookAuthor: 'Alexis King'},
+		{bookURL: 'http://example.com/book/esfp', bookTitle: 'ESFP: The Performer', bookAuthor: 'Dylan Carter'},
+		{bookURL: 'http://example.com/book/esfj', bookTitle: 'ESFJ: The Caregiver', bookAuthor: 'Charlie Quinn'},
+		{bookURL: 'http://example.com/book/estp', bookTitle: 'ESTP: The Dynamo', bookAuthor: 'Quinn Charlie'},
+		{bookURL: 'http://example.com/book/estj', bookTitle: 'ESTJ: The Director', bookAuthor: 'Carter Dylan'}
     ];
 
     const insertSql = `
@@ -423,8 +498,22 @@ async function insertMyBook(connection) {
 }
 async function insertMyArticle(connection) {
     const articles = [
-        { articleURL: 'http://example.com/article/infp', articleTitle: 'Understanding the INFP', articleAuthor: 'John Smith', articleText: 'INFPs are...' },
-        // Add more entries for each MBTI type with appropriate article URLs, titles, authors, and texts
+        {articleURL: 'http://example.com/article/infp', articleTitle: 'Understanding the INFP', articleAuthor: 'John Smith', articleText: 'INFPs are...'},
+    {articleURL: 'http://example.com/article/infj', articleTitle: 'Exploring the INFJ Personality', articleAuthor: 'Jane Doe', articleText: 'INFJs are...'},
+    {articleURL: 'http://example.com/article/intj', articleTitle: 'The World of the INTJ', articleAuthor: 'Alex Johnson', articleText: 'INTJs are...'},
+    {articleURL: 'http://example.com/article/intp', articleTitle: 'Inside the Mind of an INTP', articleAuthor: 'Sam Lee', articleText: 'INTPs are...'},
+    {articleURL: 'http://example.com/article/isfp', articleTitle: 'ISFP: The Artistic Spirit', articleAuthor: 'Chris Wong', articleText: 'ISFPs are...'},
+    {articleURL: 'http://example.com/article/isfj', articleTitle: 'The ISFJ Personality: A Closer Look', articleAuthor: 'Morgan Taylor', articleText: 'ISFJs are...'},
+    {articleURL: 'http://example.com/article/istp', articleTitle: 'ISTP: Understanding the Mechanic', articleAuthor: 'Jordan Casey', articleText: 'ISTPs are...'},
+    {articleURL: 'http://example.com/article/istj', articleTitle: 'The ISTJ Type: An Overview', articleAuthor: 'Taylor Morgan', articleText: 'ISTJs are...'},
+    {articleURL: 'http://example.com/article/enfp', articleTitle: 'ENFP: The Inspirational Motivator', articleAuthor: 'Jamie Reed', articleText: 'ENFPs are...'},
+    {articleURL: 'http://example.com/article/enfj', articleTitle: 'Decoding the ENFJ Personality', articleAuthor: 'Casey Jordan', articleText: 'ENFJs are...'},
+    {articleURL: 'http://example.com/article/entj', articleTitle: 'The ENTJ Leader', articleAuthor: 'Jordan Alex', articleText: 'ENTJs are...'},
+    {articleURL: 'http://example.com/article/entp', articleTitle: 'The Visionary ENTP', articleAuthor: 'Alexis King', articleText: 'ENTPs are...'},
+    {articleURL: 'http://example.com/article/esfp', articleTitle: 'ESFP: The Life of the Party', articleAuthor: 'Dylan Carter', articleText: 'ESFPs are...'},
+    {articleURL: 'http://example.com/article/esfj', articleTitle: 'The Care and Feeding of the ESFJ', articleAuthor: 'Charlie Quinn', articleText: 'ESFJs are...'},
+    {articleURL: 'http://example.com/article/estp', articleTitle: 'The Dynamic ESTP', articleAuthor: 'Quinn Charlie', articleText: 'ESTPs are...'},
+    {articleURL: 'http://example.com/article/estj', articleTitle: 'The ESTJ at Work and Play', articleAuthor: 'Carter Dylan', articleText: 'ESTJs are...'}
     ];
 
     const insertSql = `
