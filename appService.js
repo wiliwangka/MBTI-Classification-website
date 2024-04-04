@@ -81,14 +81,30 @@ async function testOracleConnection() {
 	});
 }
 
-async function fetchDemotableFromDb() {
-	return await withOracleDB(async (connection) => {
-		const result = await connection.execute('SELECT * FROM DEMOTABLE');
-		return result.rows;
-	}).catch(() => {
-		return [];
-	});
+async function logIn(emailAddress, password) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`SELECT * FROM LoginUser WHERE emailAddress = :emailAddress AND password = :password`,
+		[emailAddress, password],
+		{ autoCommit: true });
+        if (result.rows.length > 0) {
+            return [true, result.rows[0]];
+        } else {
+            return [false, null];
+        }
+        
+    }).catch((error) => { 
+        throw error;
+    });
 }
+
+// async function fetchDemotableFromDb() {
+// 	return await withOracleDB(async (connection) => {
+// 		const result = await connection.execute('SELECT * FROM DEMOTABLE');
+// 		return result.rows;
+// 	}).catch(() => {
+// 		return [];
+// 	});
+// }
 
 async function initialize() {
 	usernameGenerator = 1;
@@ -494,25 +510,14 @@ async function updateLoginUserMbti(emailAddress, mbtiType) {
 	});
 }
 
-// mbtiName CHAR(4) NOT NULL,
-// username VARCHAR(63) NOT NULL,
-// password VARCHAR(255) NOT NULL,
-// emailAddress VARCHAR(255) NOT NULL,
-// age INT,
-// country VARCHAR(255),
-// userGender CHAR(1),
-// PRIMARY KEY (username),
-// UNIQUE (emailAddress),
-// FOREIGN KEY (username) REFERENCES MyUser(username) ON DELETE CASCADE,
-// FOREIGN KEY (mbtiName) REFERENCES MBTI_Type(mbtiName) ON DELETE CASCADE
 
-async function updateAccountInfo(emailAddress, password, mbtiName, age, country, userGender) {
-	return await withOracleDB(async (connection) => {
-		const result = await connection.execute(
-			`UPDATE LoginUser SET mbtiName = :mbti, age = :age, country = :country, password= :password  WHERE emailAddress = :email`,
-			{ mbti, age, country,password, email },
-			{ autoCommit: true }
-		);
+async function updateAccountInfo(email,password, mbti, age, country) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `UPDATE LoginUser SET mbtiName = :mbti, age = :age, country = :country, password= :password  WHERE emailAddress = :email`,
+            { mbti, age, country,password, email },
+            { autoCommit: true }
+        );
 
 		return result.rowsAffected && result.rowsAffected > 0;
 	}).catch((error) => {
@@ -559,7 +564,7 @@ async function getLoginUserTable() {
 
 module.exports = {
 	testOracleConnection,
-	fetchDemotableFromDb,
+	// fetchDemotableFromDb,
 	initialize,
 	insertLoginUser,
 	updateAccountInfo,
