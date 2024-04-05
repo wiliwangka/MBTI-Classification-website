@@ -47,7 +47,7 @@ router.post('/register', async (req, res) => {
     const mbtiName = req.body.mbtiName;
     const age = req.body.age;
     const country = req.body.country;
-    const userGender = req.body.gender;
+    const userGender = req.body.userGender;
     const insertResult = await appService.insertLoginUser(emailAddress, password, mbtiName, age, country, userGender);
     if (insertResult) {
         res.json({ success: true });
@@ -77,16 +77,18 @@ router.post('/logIn', async (req,res) => {
 
 router.post("/update-account-info", async (req, res) => {
 	// Extract the updated fields from the request body
-	const emailAddress = req.body.emailAddress;
-	const password = req.body.password;
+	const oldEmailAddress = req.body.oldEmailAddress;
+	const oldPassword = req.body.oldPassword;
+	const newEmailAddress = req.body.newEmailAddress;
+	const newPassword = req.body.newPassword;
 	const mbtiName = req.body.mbtiName;
 	const age = req.body.age;
 	const country = req.body.country;
-	const userGender = req.body.gender;
+	const userGender = req.body.userGender;
 
 	// Assuming you have a method in appService to handle the account update
 	try {
-		const updateResult = await appService.updateAccountInfo(emailAddress, password, mbtiName, age, country, userGender);
+		const updateResult = await appService.updateAccountInfo(oldEmailAddress, oldPassword, newEmailAddress, newPassword, mbtiName, age, country, userGender);
 		if (updateResult) {
 			res.json({ success: true });
 		} else {
