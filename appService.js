@@ -489,10 +489,10 @@ async function getMbtiMoreThanN(number) {
 		FROM LoginUser lu, Mbti_Type m
 		WHERE lu.mbtiName = m.mbtiName
 		GROUP BY m.mbtiName
-		HAVING COUNT(lu.username) > :number
+		HAVING COUNT(lu.username) > :N
 		ORDER BY m.mbtiName
 		`,
-		{number: number});
+		{N: number});
 		return result.rows;
 	}).catch((error) => {
 		console.log(error, "error exists in getting mbti that have more than n login Users");
