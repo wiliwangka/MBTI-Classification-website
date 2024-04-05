@@ -489,7 +489,7 @@ async function getMbtiMoreThanN(number) {
 		FROM LoginUser lu, Mbti_Type m
 		WHERE lu.mbtiName = m.mbtiName
 		GROUP BY m.mbtiName
-		HAVING COUNT(lu.username) > :N
+		HAVING COUNT(lu.username) >= :N
 		ORDER BY m.mbtiName
 		`,
 		{N: number});
