@@ -47,7 +47,7 @@ router.post('/register', async (req, res) => {
     const mbtiName = req.body.mbtiName;
     const age = req.body.age;
     const country = req.body.country;
-    const userGender = req.body.gender;
+    const userGender = req.body.userGender;
     const insertResult = await appService.insertLoginUser(emailAddress, password, mbtiName, age, country, userGender);
     if (insertResult) {
         res.json({ success: true });
@@ -63,7 +63,7 @@ router.post('/logIn', async (req,res) => {
 	try {
 		const existing  = await appService.logIn(emailAddress, password);
 		if (existing[0]) {
-			res.json({ success: true, message: 'Log in successfully', user: existing[1]});
+			res.json({ success: true, message: 'Log in successfully', mbtiName: existing[0]});
 		} else {
 			res.status(404).json({ success: false, message: 'Account is not existed or password is wrong' });
 		}
