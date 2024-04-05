@@ -161,7 +161,7 @@ router.get("/get-article-recommendation", async (req, res) => {
 router.get("/get-numbers-mbti", async (req, res) => {
 	const {mbtiName} = req.query;
 	try{
-		console.log(res);
+		
 		const result = await appService.getNumberOfMbti(mbtiName);
 		res.json({success: true, data: result});
 	} catch (error) {

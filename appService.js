@@ -308,7 +308,7 @@ async function updateOutputs_3(tid, EIScore, SNScore, TFScore, JPScore) {
 }
 
 async function updateOutputs_2(emailAddress, startDateTime, tid){
-	console.log(startDateTime);
+	
   	return await withOracleDB(async (connection) => {
 		const sql = `
 		INSERT INTO Outputs_2 (TID, startDateTime, username)
@@ -380,7 +380,7 @@ async function getMaxTid() {
 
 
 async function getRecommendedVideos(mbtiType) {
-	// console.log(mbtiType);
+
 	return withOracleDB(async(connection) => {
 		const result = await connection.execute(
 		`SELECT V.videoTitle, V.videoType, V.videoLink
@@ -390,8 +390,8 @@ async function getRecommendedVideos(mbtiType) {
 		
 		[mbtiType],
 		{ autoCommit: true });
-		// console.log(result.rows[0]);
-		console.log(result);
+	
+
 		return result.rows;
 	}).catch((error) => {
 		// What should happen if there is an error?
