@@ -1,4 +1,3 @@
-const appServiceMain = require('./appService');
 
 async function initiateAllTables(connection) {
 	try {
@@ -7,8 +6,8 @@ async function initiateAllTables(connection) {
 		const result3 = await insertMBTI_Types(connection);
 		const result4 = await insertOutputs_4(connection); //populate Outputs_4 table
 		const result5 = await insertMyArticle(connection);
-		const result6 = await 	insertMyBook(connection);
-		const result7 = await 	insertMyVideo(connection);
+		const result6 = await insertMyBook(connection);
+		const result7 = await insertMyVideo(connection);
 		const result8 = await insertRecommendedArticles(connection);
 		const result9 = await insertRecommendedBooks(connection);
 		const result10 = await insertRecommendedVideos(connection);

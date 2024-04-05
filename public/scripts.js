@@ -114,8 +114,10 @@ async function updateAccountInfo(event) {
 	event.preventDefault();
 
 
-	const emailValue = document.getElementById('updateEmail').value;
-	const passwordValue = document.getElementById('updatePassword').value;
+	const oldEmailValue = document.getElementById('oldEmail').value;
+	const oldPasswordValue = document.getElementById('oldPassword').value;
+	const newEmailValue = document.getElementById('updateEmail').value;
+	const newPasswordValue = document.getElementById('updatePassword').value;
 	const mbtiValue = document.getElementById('updateMbti').value;
 	const ageValue = document.getElementById('updateAge').value;
 	const countryValue = document.getElementById('updateCountry').value;
@@ -128,8 +130,10 @@ async function updateAccountInfo(event) {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			emailAddress: emailValue,
-			password: passwordValue,
+			oldEmailAddress: oldEmailValue,
+			oldPassword: oldPasswordValue,
+			newEmailAddress: newEmailValue,
+			newPassword: newPasswordValue,
 			mbtiName: mbtiValue,
 			age: ageValue,
 			country: countryValue,
@@ -177,7 +181,7 @@ async function submitPersonalityTest(event) {
 
     const messageElement = document.getElementById('testResultMsg');
     const mbtiElement = document.getElementById('mbtiTypeDisplay');
-    const retriving = document.getElementById('mbtiType');
+    const retriving = document.getElementById('mbtiTypestatus');
 
 	try {
 		const response = await fetch('/submit-test-questions', {
@@ -190,21 +194,24 @@ async function submitPersonalityTest(event) {
 
 
 		const responseData = await response.json();
-        let mbti = responseData.mbtiType;
+        let mbti = responseData.mbtiType
+		console.log(responseData);
 
         if (responseData.success) {
+		
             messageElement.textContent = "Test submitted successfully!";
             mbtiElement.textContent = responseData.mbtiType;
             retriving.style.display = 'none';
          
             fetchAndUpdateRecommendations('/get-book-recommendation', mbti, 'books');
-    fetchAndUpdateRecommendations('/get-video-recommendation', mbti, 'videos');
-    fetchAndUpdateRecommendations('/get-article-recommendation', mbti, 'articles');
+			fetchAndUpdateRecommendations('/get-video-recommendation', mbti, 'videos');
+			fetchAndUpdateRecommendations('/get-article-recommendation', mbti, 'articles');
 
         } else {
             throw new Error('Server response error');
         }
     } catch (error) {
+		
         console.error('Error:', error);
         messageElement.textContent = "Error submitting test!";
     }   
@@ -408,7 +415,7 @@ async function deleteUser(event){
         }
     } catch (error) {
         console.error('Error:', error);
-        //resultElement.textContent = 'An error occurred while deleting the user.';
+    	resultElement.textContent = 'An error occurred while deleting the user.';
     }
 
 }
