@@ -109,3 +109,8 @@ button[type="submit"] {
     padding: 10px 20px; /* Adjust button padding to your preference */
     cursor: pointer; /* Changes cursor to pointer when hovering over button */
 }
+
+#mbtiTypeDisplay {
+    font-size: 50px; /* Larger text size */
+    color: blue; /* Text color set to blue */
+}

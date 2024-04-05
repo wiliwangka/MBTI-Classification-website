@@ -365,22 +365,22 @@ async function insertRecommendedVideos(connection) {
 
 async function insertRecommendedBooks(connection) {
     const books = [
-		{mbtiName: 'INFP', bookURL: 'http://example.com/book/infp'},
-		{mbtiName: 'INFJ', bookURL: 'http://example.com/book/infj'},
-		{mbtiName: 'INTJ', bookURL: 'http://example.com/book/intj'},
-		{mbtiName: 'INTP', bookURL: 'http://example.com/book/intp'},
-		{mbtiName: 'ISFP', bookURL: 'http://example.com/book/isfp'},
-		{mbtiName: 'ISFJ', bookURL: 'http://example.com/book/isfj'},
-		{mbtiName: 'ISTP', bookURL: 'http://example.com/book/istp'},
-		{mbtiName: 'ISTJ', bookURL: 'http://example.com/book/istj'},
-		{mbtiName: 'ENFP', bookURL: 'http://example.com/book/enfp'},
-		{mbtiName: 'ENFJ', bookURL: 'http://example.com/book/enfj'},
-		{mbtiName: 'ENTJ', bookURL: 'http://example.com/book/entj'},
-		{mbtiName: 'ENTP', bookURL: 'http://example.com/book/entp'},
-		{mbtiName: 'ESFP', bookURL: 'http://example.com/book/esfp'},
-		{mbtiName: 'ESFJ', bookURL: 'http://example.com/book/esfj'},
-		{mbtiName: 'ESTP', bookURL: 'http://example.com/book/estp'},
-		{mbtiName: 'ESTJ', bookURL: 'http://example.com/book/estj'}
+		{mbtiName: 'INFP', bookURL: 'http://example.com/book'},
+		{mbtiName: 'INFJ', bookURL: 'http://example.com/book'},
+		{mbtiName: 'INTJ', bookURL: 'http://example.com/book'},
+		{mbtiName: 'INTP', bookURL: 'http://example.com/book'},
+		{mbtiName: 'ISFP', bookURL: 'http://example.com/book'},
+		{mbtiName: 'ISFJ', bookURL: 'http://example.com/book'},
+		{mbtiName: 'ISTP', bookURL: 'http://example.com/book'},
+		{mbtiName: 'ISTJ', bookURL: 'http://example.com/book'},
+		{mbtiName: 'ENFP', bookURL: 'http://example.com/book'},
+		{mbtiName: 'ENFJ', bookURL: 'http://example.com/book'},
+		{mbtiName: 'ENTJ', bookURL: 'http://example.com/book'},
+		{mbtiName: 'ENTP', bookURL: 'http://example.com/book'},
+		{mbtiName: 'ESFP', bookURL: 'http://example.com/book'},
+		{mbtiName: 'ESFJ', bookURL: 'http://example.com/book'},
+		{mbtiName: 'ESTP', bookURL: 'http://example.com/book'},
+		{mbtiName: 'ESTJ', bookURL: 'http://example.com/book'}
     ];
 
     const insertSql = `
@@ -465,6 +465,7 @@ async function insertMyVideo(connection) {
 
 async function insertMyBook(connection) {
     const books = [
+		{bookURL: 'http://example.com/book', bookTitle: 'Example book', bookAuthor: 'Jane Doe'},
 		{bookURL: 'http://example.com/book/infp', bookTitle: 'INFP: The Dreamer', bookAuthor: 'Jane Doe'},
 		{bookURL: 'http://example.com/book/infj', bookTitle: 'INFJ: The Advocate', bookAuthor: 'John Smith'},
 		{bookURL: 'http://example.com/book/intj', bookTitle: 'INTJ: The Architect', bookAuthor: 'Alex Johnson'},

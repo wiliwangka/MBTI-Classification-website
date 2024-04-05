@@ -86,7 +86,7 @@
 <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 <form id="updataUserTable">
    
-	Update email: <input type="text" id="updateEmail" placeholder="Enter new email" > <br><br>
+	Update email: <input type="text" id="updateEmail" placeholder="Enter new email" required><br><br>
 	Update password: <input type="text" id="updatePassword" placeholder="Enter new password" > <br><br>
 	Update mbti: <input type="text" id="updateMbti" placeholder="Enter new MBTI type" > <br><br>
 	Update age: <input type="number" id="updateAge" placeholder="Enter new age" maxlength="20"> <br><br>
@@ -143,7 +143,7 @@
 			<!-- Placeholder where the MBTI type will be displayed -->
 			<div id="mbtiTypeDisplay">
 				<!-- This is where the MBTI type will be inserted by the JavaScript -->
-				<p id="mbtiType">Retrieving...</p>
+				<p id="mbtiTypestatus">Retrieving...</p>
 			</div>
 		
 			<!-- Additional details about the MBTI type could also be dynamically inserted here if needed -->
@@ -214,17 +214,17 @@
     </section>
     
 
- <!-- ===================================================================================== -->
+	<br><hr><br><!-- ===================================================================================== -->
  <h2>Count the number of MBTI type in database</h2>
 
  <!-- Dropdown to select an MBTI type -->
  <select id="mbtiType">
+	 <option value="INFP">INFP</option>
 	 <option value="INTJ">INTJ</option>
 	 <option value="INTP">INTP</option>
 	 <option value="ENTJ">ENTJ</option>
 	 <option value="ENTP">ENTP</option>
 	 <option value="INFJ">INFJ</option>
-	 <option value="INFP">INFP</option>
 	 <option value="ENFJ">ENFJ</option>
 	 <option value="ENFP">ENFP</option>
 	 <option value="ISTJ">ISTJ</option>
@@ -242,7 +242,22 @@
  <!-- A placeholder to display the count result -->
  <div id="countResultMsg"></div> <br>
 
-	<!-- ===================================================================================== -->
+ <br><hr><br><!-- ===================================================================================== -->
 
+
+
+
+	<h1>MBTI Average Number of Book Recommendations</h1>
+    <button id="calculateButton">Calculate Average</button>
+    <p id="averageResult"></p>
+
+   
+	<br><hr><br><!-- ===================================================================================== -->
+
+
+	<h1>MBTI Recommended Books</h1>
+    <button id="getRecommendBooksButton">Get Recommended Books</button>
+    <p id="recommendBooksResult"></p>
+	<p>error exists in getting books that all mbti recommend rn because there no common books that all mbti recommend on the database rn</p>
 </body>
 </html>

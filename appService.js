@@ -519,7 +519,7 @@ async function getAverageBook() {
 				MBTI_Book_Count
 			`);
 		if (result.rows.length > 0) {
-			return result.rows[0][0]; // 返回查询结果的第一行第一列的值
+			return result.rows[0][0]; 
 		} else {
 			console.log(error, "No book exusts");
 			return [];
@@ -538,7 +538,7 @@ async function getAllRecommendBook() {
 			FROM MyBook B
 			WHERE NOT EXISTS (
 				(SELECT M.mbtiName FROM MBTI_Type M)
-				EXCEPT
+				MINUS
 				(SELECT I.mbtiName FROM IsRecommendedBook I WHERE I.bookURL = B.bookURL)
 			)
 			`);
@@ -641,27 +641,26 @@ async function countLoginUsers() {
 	});
 }
 
-async function getUserTable() {
-	return await withOracleDB(async (connection) => {
-		const result = await connection.execute('SELECT * FROM User');
-		return result
-	}).catch(() => {
-		return -1;
-	});
-}
+// async function getUserTable() {
+// 	return await withOracleDB(async (connection) => {
+// 		const result = await connection.execute('SELECT * FROM User');
+// 		return result
+// 	}).catch(() => {
+// 		return -1;
+// 	});
+// }
 
-async function getLoginUserTable() {
-	return await withOracleDB(async (connection) => {
-		const result = await connection.execute('SELECT * FROM LoginUser');
-		return result
-	}).catch(() => {
-		return -1;
-	});
-}
+// async function getLoginUserTable() {
+// 	return await withOracleDB(async (connection) => {
+// 		const result = await connection.execute('SELECT * FROM LoginUser');
+// 		return result
+// 	}).catch(() => {
+// 		return -1;
+// 	});
+// }
 
 module.exports = {
 	testOracleConnection,
-	// fetchDemotableFromDb,
 	initialize,
 	insertLoginUser,
 	updateAccountInfo,
