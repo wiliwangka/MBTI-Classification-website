@@ -641,27 +641,26 @@ async function countLoginUsers() {
 	});
 }
 
-async function getUserTable() {
-	return await withOracleDB(async (connection) => {
-		const result = await connection.execute('SELECT * FROM User');
-		return result
-	}).catch(() => {
-		return -1;
-	});
-}
+// async function getUserTable() {
+// 	return await withOracleDB(async (connection) => {
+// 		const result = await connection.execute('SELECT * FROM User');
+// 		return result
+// 	}).catch(() => {
+// 		return -1;
+// 	});
+// }
 
-async function getLoginUserTable() {
-	return await withOracleDB(async (connection) => {
-		const result = await connection.execute('SELECT * FROM LoginUser');
-		return result
-	}).catch(() => {
-		return -1;
-	});
-}
+// async function getLoginUserTable() {
+// 	return await withOracleDB(async (connection) => {
+// 		const result = await connection.execute('SELECT * FROM LoginUser');
+// 		return result
+// 	}).catch(() => {
+// 		return -1;
+// 	});
+// }
 
 module.exports = {
 	testOracleConnection,
-	// fetchDemotableFromDb,
 	initialize,
 	insertLoginUser,
 	updateAccountInfo,

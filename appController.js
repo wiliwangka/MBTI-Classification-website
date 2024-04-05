@@ -161,6 +161,7 @@ router.get("/get-article-recommendation", async (req, res) => {
 router.get("/get-numbers-mbti", async (req, res) => {
 	const {mbtiName} = req.query;
 	try{
+		console.log(res);
 		const result = await appService.getNumberOfMbti(mbtiName);
 		res.json({success: true, data: result});
 	} catch (error) {
@@ -201,40 +202,25 @@ router.get("/get-recommend-book", async (req,res) => {
 	}
 })
 
-// router.get('/demotable', async (req, res) => {
-//     const tableContent = await appService.fetchDemotableFromDb();
-//     res.json({data: tableContent});
+
+
+
+
+
+// router.get('/count-mbtitable', async (req, res) => {
+// 	const tableCount = await appService.countDemotable();
+// 	if (tableCount >= 0) {
+// 		res.json({ 
+// 			success: true,  
+// 			count: tableCount
+// 		});
+// 	} else {
+// 		res.status(500).json({ 
+// 			success: false, 
+// 			count: tableCount
+// 		});
+// 	}
 // });
-
-
-
-// router.post("/insert-demotable", async (req, res) => {
-//     const { id, name } = req.body;
-//     const insertResult = await appService.insertDemotable(id, name);
-//     if (insertResult) {
-//         res.json({ success: true });
-//     } else {
-//         res.status(500).json({ success: false });
-//     }
-// });
-
-
-
-
-router.get('/count-mbtitable', async (req, res) => {
-	const tableCount = await appService.countDemotable();
-	if (tableCount >= 0) {
-		res.json({ 
-			success: true,  
-			count: tableCount
-		});
-	} else {
-		res.status(500).json({ 
-			success: false, 
-			count: tableCount
-		});
-	}
-});
 
 
 module.exports = router;

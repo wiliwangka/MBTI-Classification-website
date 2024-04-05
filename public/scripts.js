@@ -208,7 +208,7 @@ async function submitPersonalityTest(event) {
             messageElement.textContent = "Test submitted successfully!";
             mbtiElement.textContent = responseData.mbtiType;
             retriving.style.display = 'none';
-         console.log(mbti);
+         
             fetchAndUpdateRecommendations('/get-book-recommendation', mbti, 'books');
     fetchAndUpdateRecommendations('/get-video-recommendation', mbti, 'videos');
     fetchAndUpdateRecommendations('/get-article-recommendation', mbti, 'articles');
@@ -318,9 +318,7 @@ function fetchAndUpdateRecommendations(apiEndpoint, mbtiName, type) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-				// console.log(1);
-				// console.log("chia");
-				// console.log(data);
+				
                 updateTable(type, data.data);
             } else {
                 console.error(`Failed to fetch ${type}:`, data.message);
@@ -343,7 +341,7 @@ function fetchAndUpdateRecommendations(apiEndpoint, mbtiName, type) {
 
 
 function updateTable(type, items) {
-	console.log(items);
+	
     // Select the correct table based on the type of content
     const table = document.querySelector(`.${type}-section table`);
     
@@ -353,7 +351,7 @@ function updateTable(type, items) {
         switch (type) {
 			
             case 'books':
-				console.log(2);
+				
                 return `<tr>
                             <td>${item[0]}</td>
                             <td>${item[1]}</td>
@@ -361,7 +359,7 @@ function updateTable(type, items) {
                             
                         </tr>`;
             case 'videos':
-				console.log(3);
+			
                 return `<tr>
                             <td>${item[0]}</td>
                             <td>${item[1]}</td>
@@ -396,22 +394,87 @@ function updateTable(type, items) {
 // Counts rows in the demotable.
 // Modify the function accordingly if using different aggregate functions or procedures.
 async function countMBTItype() {
-	const response = await fetch("/count-mbtitable", {
-		method: 'GET'
-	});
+    // Get the selected MBTI type from the dropdown
 
-	const responseData = await response.json();
-	const messageElement = document.getElementById('countResultMsg');
+    
+    const mbtiName =  document.getElementById('mbtiType').value;
 
-	if (responseData.success) {
-		const tupleCount = responseData.count;
-		messageElement.textContent = `The number of tuples in demotable: ${tupleCount}`;
-	} else {
-		messageElement.textContent = `Error in count demotable!`;
-	 
+
+
+    // Fetch the count from the server using the selected MBTI type
+    const response = await fetch(`/get-numbers-mbti?mbtiName=${mbtiName}`, {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    const messageElement = document.getElementById('countResultMsg');
+
+    if (responseData.success) {
+        // Assuming that the server sends the count in the 'data' field
+        const tupleCount = responseData.data;
+		 const number = tupleCount[0][1];
 		
-	}
+        messageElement.textContent = `The number of ${mbtiName } user is: ${number}`;
+    } else {
+        // Use the server-provided error message, if available
+        const errorMessage = responseData.message || 'Error in counting demotable!';
+        messageElement.textContent = errorMessage;
+    }
 }
+
+
+async function calculateAvgbooks() {
+
+	try {
+        const response = await fetch('/get-average-book');
+        const data = await response.json();
+
+        if (data.success) {
+            document.getElementById('averageResult').textContent = `Average number of books recommended: ${data.data}`;
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        document.getElementById('averageResult').textContent = 'Error fetching data. Please try again later.';
+    }
+}
+
+
+
+async function getRecommendBooks() {
+    try {
+        const response = await fetch('/get-recommend-book');
+        const data = await response.json();
+        
+        if (data.success) {
+            const recommendedBooks = data.data.join(', '); // Assuming data.data is an array of book titles
+            document.getElementById('recommendBooksResult').textContent = `Books recommended by all MBTI types: ${recommendedBooks}`;
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        document.getElementById('recommendBooksResult').textContent = 'Error fetching data. Please try again later.';
+    }
+}
+
+
+
+
+
+
+///-----------------------------------------------------------------
+//helper functions
+
+
+
+
+
+
+
+
 //helper that turn New Date(); into sql timestamp formate
 function formatToTimestamp(date) {
 	const year = date.getFullYear();
@@ -430,87 +493,14 @@ function formatToTimestamp(date) {
 // Add or remove event listeners based on the desired functionalities.
 window.onload = function() {
 	checkDbConnection();
-	// fetchTableData();
+	
 	document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
 	document.getElementById("insertDemotable").addEventListener("submit", register);
 	document.getElementById("loginForm").addEventListener("submit", login);
 	document.getElementById("personalityTestForm").addEventListener("submit", submitPersonalityTest);
 	document.getElementById("updataUserTable").addEventListener("submit", updateAccountInfo);
 	document.getElementById("countmbtitable").addEventListener("click", countMBTItype);
-};
+	document.getElementById('calculateButton').addEventListener('click', calculateAvgbooks );
+	document.getElementById('getRecommendBooksButton').addEventListener('click', getRecommendBooks);
 
-
-
-
-
-
-
-
-
-
-
-// Test items for "books"
-const testBooks = [
-    {
-        bookTitle: "1984",
-        bookAuthor: "George Orwell",
-        bookURL: "https://example.com/1984"
-    },
-    {
-        bookTitle: "Brave New World",
-        bookAuthor: "Aldous Huxley",
-        bookURL: "https://example.com/brave-new-world"
-    },
-    {
-        bookTitle: "To Kill a Mockingbird",
-        bookAuthor: "Harper Lee",
-        bookURL: "https://example.com/to-kill-a-mockingbird"
-    }
-];
-
-// Test items for "videos"
-const testVideos = [
-    {
-        videoTitle: "The Power of Vulnerability",
-        videoType: "TED Talk",
-        videoLink: "https://example.com/the-power-of-vulnerability"
-    },
-    {
-        videoTitle: "Understanding the Universe",
-        videoType: "Documentary",
-        videoLink: "https://example.com/understanding-the-universe"
-    },
-    {
-        videoTitle: "Learn JavaScript in 1 Hour",
-        videoType: "Tutorial",
-        videoLink: "https://example.com/learn-javascript"
-    }
-];
-
-// Test items for "articles"
-const testArticles = [
-    {
-        articleTitle: "Exploring the Depths of the Ocean",
-        articleAuthor: "Jane Doe",
-        articleText: "An in-depth look at ocean exploration.",
-        articleURL: "https://example.com/exploring-ocean"
-    },
-    {
-        articleTitle: "The Future of Artificial Intelligence",
-        articleAuthor: "John Smith",
-        articleText: "Predicting how AI will evolve in the coming years.",
-        articleURL: "https://example.com/future-ai"
-    },
-    {
-        articleTitle: "Meditation and Mindfulness",
-        articleAuthor: "Emily White",
-        articleText: "How meditation and mindfulness change the brain.",
-        articleURL: "https://example.com/meditation-mindfulness"
-    }
-];
-
-// General function to refresh the displayed table data. 
-// You can invoke this after any table-modifying operation to keep consistency.
-// function fetchTableData() {
-//     fetchAndDisplayUsers();
-// }
+}
