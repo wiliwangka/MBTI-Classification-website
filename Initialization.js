@@ -554,7 +554,7 @@ async function insertMyBook(connection) {
     {bookURL: 'http://amzn.to/2amn6Ps', bookTitle: 'How to Stop Worrying and Start Living', bookAuthor: 'Dale Carnegie'},
     {bookURL: 'http://amzn.to/2azbCXf', bookTitle: 'What Color is Your Parachute?', bookAuthor: 'Richard Bolles'},
     {bookURL: 'http://amzn.to/2aBUWyO', bookTitle: 'The 7 Habits of Highly Effective People', bookAuthor: 'Stephen Covey'},
-    {bookURL: 'http://amzn.to/2azbCXf', bookTitle: 'What Color is Your Parachute?', bookAuthor: 'Richard Bolles'},
+   
 		
 
 
