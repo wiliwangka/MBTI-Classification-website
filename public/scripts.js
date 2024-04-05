@@ -403,8 +403,33 @@ async function getRecommendBooks() {
     }
 }
 
+async function deleteUser(event){
+	event.preventDefault(); 
+	const emailAddress = document.getElementById('emailAddress').value;
+    const resultElement = document.getElementById('result');
 
+	try {
+        const response = await fetch('delete-login-user', { // Adjust the URL as needed
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ emailAddress }),
+        });
 
+        const result = await response.json();
+
+        if (result.success) {
+            resultElement.textContent = 'User deleted successfully.';
+        } else {
+            resultElement.textContent = `Delete failed: ${result.message}`;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        resultElement.textContent = 'An error occurred while deleting the user.';
+    }
+
+}
 
 
 
@@ -446,5 +471,6 @@ window.onload = function() {
 	document.getElementById('calculateButton').addEventListener('click', calculateAvgbooks );
 	document.getElementById('getRecommendBooksButton').addEventListener('click', getRecommendBooks);
 	document.getElementById('getMbtiOverNButton').addEventListener('click', getMbtiOverNUsers);
+	document.getElementById('deleteUserForm').addEventListener('submit', deleteUser);
 
 }

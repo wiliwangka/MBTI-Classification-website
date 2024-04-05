@@ -87,11 +87,11 @@
 <form id="updataUserTable">
    
 	Update email: <input type="text" id="updateEmail" placeholder="Enter new email" required><br><br>
-	Update password: <input type="text" id="updatePassword" placeholder="Enter new password" > <br><br>
-	Update mbti: <input type="text" id="updateMbti" placeholder="Enter new MBTI type" > <br><br>
-	Update age: <input type="number" id="updateAge" placeholder="Enter new age" maxlength="20"> <br><br>
-	Update country: <input type="text" id="updateCountry" placeholder="Enter new country" > <br><br>
-	Update gender: <input type="text" id="updateGender" placeholder="Enter new gender" > <br><br>
+	Update password: <input type="text" id="updatePassword" placeholder="Enter new password" required> <br><br>
+	Update mbti: <input type="text" id="updateMbti" placeholder="Enter new MBTI type" required> <br><br>
+	Update age: <input type="number" id="updateAge" placeholder="Enter new age" maxlength="20" required> <br><br>
+	Update country: <input type="text" id="updateCountry" placeholder="Enter new country" required> <br><br>
+	Update gender: <input type="text" id="updateGender" placeholder="Enter new gender" required> <br><br>
 
 	<button type="submit"> update </button> <br>
 </form>
@@ -100,6 +100,16 @@
 
 <br><hr><br> <!-- ========================================================================= -->
 
+
+<form id="deleteUserForm">
+	<label for="emailAddress">Email Address:</label>
+	<input type="email" id="emailAddress" name="emailAddress" required>
+	<button type="submit">Delete User</button>
+</form>
+
+<div id="result"></div>
+
+<br><hr><br> <!-- ========================================================================= -->
 
 <h2>Personality Test</h2>
 <form id="personalityTestForm">
@@ -248,10 +258,10 @@
 
  <h1>MBTI Users Count</h1>
  <label for="userCount">Enter the minimum number of users:</label>
- <input type="number" id="userCount" min="1" value="10"> <!-- Default value is set to 10 -->
+ <input type="number" id="userCount" min="1" value="1"> 
  <button id="getMbtiOverNButton">Get MBTI Types</button>
  <ul id="mbtiList"></ul>
- 
+
  <br><hr><br><!-- ===================================================================================== -->
 
 
