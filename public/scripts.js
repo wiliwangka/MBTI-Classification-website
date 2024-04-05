@@ -181,7 +181,7 @@ async function submitPersonalityTest(event) {
 
     const messageElement = document.getElementById('testResultMsg');
     const mbtiElement = document.getElementById('mbtiTypeDisplay');
-    const retriving = document.getElementById('mbtiTypeStatus');
+    const retriving = document.getElementById('mbtiTypestatus');
 
 	try {
 		const response = await fetch('/submit-test-questions', {
@@ -194,9 +194,11 @@ async function submitPersonalityTest(event) {
 
 
 		const responseData = await response.json();
-        let mbti = responseData.mbtiType;
+        let mbti = responseData.mbtiType
+		console.log(responseData);
 
         if (responseData.success) {
+		
             messageElement.textContent = "Test submitted successfully!";
             mbtiElement.textContent = responseData.mbtiType;
             retriving.style.display = 'none';
@@ -209,6 +211,7 @@ async function submitPersonalityTest(event) {
             throw new Error('Server response error');
         }
     } catch (error) {
+		
         console.error('Error:', error);
         messageElement.textContent = "Error submitting test!";
     }   
