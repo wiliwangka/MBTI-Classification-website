@@ -103,7 +103,7 @@ async function login(event) {
 	const messageElement = document.getElementById('loginResultMsg');
 
 	if (responseData.success) {
-		messageElement.textContent = "login successfully!";
+		messageElement.textContent = "login successfully! Your MBTI is" + responseData.mbtiName;
 	} else {
 		messageElement.textContent = "Error in login!";
 	}
@@ -198,11 +198,10 @@ async function submitPersonalityTest(event) {
 		console.log(responseData);
 
         if (responseData.success) {
-		
             messageElement.textContent = "Test submitted successfully!";
             mbtiElement.textContent = responseData.mbtiType;
-            retriving.style.display = 'none';
-         
+            //retriving.style.display = 'none';
+			
             fetchAndUpdateRecommendations('/get-book-recommendation', mbti, 'books');
 			fetchAndUpdateRecommendations('/get-video-recommendation', mbti, 'videos');
 			fetchAndUpdateRecommendations('/get-article-recommendation', mbti, 'articles');

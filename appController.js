@@ -63,7 +63,7 @@ router.post('/logIn', async (req,res) => {
 	try {
 		const existing  = await appService.logIn(emailAddress, password);
 		if (existing[0]) {
-			res.json({ success: true, message: 'Log in successfully', mbtiName: existing[0]});
+			res.json({ success: true, message: 'Log in successfully', mbtiName: existing[1]});
 		} else {
 			res.status(404).json({ success: false, message: 'Account is not existed or password is wrong' });
 		}
