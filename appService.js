@@ -549,6 +549,32 @@ async function getAllRecommendBook() {
 	});
 }
 
+// implmentation of deleting LogIn user
+async function deleteLogInUser(emailAddress) {
+	return withOracleDB(async(connection) => {
+		const result1 = await connection.execute(
+		`SELECT username
+		FROM LoginUser
+		WHERE emailAddress = :emailAddress
+		`,
+		[emailAddress]);
+		if (result1.rows[0].length > 0) {
+			const result2 = await connection.execute(
+				`DELETE FROM MyUser
+				WHERE username  = :username
+				`,
+				[result1.rows[0][0]]
+			);
+			return result2.rowsAffected && result2.rowsAffected > 0;
+		} else {
+			return false;
+		}
+	}).catch((error) => {
+		console.log(error, "error exists in deleting Login user");
+		return false;
+	});
+}
+
 
 async function countRecommendedArticles(mbtiType) {
 	return withOracleDB(async(connection) => {
@@ -675,5 +701,6 @@ module.exports = {
 	getNumberOfMbti,
 	getMbtiMoreThanN,
 	getAverageBook,
-	getAllRecommendBook
+	getAllRecommendBook,
+	deleteLogInUser
 };

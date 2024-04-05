@@ -202,6 +202,20 @@ router.get("/get-recommend-book", async (req,res) => {
 	}
 })
 
+//API endpoint of deleting LogIn user
+router.post("delete-login-user", async (req, res) => {
+	const {emailAddress} = req.body;
+	try{
+		const result = await appService.deleteLogInUser(emailAddress);
+		if (result) {
+			res.json({success: true});
+		} else {
+			res.json({success: false, message: "Delete fails or this emailAddress is not in LogInUser"});
+		}
+	} catch (error) {
+		res.status(500).json({success: false, message: "error exists in deleting login user"});
+	}
+})
 
 
 
