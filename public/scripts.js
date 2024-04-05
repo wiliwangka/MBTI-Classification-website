@@ -412,10 +412,17 @@ async function countMBTItype() {
 
     if (responseData.success) {
         // Assuming that the server sends the count in the 'data' field
+		console.log(responseData);
         const tupleCount = responseData.data;
-		 const number = tupleCount[0][1];
+		if (tupleCount.length > 0){
+			const number = tupleCount[0][1];
+			messageElement.textContent = `The number of ${mbtiName } user in the database is: ${number}`;
+		} else {
+			messageElement.textContent = `The number of ${mbtiName } user in the database is: 0 `;
+		}
 		
-        messageElement.textContent = `The number of ${mbtiName } user is: ${number}`;
+		
+       
     } else {
         // Use the server-provided error message, if available
         const errorMessage = responseData.message || 'Error in counting demotable!';

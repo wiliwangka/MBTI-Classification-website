@@ -366,6 +366,7 @@ async function insertRecommendedVideos(connection) {
 async function insertRecommendedBooks(connection) {
     const books = [
 		{mbtiName: 'INFP', bookURL: 'http://example.com/book'},
+		{mbtiName: 'INFP', bookURL: 'http://example.com/book/infj'},
 		{mbtiName: 'INFJ', bookURL: 'http://example.com/book'},
 		{mbtiName: 'INTJ', bookURL: 'http://example.com/book'},
 		{mbtiName: 'INTP', bookURL: 'http://example.com/book'},
