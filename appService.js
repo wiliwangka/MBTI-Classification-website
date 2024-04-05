@@ -557,14 +557,15 @@ async function deleteLogInUser(emailAddress) {
 		FROM LoginUser
 		WHERE emailAddress = :emailAddress
 		`,
-		[emailAddress]);
+		[emailAddress],
+		{ autoCommit: true });
 		if (result1.rows[0].length > 0) {
 			const result2 = await connection.execute(
 				`DELETE FROM MyUser
 				WHERE username  = :username
 				`,
-				[result1.rows[0][0]]
-			);
+				[result1.rows[0][0]],
+				{ autoCommit: true });
 			return result2.rowsAffected && result2.rowsAffected > 0;
 		} else {
 			return false;
@@ -587,6 +588,21 @@ async function countRecommendedArticles(mbtiType) {
 		{ autoCommit: true });
 	}).catch(() => {
 		// What should happen if there is an error?
+	});
+}
+
+async function updateAccountInfo(email, password, mbti, age, country) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `UPDATE LoginUser SET mbtiName = :mbti, age = :age, country = :country, password= :password  WHERE emailAddress = :email`,
+            { mbti, age, country,password, email },
+            { autoCommit: true }
+        );
+
+		return result.rowsAffected && result.rowsAffected > 0;
+	}).catch((error) => {
+		console.error('Error updating account info:', error);
+		return false;
 	});
 }
 
@@ -629,22 +645,6 @@ async function updateLoginUserMbti(emailAddress, mbtiType) {
 		);
 		return result.rowsAffected && result.rowsAffected > 0;
 	}).catch(() => {
-		return false;
-	});
-}
-
-
-async function updateAccountInfo(email,password, mbti, age, country) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `UPDATE LoginUser SET mbtiName = :mbti, age = :age, country = :country, password= :password  WHERE emailAddress = :email`,
-            { mbti, age, country,password, email },
-            { autoCommit: true }
-        );
-
-		return result.rowsAffected && result.rowsAffected > 0;
-	}).catch((error) => {
-		console.error('Error updating account info:', error);
 		return false;
 	});
 }

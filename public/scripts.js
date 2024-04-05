@@ -386,17 +386,17 @@ async function getRecommendBooks() {
 }
 
 async function deleteUser(event){
-	event.preventDefault(); 
-	const emailAddress = document.getElementById('emailAddress').value;
+	event.preventDefault();
+	const emailValue = document.getElementById('emailValue').value;
     const resultElement = document.getElementById('result');
 
 	try {
-        const response = await fetch('delete-login-user', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ emailAddress }),
+        const response = await fetch('/delete-login-user', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+            body: JSON.stringify({emailAddress: emailValue})
         });
 
         const result = await response.json();
@@ -408,7 +408,7 @@ async function deleteUser(event){
         }
     } catch (error) {
         console.error('Error:', error);
-        resultElement.textContent = 'An error occurred while deleting the user.';
+        //resultElement.textContent = 'An error occurred while deleting the user.';
     }
 
 }
