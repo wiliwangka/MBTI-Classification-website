@@ -171,9 +171,9 @@ router.get("/get-numbers-mbti", async (req, res) => {
 
 // API endpoint of getting mbtis that have more than n users
 router.get("/get-over-n-mbti", async (req, res) => {
-	const {mbtiName, number} = req.query;
+	const {number} = req.query;
 	try{
-		const result = await appService.getMbtiMoreThanN(mbtiName, number);
+		const result = await appService.getMbtiMoreThanN(number);
 		res.json({success: true, data: result});
 	} catch (error) {
 		res.status(500).json({success: false, message: "error exists in getting mbti having over n loginusers"});

@@ -482,17 +482,17 @@ async function getNumberOfMbti(mbtiName) {
 }
 
 // implementation of looking for mbtis which have more than n loginUsers
-async function getMbtiMoreThanN(mbtiName, number) {
+async function getMbtiMoreThanN(number) {
 	return withOracleDB(async(connection) => {
 		const result = await connection.execute(
 		`SELECT m.mbtiName, COUNT(lu.username)
 		FROM LoginUser lu, Mbti_Type m
-		WHERE lu.mbtiName = m.mbtiName AND m.mbtiName = :mbtiName
+		WHERE lu.mbtiName = m.mbtiName
 		GROUP BY m.mbtiName
 		HAVING COUNT(lu.username) > :number
 		ORDER BY m.mbtiName
 		`,
-		{mbtiName: mbtiName, number: number});
+		{number: number});
 		return result.rows;
 	}).catch((error) => {
 		console.log(error, "error exists in getting mbti that have more than n login Users");
@@ -519,9 +519,9 @@ async function getAverageBook() {
 				MBTI_Book_Count
 			`);
 		if (result.rows.length > 0) {
-			return result.rows[0][0]; // 返回查询结果的第一行第一列的值
+			return result.rows[0][0]; 
 		} else {
-			console.log(error, "No book exusts");
+			console.log(error, "No book exists");
 			return [];
 		}
 	}).catch((error) => {
@@ -538,7 +538,7 @@ async function getAllRecommendBook() {
 			FROM MyBook B
 			WHERE NOT EXISTS (
 				(SELECT M.mbtiName FROM MBTI_Type M)
-				EXCEPT
+				MINUS
 				(SELECT I.mbtiName FROM IsRecommendedBook I WHERE I.bookURL = B.bookURL)
 			)
 			`);
