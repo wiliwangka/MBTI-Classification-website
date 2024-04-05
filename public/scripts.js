@@ -288,7 +288,7 @@ async function countMBTItype() {
  
 
     
-    const mbtiName =  document.getElementById('mbtiType').value;
+    const mbtiName =  document.getElementById('mbtiTypeselect').value;
 
 
 

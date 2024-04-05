@@ -407,7 +407,6 @@ async function insertRecommendedBooks(connection) {
     {mbtiName: 'ESTP', bookURL: 'http://amzn.to/2azbCXf'},
 		
 		{mbtiName: 'INFP', bookURL: 'http://example.com/book'},
-		{mbtiName: 'INFP', bookURL: 'http://example.com/book/infj'},
 		{mbtiName: 'INFJ', bookURL: 'http://example.com/book'},
 		{mbtiName: 'INTJ', bookURL: 'http://example.com/book'},
 		{mbtiName: 'INTP', bookURL: 'http://example.com/book'},
@@ -554,8 +553,6 @@ async function insertMyBook(connection) {
     {bookURL: 'http://amzn.to/2amn6Ps', bookTitle: 'How to Stop Worrying and Start Living', bookAuthor: 'Dale Carnegie'},
     {bookURL: 'http://amzn.to/2azbCXf', bookTitle: 'What Color is Your Parachute?', bookAuthor: 'Richard Bolles'},
     {bookURL: 'http://amzn.to/2aBUWyO', bookTitle: 'The 7 Habits of Highly Effective People', bookAuthor: 'Stephen Covey'},
-		
-
 
 		{bookURL: 'http://example.com/book', bookTitle: 'Example book', bookAuthor: 'Jane Doe'},
 		{bookURL: 'http://example.com/book/infp', bookTitle: 'INFP: The Dreamer', bookAuthor: 'Jane Doe'},
