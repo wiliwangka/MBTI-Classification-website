@@ -224,93 +224,7 @@ async function submitPersonalityTest(event) {
         messageElement.textContent = "Error submitting test!";
     }   
 }
-// async function fetchAndDisplayUsers() {
-//     const tableElement = document.getElementById('demotable');
-//     const tableBody = tableElement.querySelector('tbody');
 
-//     const response = await fetch('/demotable', {
-//         method: 'GET'
-//     });
-
-//     const responseData = await response.json();
-//     const demotableContent = responseData.data;
-
-//     // Always clear old, already fetched data before new fetching process.
-//     if (tableBody) {
-//         tableBody.innerHTML = '';
-//     }
-
-//     demotableContent.forEach(user => {
-//         const row = tableBody.insertRow();
-//         user.forEach((field, index) => {
-//             const cell = row.insertCell(index);
-//             cell.textContent = field;
-//         });
-//     });
-// }
-
-
-
-
-
-// async function fetchAndUpdateRecommendations() {
-
-
-//     fetchAndUpdateRecommendations('/get-book-recommendation', mbtiName, 'books');
-//     fetchAndUpdateRecommendations('/get-video-recommendation', mbtiName, 'videos');
-//     fetchAndUpdateRecommendations('/get-article-recommendation', mbtiName, 'articles');
-
-//     const bookresponse = await fetch('/get-book-recommendatio', {
-//         method: 'GET'
-//     });
-
-//     const bookresponseData = await bookresponse.json();
-//     const booktableContent = bookresponseData.data;
-//     updateTable('books', booktableContent);
-
-//     // Always clear old, already fetched data before new fetching process.
-//     // if (tableBody) {
-//     //     tableBody.innerHTML = '';
-//     // }
-//     // booktableContent.forEach(user => {
-//     //     const row = tableBody.insertRow();
-//     //     user.forEach((field, index) => {
-//     //         const cell = row.insertCell(index);
-//     //         cell.textContent = field;
-//     //     });
-//     // });
-
-// 		.then(response => response.json())
-// 		.then(data => {
-// 			updateTable('books', data.books);
-// 			updateTable('videos', data.videos);
-// 			updateTable('articles', data.articles);
-// 		})
-// 		.catch(error => console.error('Failed to fetch recommendations:', error));
-// }
-
-// function fetchAndUpdateRecommendations(apiEndpoint, mbtiName, type) {
-//     fetch(`${apiEndpoint}?mbtiName=${mbtiName}`) // Assuming you will use query parameters
-//         .then(response => response.json())
-//         .then(data => {
-//             if (data.success) {
-//                 updateTable(type, data.data);
-//             } else {
-//                 console.error(`Failed to fetch ${type}:`, data.message);
-//             }
-//         })
-//         .catch(error => console.error(`Error fetching ${type}:`, error));
-// }
-
-
-// function fetchAndUpdateRecommendations(apiEndpoint, mbtiName, type) {
-//     fetch(apiEndpoint, {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({ mbtiName: mbtiName })
-//     })
 
 
 function fetchAndUpdateRecommendations(apiEndpoint, mbtiName, type) {
@@ -327,24 +241,19 @@ function fetchAndUpdateRecommendations(apiEndpoint, mbtiName, type) {
         .catch(error => console.error(`Error fetching ${type}:`, error));
 }
 
-    // .then(response => response.json())
-    // .then(data => {
-    //     if (data.success) {
-    //         updateTable(type, data.data);
-    //     } else {
-    //         console.error(`Failed to fetch ${type}:`, data.message);
-    //     }
-    // })
-    // .catch(error => console.error(`Error fetching ${type}:`, error));
-// }
+
 
 
 
 function updateTable(type, items) {
 	
     // Select the correct table based on the type of content
-    const table = document.querySelector(`.${type}-section table`);
-    
+	
+    // const table = document.querySelector(`.${type}-section table`);
+	
+	const tbody = document.querySelector(`.${type}-section tbody`);
+	
+  
     // Generate table rows from the items array
     let rows = items.map(item => {
 		
@@ -379,7 +288,7 @@ function updateTable(type, items) {
     }).join('');
 
     // Set the inner HTML of the table to include the new rows
-    table.innerHTML = rows;
+    tbody.innerHTML = rows;
 }
 
 
@@ -427,6 +336,33 @@ async function countMBTItype() {
         // Use the server-provided error message, if available
         const errorMessage = responseData.message || 'Error in counting demotable!';
         messageElement.textContent = errorMessage;
+    }
+}
+
+
+async function getMbtiOverNUsers() {
+    const userCount = document.getElementById('userCount').value;
+
+    try {
+        const response = await fetch(`/get-over-n-mbti?number=${userCount}`);
+        const data = await response.json();
+        
+        if (data.success) {
+            const mbtiList = data.data;
+            const mbtiListElement = document.getElementById('mbtiList');
+            mbtiListElement.innerHTML = ''; 
+
+            mbtiList.forEach(mbti => {
+                const listItem = document.createElement('li');
+                listItem.textContent = mbti;
+                mbtiListElement.appendChild(listItem);
+            });
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        document.getElementById('mbtiList').innerHTML = 'Error fetching data. Please try again later.';
     }
 }
 
@@ -509,5 +445,6 @@ window.onload = function() {
 	document.getElementById("countmbtitable").addEventListener("click", countMBTItype);
 	document.getElementById('calculateButton').addEventListener('click', calculateAvgbooks );
 	document.getElementById('getRecommendBooksButton').addEventListener('click', getRecommendBooks);
+	document.getElementById('getMbtiOverNButton').addEventListener('click', getMbtiOverNUsers);
 
 }
