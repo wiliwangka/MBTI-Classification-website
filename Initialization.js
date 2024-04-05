@@ -331,6 +331,29 @@ async function insertrecommendedcontent(connection){
 
 async function insertRecommendedVideos(connection) {
     const videos = [
+
+		{mbtiName: 'ISTJ', videoLink: 'https://www.imdb.com/title/tt1895587/'},
+		{mbtiName: 'ISFJ', videoLink: 'https://www.imdb.com/title/tt2980516/'},
+		{mbtiName: 'INFJ', videoLink: 'https://www.imdb.com/title/tt0359950/'},
+		{mbtiName: 'INTJ', videoLink: 'https://www.imdb.com/title/tt2543164/'},
+		{mbtiName: 'ISTP', videoLink: 'https://www.imdb.com/title/tt2911666/'},
+		{mbtiName: 'ISFP', videoLink: 'https://www.imdb.com/title/tt3783958/'},
+		{mbtiName: 'INFP', videoLink: 'https://www.imdb.com/title/tt1605783/'},
+		{mbtiName: 'INTP', videoLink: 'https://www.imdb.com/title/tt0470752/'},
+		{mbtiName: 'ESTP', videoLink: 'https://www.imdb.com/title/tt1392190/'},
+		{mbtiName: 'ESFP', videoLink: 'https://www.imdb.com/title/tt1981677/'},
+		{mbtiName: 'ENFP', videoLink: 'https://www.imdb.com/title/tt2278388/'},
+		{mbtiName: 'ENTP', videoLink: 'https://www.imdb.com/title/tt0993846/'},
+		{mbtiName: 'ESTJ', videoLink: 'https://www.imdb.com/title/tt3659388/'},
+		{mbtiName: 'ESFJ', videoLink: 'https://www.imdb.com/title/tt2380307/'},
+		{mbtiName: 'ENFJ', videoLink: 'https://www.imdb.com/title/tt1020072/'},
+		{mbtiName: 'ENTJ', videoLink: 'https://www.imdb.com/title/tt1285016/'},
+		
+
+
+
+
+
 		{mbtiName: 'INFP', videoLink: 'http://example.com/video/infp'},
 		{mbtiName: 'INFJ', videoLink: 'http://example.com/video/infj'},
 		{mbtiName: 'INTJ', videoLink: 'http://example.com/video/intj'},
@@ -365,6 +388,24 @@ async function insertRecommendedVideos(connection) {
 
 async function insertRecommendedBooks(connection) {
     const books = [
+		{mbtiName: 'INFP', bookURL: 'https://a.co/d/hak3RIa'},
+
+		{mbtiName: 'INFJ', bookURL: 'http://amzn.to/2ayQC63'},
+    {mbtiName: 'INTJ', bookURL: 'http://amzn.to/2ayQzXI'},
+    {mbtiName: 'INTP', bookURL: 'http://amzn.to/2apDoCL'},
+    {mbtiName: 'ISFJ', bookURL: 'http://amzn.to/2amlftS'},
+    {mbtiName: 'ISTJ', bookURL: 'http://amzn.to/2amll4T'},
+    {mbtiName: 'ISTP', bookURL: 'http://amzn.to/2apEn5H'},
+    {mbtiName: 'ISFP', bookURL: 'http://amzn.to/2amlftS'},
+    {mbtiName: 'ENFJ', bookURL: 'http://amzn.to/2aXoOb4'},
+    {mbtiName: 'ENFP', bookURL: 'http://amzn.to/2ay7sf9'},
+    {mbtiName: 'ENTJ', bookURL: 'http://amzn.to/2ay7YK3'},
+    {mbtiName: 'ENTP', bookURL: 'http://amzn.to/2ammN79'},
+    {mbtiName: 'ESFJ', bookURL: 'http://amzn.to/2amn6Ps'},
+    {mbtiName: 'ESFP', bookURL: 'http://amzn.to/2azbCXf'},
+    {mbtiName: 'ESTJ', bookURL: 'http://amzn.to/2aBUWyO'},
+    {mbtiName: 'ESTP', bookURL: 'http://amzn.to/2azbCXf'},
+		
 		{mbtiName: 'INFP', bookURL: 'http://example.com/book'},
 		{mbtiName: 'INFP', bookURL: 'http://example.com/book/infj'},
 		{mbtiName: 'INFJ', bookURL: 'http://example.com/book'},
@@ -400,12 +441,21 @@ async function insertRecommendedBooks(connection) {
 async function insertRecommendedArticles(connection) {
     const articles = [
 		{mbtiName: 'INFP', articleURL: 'http://example.com/article/infp'},
+
+
 		{mbtiName: 'INFJ', articleURL: 'http://example.com/article/infj'},
+
+
 		{mbtiName: 'INTJ', articleURL: 'http://example.com/article/intj'},
+
 		{mbtiName: 'INTP', articleURL: 'http://example.com/article/intp'},
+
 		{mbtiName: 'ISFP', articleURL: 'http://example.com/article/isfp'},
+
 		{mbtiName: 'ISFJ', articleURL: 'http://example.com/article/isfj'},
+
 		{mbtiName: 'ISTP', articleURL: 'http://example.com/article/istp'},
+
 		{mbtiName: 'ISTJ', articleURL: 'http://example.com/article/istj'},
 		{mbtiName: 'ENFP', articleURL: 'http://example.com/article/enfp'},
 		{mbtiName: 'ENFJ', articleURL: 'http://example.com/article/enfj'},
@@ -432,6 +482,29 @@ async function insertRecommendedArticles(connection) {
 
 async function insertMyVideo(connection) {
     const videos = [
+
+		{videoLink: 'https://www.imdb.com/title/tt1895587/', videoType: 'Drama', videoTitle: 'Spotlight'},
+		{videoLink: 'https://www.imdb.com/title/tt2980516/', videoType: 'Biographical', videoTitle: 'The Theory of Everything'},
+		{videoLink: 'https://www.imdb.com/title/tt0359950/', videoType: 'Adventure', videoTitle: 'The Secret Life of Walter Mitty'},
+		{videoLink: 'https://www.imdb.com/title/tt2543164/', videoType: 'Science Fiction', videoTitle: 'Arrival'},
+		{videoLink: 'https://www.imdb.com/title/tt2911666/', videoType: 'Action', videoTitle: 'John Wick'},
+		{videoLink: 'https://www.imdb.com/title/tt3783958/', videoType: 'Musical', videoTitle: 'La La Land'},
+		{videoLink: 'https://www.imdb.com/title/tt1605783/', videoType: 'Fantasy', videoTitle: 'Midnight in Paris'},
+		{videoLink: 'https://www.imdb.com/title/tt0470752/', videoType: 'Science Fiction', videoTitle: 'Ex Machina'},
+		{videoLink: 'https://www.imdb.com/title/tt1392190/', videoType: 'Action', videoTitle: 'Mad Max: Fury Road'},
+		{videoLink: 'https://www.imdb.com/title/tt1981677/', videoType: 'Comedy', videoTitle: 'Pitch Perfect'},
+		{videoLink: 'https://www.imdb.com/title/tt2278388/', videoType: 'Comedy', videoTitle: 'The Grand Budapest Hotel'},
+		{videoLink: 'https://www.imdb.com/title/tt0993846/', videoType: 'Biographical', videoTitle: 'The Wolf of Wall Street'},
+		{videoLink: 'https://www.imdb.com/title/tt3659388/', videoType: 'Science Fiction', videoTitle: 'The Martian'},
+		{videoLink: 'https://www.imdb.com/title/tt2380307/', videoType: 'Animated', videoTitle: 'Coco'},
+		{videoLink: 'https://www.imdb.com/title/tt1020072/', videoType: 'Historical', videoTitle: 'Selma'},
+		{videoLink: 'https://www.imdb.com/title/tt1285016/', videoType: 'Biographical', videoTitle: 'The Social Network'},
+		
+
+
+
+
+
         {videoLink: 'http://example.com/video/infp', videoType: 'Motivational', videoTitle: 'INFP Inspiration'},
     {videoLink: 'http://example.com/video/infj', videoType: 'Motivational', videoTitle: 'INFJ Inspiration'},
     {videoLink: 'http://example.com/video/intj', videoType: 'Motivational', videoTitle: 'INTJ Inspiration'},
@@ -466,6 +539,25 @@ async function insertMyVideo(connection) {
 
 async function insertMyBook(connection) {
     const books = [
+
+		{bookURL: 'https://a.co/d/hak3RIa', bookTitle: 'The Courage to Be Disliked', bookAuthor: ' Ichiro Kishimi , Fumitake Koga '},
+		{bookURL: 'http://amzn.to/2ayQC63', bookTitle: 'Man’s Search for Meaning', bookAuthor: 'Viktor Frankl'},
+    {bookURL: 'http://amzn.to/2ayQzXI', bookTitle: 'The 48 Laws of Power', bookAuthor: 'Robert Greene'},
+    {bookURL: 'http://amzn.to/2apDoCL', bookTitle: 'Predictably Irrational', bookAuthor: 'Dan Ariely'},
+    {bookURL: 'http://amzn.to/2amlftS', bookTitle: 'Self-Promotion for Introverts: The Quiet Guide of Getting Ahead', bookAuthor: 'Nancy Ancowitz'},
+    {bookURL: 'http://amzn.to/2amll4T', bookTitle: 'Emotional Intelligence: Why It Can Matter More Than IQ', bookAuthor: 'Daniel Goleman'},
+    {bookURL: 'http://amzn.to/2apEn5H', bookTitle: 'How to Win Friends & Influence People', bookAuthor: 'Dale Carnegie'},
+    {bookURL: 'http://amzn.to/2aXoOb4', bookTitle: 'Authentic Happiness', bookAuthor: 'Martin Seligman'},
+    {bookURL: 'http://amzn.to/2ay7sf9', bookTitle: 'Flow: The Psychology of Optimal Experience', bookAuthor: 'Mihaly Csikszentmihalyi'},
+    {bookURL: 'http://amzn.to/2ay7YK3', bookTitle: 'Influence: The Psychology of Persuasion', bookAuthor: 'Robert Cialdini'},
+    {bookURL: 'http://amzn.to/2ammN79', bookTitle: 'The 4-Hour Workweek', bookAuthor: 'Tim Ferris'},
+    {bookURL: 'http://amzn.to/2amn6Ps', bookTitle: 'How to Stop Worrying and Start Living', bookAuthor: 'Dale Carnegie'},
+    {bookURL: 'http://amzn.to/2azbCXf', bookTitle: 'What Color is Your Parachute?', bookAuthor: 'Richard Bolles'},
+    {bookURL: 'http://amzn.to/2aBUWyO', bookTitle: 'The 7 Habits of Highly Effective People', bookAuthor: 'Stephen Covey'},
+    {bookURL: 'http://amzn.to/2azbCXf', bookTitle: 'What Color is Your Parachute?', bookAuthor: 'Richard Bolles'},
+		
+
+
 		{bookURL: 'http://example.com/book', bookTitle: 'Example book', bookAuthor: 'Jane Doe'},
 		{bookURL: 'http://example.com/book/infp', bookTitle: 'INFP: The Dreamer', bookAuthor: 'Jane Doe'},
 		{bookURL: 'http://example.com/book/infj', bookTitle: 'INFJ: The Advocate', bookAuthor: 'John Smith'},
@@ -483,6 +575,12 @@ async function insertMyBook(connection) {
 		{bookURL: 'http://example.com/book/esfj', bookTitle: 'ESFJ: The Caregiver', bookAuthor: 'Charlie Quinn'},
 		{bookURL: 'http://example.com/book/estp', bookTitle: 'ESTP: The Dynamo', bookAuthor: 'Quinn Charlie'},
 		{bookURL: 'http://example.com/book/estj', bookTitle: 'ESTJ: The Director', bookAuthor: 'Carter Dylan'}
+
+		
+
+		
+
+
     ];
 
     const insertSql = `

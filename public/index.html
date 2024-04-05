@@ -2,52 +2,32 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
+
 	<link rel="stylesheet" href="styles.css">  
    
 	<title>MBTI Database</title>
 </head>
 <body>
 
-	<!--1. ===================================================================================== -->
-	<!-- Display the current status of the database connection. 
-		 !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
-		 -->
+
 	<h1>Database Connection Status: 
-		<!-- An in-line placeholder to display connection status. -->
+
 		<span id="dbStatus"> </span>
-		<!-- A loading GIF, will be hided once get the status. -->
+
 		<img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
 	</h1>
 
  
 
-	<!-- Show 'Demotable'. 
-		Data will be fetched and inserted here dynamically using JavaScript. -->
-
-		<!--
-	<h2>Show Demotable</h2>
-	<table id="demotable" border="1">
-		<thead>
-			<tr>
-				Table head, need to be adjusted accordingly to align with your own.
-				<th>ID</th>
-				<th>Name</th>
-			</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
--->
 	<br><hr><br> <!--2.  ========================================================================= -->
 
 	<h2>Reset</h2>
 	<p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 	<button id="resetDemotable"> reset </button> <br>
-	<!-- A placeholder to display messages related to the reset operation. -->
+
 	<div id="resetResultMsg"></div>
 
 	<br><hr><br> <!-- ========================================================================= -->
@@ -95,7 +75,7 @@
 
 	<button type="submit"> update </button> <br>
 </form>
-<!-- A placeholder to display messages related to the update operation. -->
+
 <div id="updateNameResultMsg"></div>
 
 <br><hr><br> <!-- ========================================================================= -->
@@ -143,25 +123,25 @@
 <div id="testResultMsg"></div>
 
 
-	<!-- External JavaScript file that contains the functionality/logic for the operations above. -->
+
 	<script src="scripts.js"></script>
 
 	<br><hr><br> <!-- ========================================================================= -->
 
 		<section id="mbtiReport">
 			<h2>Your MBTI Type</h2>
-			<!-- Placeholder where the MBTI type will be displayed -->
+		
 			<div id="mbtiTypeDisplay">
-				<!-- This is where the MBTI type will be inserted by the JavaScript -->
+			
 				<p id="mbtiTypestatus">Retrieving...</p>
 			</div>
 		
-			<!-- Additional details about the MBTI type could also be dynamically inserted here if needed -->
+		
 			<div id="mbtiDetails">
-				<!-- Details will be filled in by JavaScript -->
+			
 			</div>
 		
-			<!-- A call to action or next steps based on the MBTI type could go here -->
+		
 			<div id="mbtiNextSteps">
 				<h3>What to Do Next</h3>
 				<p>Once you know your MBTI type, you can start to explore careers, relationships, and personal growth strategies that align with your personality.</p>
@@ -183,7 +163,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Rows will be added here by JavaScript -->
+                    <!-- Rows will be added here  -->
                 </tbody>
             </table>
         </section>
@@ -195,11 +175,11 @@
                     <tr>
                         <th>Title</th>
                         <th>Type</th>
-                        <th></th> <!-- Intentionally left blank for the 'Watch here' links -->
+                        <th></th> <!--  for the 'Watch here' links -->
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Rows will be added here by JavaScript -->
+                    <!-- Rows will be added here -->
                 </tbody>
             </table>
         </section>
@@ -216,7 +196,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Rows will be added here by JavaScript -->
+                    <!-- Rows will be added here  -->
                 </tbody>
             </table>
         </section>

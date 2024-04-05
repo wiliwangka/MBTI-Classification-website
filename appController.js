@@ -206,6 +206,7 @@ router.get("/get-recommend-book", async (req,res) => {
 router.post("delete-login-user", async (req, res) => {
 	const {emailAddress} = req.body;
 	try{
+		console.log(emailAddress);
 		const result = await appService.deleteLogInUser(emailAddress);
 		if (result) {
 			res.json({success: true});

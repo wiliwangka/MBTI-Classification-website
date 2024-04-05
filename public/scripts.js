@@ -1,19 +1,7 @@
-/*
- * These functions below are for various webpage functionalities. 
- * Each function serves to process data on the frontend:
- *      - Before sending requests to the backend.
- *      - After receiving responses from the backend.
- * 
- * To tailor them to your specific needs,
- * adjust or expand these functions to match both your 
- *   backend endpoints 
- * and 
- *   HTML structure.
- * 
- */
 
 
-// This function checks the database connection and updates its status on the frontend.
+
+
 async function checkDbConnection() {
 	const statusElem = document.getElementById('dbStatus');
 	const loadingGifElem = document.getElementById('loadingGif');
@@ -32,7 +20,7 @@ async function checkDbConnection() {
 		statusElem.textContent = text;
 	})
 	.catch((error) => {
-		statusElem.textContent = 'connection timed out';  // Adjust error handling if required.
+		statusElem.textContent = 'connection timed out'; 
 	});
 }
 
@@ -48,7 +36,7 @@ async function resetDemotable() {
 	if (responseData.success) {
 		const messageElement = document.getElementById('resetResultMsg');
 		messageElement.textContent = "reset successfully!";
-		// fetchTableData();
+	
 	} else {
 		alert("Error resetting!");
 	}
@@ -125,7 +113,7 @@ async function login(event) {
 async function updateAccountInfo(event) {
 	event.preventDefault();
 
-	// Get the form data
+
 	const emailValue = document.getElementById('updateEmail').value;
 	const passwordValue = document.getElementById('updatePassword').value;
 	const mbtiValue = document.getElementById('updateMbti').value;
@@ -133,8 +121,8 @@ async function updateAccountInfo(event) {
 	const countryValue = document.getElementById('updateCountry').value;
 	const genderValue = document.getElementById('updateGender').value;
 
-	// Send the data to the server
-	const response = await fetch('/update-account-info', {  // Adjust the endpoint as necessary
+
+	const response = await fetch('/update-account-info', {  
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -164,9 +152,9 @@ async function updateAccountInfo(event) {
 //mbti test 
 
 async function submitPersonalityTest(event) {
-	event.preventDefault();  // Prevent the form from submitting in the traditional way
+	event.preventDefault(); 
 
-    // Get the binary values from the form
+
     const answers = {
         E: document.querySelector('input[name="question1"]:checked')?.value === 'E' ? 100 : 0,
         S: document.querySelector('input[name="question2"]:checked')?.value === 'S' ? 100 : 0,
@@ -179,7 +167,7 @@ async function submitPersonalityTest(event) {
 	const timestamp = formatToTimestamp(now);
 
 	const testData = {
-		emailAddress: emailValue, // Use null if the user isn't logged in
+		emailAddress: emailValue, 
 		startDateTime: timestamp,
 		EIScore: answers.E,
 		SNScore: answers.S,
@@ -213,9 +201,6 @@ async function submitPersonalityTest(event) {
     fetchAndUpdateRecommendations('/get-video-recommendation', mbti, 'videos');
     fetchAndUpdateRecommendations('/get-article-recommendation', mbti, 'articles');
 
-//     updateTable('books', testBooks);
-// updateTable('videos', testVideos);
-// updateTable('articles', testArticles);
         } else {
             throw new Error('Server response error');
         }
@@ -228,7 +213,7 @@ async function submitPersonalityTest(event) {
 
 
 function fetchAndUpdateRecommendations(apiEndpoint, mbtiName, type) {
-    fetch(`${apiEndpoint}?mbtiName=${encodeURIComponent(mbtiName)}`)  // Ensure the parameter is properly encoded
+    fetch(`${apiEndpoint}?mbtiName=${encodeURIComponent(mbtiName)}`) 
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -247,14 +232,12 @@ function fetchAndUpdateRecommendations(apiEndpoint, mbtiName, type) {
 
 function updateTable(type, items) {
 	
-    // Select the correct table based on the type of content
-	
-    // const table = document.querySelector(`.${type}-section table`);
+
 	
 	const tbody = document.querySelector(`.${type}-section tbody`);
 	
   
-    // Generate table rows from the items array
+
     let rows = items.map(item => {
 		
         switch (type) {
@@ -287,7 +270,7 @@ function updateTable(type, items) {
         }
     }).join('');
 
-    // Set the inner HTML of the table to include the new rows
+
     tbody.innerHTML = rows;
 }
 
@@ -300,17 +283,16 @@ function updateTable(type, items) {
 
 
 
-// Counts rows in the demotable.
-// Modify the function accordingly if using different aggregate functions or procedures.
+// Counts number of one mbti type in the database
 async function countMBTItype() {
-    // Get the selected MBTI type from the dropdown
+ 
 
     
     const mbtiName =  document.getElementById('mbtiType').value;
 
 
 
-    // Fetch the count from the server using the selected MBTI type
+
     const response = await fetch(`/get-numbers-mbti?mbtiName=${mbtiName}`, {
         method: 'GET'
     });
@@ -320,7 +302,7 @@ async function countMBTItype() {
     const messageElement = document.getElementById('countResultMsg');
 
     if (responseData.success) {
-        // Assuming that the server sends the count in the 'data' field
+  
 		console.log(responseData);
         const tupleCount = responseData.data;
 		if (tupleCount.length > 0){
@@ -333,7 +315,7 @@ async function countMBTItype() {
 		
        
     } else {
-        // Use the server-provided error message, if available
+  
         const errorMessage = responseData.message || 'Error in counting demotable!';
         messageElement.textContent = errorMessage;
     }
@@ -392,7 +374,7 @@ async function getRecommendBooks() {
         const data = await response.json();
         
         if (data.success) {
-            const recommendedBooks = data.data.join(', '); // Assuming data.data is an array of book titles
+            const recommendedBooks = data.data.join(', '); 
             document.getElementById('recommendBooksResult').textContent = `Books recommended by all MBTI types: ${recommendedBooks}`;
         } else {
             throw new Error(data.message);
@@ -409,7 +391,7 @@ async function deleteUser(event){
     const resultElement = document.getElementById('result');
 
 	try {
-        const response = await fetch('delete-login-user', { // Adjust the URL as needed
+        const response = await fetch('delete-login-user', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -435,12 +417,6 @@ async function deleteUser(event){
 
 ///-----------------------------------------------------------------
 //helper functions
-
-
-
-
-
-
 
 
 //helper that turn New Date(); into sql timestamp formate
