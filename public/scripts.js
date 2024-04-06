@@ -103,7 +103,7 @@ async function login(event) {
 	const messageElement = document.getElementById('loginResultMsg');
 
 	if (responseData.success) {
-		messageElement.textContent = "login successfully! Your MBTI is" + responseData.mbtiName;
+		messageElement.textContent = "login successfully! Your MBTI is " + responseData.mbtiName;
 	} else {
 		messageElement.textContent = "Error in login!";
 	}
