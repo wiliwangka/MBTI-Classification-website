@@ -163,10 +163,11 @@ router.get("/get-article-recommendation", async (req, res) => {
 
 // API endpoint of getting the numbers of login users for every mbti
 router.get("/get-numbers-mbti", async (req, res) => {
-	const {mbtiName} = req.query;
+	
 	try{
 		
-		const result = await appService.getNumberOfMbti(mbtiName);
+		const result = await appService.getNumberOfMbti();
+		console.log(result)
 		res.json({success: true, data: result});
 	} catch (error) {
 		res.status(500).json({success: false, message: "error exists in getting articless"});

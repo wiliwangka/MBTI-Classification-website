@@ -319,16 +319,16 @@ async function getRecommendedArticles(mbtiType) {
 }
 
 // implementation of getting the number of login users for every mbti
-async function getNumberOfMbti(mbtiName) {
+async function getNumberOfALLMbti() {
 	return withOracleDB(async(connection) => {
 		const result = await connection.execute(
 		`SELECT m.mbtiName, COUNT(lu.username)
 		FROM LoginUser lu, Mbti_Type m
-		WHERE lu.mbtiName = m.mbtiName AND m.mbtiName = :mbtiName
+		WHERE lu.mbtiName = m.mbtiName 
 		GROUP BY m.mbtiName
 		ORDER BY m.mbtiName
 		`,
-		[mbtiName]);
+		);
 		return result.rows;
 	}).catch((error) => {
 		console.log(error, "error exists in getting the numbers of login users every mbti");
@@ -511,7 +511,7 @@ module.exports = {
 	getRecommendedBooks,
 	getRecommendedVideos,
 	getRecommendedArticles,
-	getNumberOfMbti,
+	getNumberOfMbti: getNumberOfALLMbti,
 	getMbtiMoreThanN,
 	getAverageBook,
 	getAllRecommendBook,

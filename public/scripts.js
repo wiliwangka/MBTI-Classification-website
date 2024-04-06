@@ -294,12 +294,12 @@ async function countMBTItype() {
  
 
     
-    const mbtiName =  document.getElementById('mbtiTypeselect').value;
+ 
 
 
 
 
-    const response = await fetch(`/get-numbers-mbti?mbtiName=${mbtiName}`, {
+    const response = await fetch(`/get-numbers-mbti`, {
         method: 'GET'
     });
 
@@ -312,8 +312,8 @@ async function countMBTItype() {
 		console.log(responseData);
         const tupleCount = responseData.data;
 		if (tupleCount.length > 0){
-			const number = tupleCount[0][1];
-			messageElement.textContent = `The number of ${mbtiName } user in the database is: ${number}`;
+			;
+			messageElement.textContent = "the number of each mbti user are " + tupleCount ;
 		} else {
 			messageElement.textContent = `The number of ${mbtiName } user in the database is: 0 `;
 		}
