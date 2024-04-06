@@ -12,5 +12,5 @@ The website will then present customized content and recommendations tailored to
 
 
 # Additional Recourses
-[Project timeline](https://en.wikipedia.org/wiki/Myers%E2%80%93Briggs_Type_Indicator)
+[Project timeline](https://graceful-moment-292818.framer.app/)
 Frontend Brainstorm and wireframe
