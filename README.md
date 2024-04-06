@@ -1,6 +1,6 @@
 # ER Diagram 
 
-![ER Diagram](assets/ERdiagram.drawio.png)
+![ERdiagram drawio](https://media.github.students.cs.ubc.ca/user/17254/files/3ac45d08-b701-4abf-bf42-a21f1e6b43bb)
 
 
 # Project Description
