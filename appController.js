@@ -85,10 +85,12 @@ router.post("/update-account-info", async (req, res) => {
 	const age = req.body.age;
 	const country = req.body.country;
 	const userGender = req.body.userGender;
+	console.log(req.body);
 
 	// Assuming you have a method in appService to handle the account update
 	try {
 		const updateResult = await appService.updateAccountInfo(oldEmailAddress, oldPassword, newEmailAddress, newPassword, mbtiName, age, country, userGender);
+		console.log(updateResult);
 		if (updateResult) {
 			res.json({ success: true });
 		} else {
