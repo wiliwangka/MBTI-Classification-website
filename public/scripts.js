@@ -315,7 +315,7 @@ async function countMBTItype() {
 			;
 			messageElement.textContent = "the number of each mbti user are " + tupleCount ;
 		} else {
-			messageElement.textContent = `The number of ${mbtiName } user in the database is: 0 `;
+			messageElement.textContent = `The number of user in the database is: 0 `;
 		}
 		
 		
