@@ -1,6 +1,6 @@
 # ER Diagram 
 
-![ER Diagram](https://github.com/ww01/project_g0x2s_j2s2z_x4j6p/blob/main/asset/ERdiagram.drawio.png?raw=true)
+![ER Diagram](assets/ERdiagram.drawio.png)
 
 
 # Project Description
