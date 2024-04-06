@@ -103,7 +103,7 @@ async function login(event) {
 	const messageElement = document.getElementById('loginResultMsg');
 
 	if (responseData.success) {
-		messageElement.textContent = "login successfully!";
+		messageElement.textContent = "login successfully! Your MBTI is" + responseData.mbtiName;
 	} else {
 		messageElement.textContent = "Error in login!";
 	}
@@ -181,7 +181,7 @@ async function submitPersonalityTest(event) {
 
     const messageElement = document.getElementById('testResultMsg');
     const mbtiElement = document.getElementById('mbtiTypeDisplay');
-    const retriving = document.getElementById('mbtiTypeStatus');
+    const retriving = document.getElementById('mbtiTypestatus');
 
 	try {
 		const response = await fetch('/submit-test-questions', {
@@ -194,13 +194,14 @@ async function submitPersonalityTest(event) {
 
 
 		const responseData = await response.json();
-        let mbti = responseData.mbtiType;
+        let mbti = responseData.mbtiType
+		console.log(responseData);
 
         if (responseData.success) {
             messageElement.textContent = "Test submitted successfully!";
             mbtiElement.textContent = responseData.mbtiType;
-            retriving.style.display = 'none';
-         
+            //retriving.style.display = 'none';
+			
             fetchAndUpdateRecommendations('/get-book-recommendation', mbti, 'books');
 			fetchAndUpdateRecommendations('/get-video-recommendation', mbti, 'videos');
 			fetchAndUpdateRecommendations('/get-article-recommendation', mbti, 'articles');
@@ -209,6 +210,7 @@ async function submitPersonalityTest(event) {
             throw new Error('Server response error');
         }
     } catch (error) {
+		
         console.error('Error:', error);
         messageElement.textContent = "Error submitting test!";
     }   
