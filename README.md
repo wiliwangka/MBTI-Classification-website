@@ -12,5 +12,5 @@ The website will then present customized content and recommendations tailored to
 
 
 # Additional Recourses
-[Project timeline](https://graceful-moment-292818.framer.app/)
-Frontend Brainstorm and wireframe
+[Frontend Brainstorm and wireframe](https://graceful-moment-292818.framer.app/)
+
